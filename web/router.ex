@@ -17,19 +17,24 @@ defmodule Risen.Router do
     post "/signin", AccountController, :signin_post
   end
 
-  scope "/a", Risen.Admin do
+  scope "/a", Risen.Admin, as: :admin do
     pipe_through :browser
 
-    get "/", IndexController, :index
+    get   "/", IndexController, :index
+    get   "/students", StudentsController, :index
+    get   "/students/:id/edit", StudentsController, :edit_get
+    patch "/students/:id/edit", StudentsController, :edit_patch
+    get   "/batches", BatchesController, :index
+    get   "/batches/:id", BatchesController, :show
   end
 
-  scope "/e", Risen.Employer do
+  scope "/e", Risen.Employer, as: :employer do
     pipe_through :browser
 
     get "/", IndexController, :show
   end
 
-  scope "/s", Risen.Student do
+  scope "/s", Risen.Student, as: :student do
     pipe_through :browser
 
     get   "/:school/register", RegisterController, :register_get
