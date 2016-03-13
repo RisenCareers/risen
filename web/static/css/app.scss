@@ -1,4 +1,5 @@
-@import 'student-list-item';
+@import 'student_list_item';
+@import 'signin_form';
 
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -24,14 +25,6 @@ form.link, form.button {
 .header {
   border-bottom: 1px solid #e5e5e5;
 }
-/*.logo {
-  width: 519px;
-  height: 71px;
-  display: inline-block;
-  margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
-  background-size: 519px 71px;
-}*/
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
@@ -80,7 +73,8 @@ form.link, form.button {
 }
 
 
-/* RISE CUSTOM STYLE */
+/* RISEN CUSTOM STYLE */
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -100,6 +94,23 @@ body {
 .top-bar h1 {
   margin: 0 1rem;
 }
+.risen-logo {
+
+}
+.middot::before {
+	content: "\b7";
+	display: inline;
+}
+.neutral {
+	background-color: #449D44;
+}
+.warning {
+	background-color: #EC971F;
+}
+.status-badge.neutral {
+	color: white;
+}
+
 .container-mid {
   display: flex;
   justify-content: center;
@@ -131,7 +142,7 @@ body {
 .card-sm {
   width: 480px;
 }
-.sign-in, .sign-up {
+.sign-up {
   text-align: center;
   margin: 20px;
 }
@@ -164,9 +175,7 @@ body {
   bottom: 7px;
   right: 7px;
 }
-input[type='text'],
-input[type='tel'],
-input[type='email'] {
+.input-default {
   width: 100%;
   border-right: none;
   border-left: none;
@@ -175,13 +184,16 @@ input[type='email'] {
   padding: 0.75rem 0.25rem 0.25rem 0.25rem;
   font-size: 125%;
 }
-input:focus {
+.input-default:focus {
   outline: none;
+  border-bottom-color: #003366;
 }
 .action-btn-primary {
   background-color: #003366;
   color: #FEFEFE;
   border: none;
   padding: 1rem 1.5rem;
-  /*border-radius: 15%;*/
+}
+.action-btn-primary:hover {
+  background-color: #3366AA;
 }

@@ -1,0 +1,32 @@
+.student-list-item {
+    .card-content {
+        display: flex;
+    }
+    .pic-container {
+        flex: 0;
+    }
+    .student-info-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        margin-left: 2rem;
+    }
+    .date-info-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .row {
+        margin: 0;
+    }
+    .student-name {
+        font-size: 3rem;
+    }
+    .status-badge {
+        margin-left: 1rem;
+        padding: 5px;
+        vertical-align: super;
+        font-size: 1.25rem;
+    }
+}
