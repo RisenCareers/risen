@@ -1,0 +1,11 @@
+<div class="sign-in">
+  <div class="logo">
+    <h1>RISEN</h1>
+    <p>Sign-in to your account</p>
+  </div>
+  <form action="">
+    <p><input name="email" type="email" placeholder="Email"></p>
+    <p><input name="password" type="password" placeholder="Password"></p>
+    <input name="submit" type="submit" value="Sign In">
+  </form>
+</div>
