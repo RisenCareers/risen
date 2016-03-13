@@ -1,0 +1,14 @@
+<div class="sign-up">
+  <div class="logo">
+    <h1>RISEN</h1>
+    <p>Sign-up with us through</p>
+    <img class="school-pic" src="">
+    <p>School Name</p>
+  </div>
+  <form action="">
+    <p><input name="organization" type="email" placeholder="Full Name"></p>
+    <p><input name="email" type="text" placeholder="Email"></p>
+    <p><input name="password" type="password" placeholder="Password"></p>
+    <input name="submit" type="submit" value="Sign Up">
+  </form>
+</div>
