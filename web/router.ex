@@ -13,6 +13,7 @@ defmodule Risen.Router do
     pipe_through :browser
 
     get  "/", HomeController, :index
+
     get  "/signin", AccountController, :signin_get
     post "/signin", AccountController, :signin_post
   end
@@ -21,9 +22,11 @@ defmodule Risen.Router do
     pipe_through :browser
 
     get   "/", IndexController, :index
+
     get   "/students", StudentsController, :index
     get   "/students/:id/edit", StudentsController, :edit_get
     patch "/students/:id/edit", StudentsController, :edit_patch
+
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show
   end
@@ -31,7 +34,21 @@ defmodule Risen.Router do
   scope "/e", Risen.Employer, as: :employer do
     pipe_through :browser
 
-    get "/", IndexController, :show
+    get   "/", IndexController, :index
+
+    get   "/register", RegisterController, :register_get
+    post  "/register", RegisterController, :register_post
+
+    get   "/setup", RegisterController, :setup_get
+    post  "/setup", RegisterController, :setup_post
+
+    get   "/students", StudentsController, :index
+    get   "/students/:id", StudentsController, :show
+
+    get   "/batches/:id", BatchesController, :show
+
+    get   "/settings", SettingsController, :show
+    patch "/settings", SettingsController, :update
   end
 
   scope "/s", Risen.Student, as: :student do
@@ -40,8 +57,8 @@ defmodule Risen.Router do
     get   "/:school/register", RegisterController, :register_get
     post  "/:school/register", RegisterController, :register_post
 
-    get   "/:school/register/profile", RegisterController, :profile_get
-    post  "/:school/register/profile", RegisterController, :profile_post
+    get   "/:school/setup", RegisterController, :setup_get
+    post  "/:school/setup", RegisterController, :setup_post
 
     get   "/:id/edit", ProfileController, :edit_get
     patch "/:id/edit", ProfileController, :edit_patch

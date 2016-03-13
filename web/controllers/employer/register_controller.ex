@@ -1,7 +1,7 @@
-defmodule Risen.Student.RegisterController do
+defmodule Risen.Employer.RegisterController do
   use Risen.Web, :controller
 
-  plug :put_layout, "student.html"
+  plug :put_layout, "employer.html"
 
   def register_get(conn, _params) do
     render conn, "register.html"
@@ -12,10 +12,10 @@ defmodule Risen.Student.RegisterController do
   end
 
   def setup_get(conn, _params) do
-    render conn, "profile.html"
+    render conn, "setup.html"
   end
 
   def setup_post(conn, _params) do
-    render conn, "profile.html"
+    render conn, "setup.html"
   end
 end
