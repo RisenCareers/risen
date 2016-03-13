@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 # Risen
 
-To start your Phoenix app:
+To start your app:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
@@ -19,6 +18,3 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: http://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
-=======
-# risen
->>>>>>> 0858d4fe8050b9fbb8b84825a0c12b79a8f41bd2
