@@ -10,6 +10,7 @@ defmodule Risen.Student do
     field :job_type, :string
     field :location_preference, :string
     field :status, :string
+
     belongs_to :school, Risen.School
     belongs_to :major, Risen.Major
 
@@ -28,5 +29,6 @@ defmodule Risen.Student do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_length(:name, min: 2)
   end
 end
