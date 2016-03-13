@@ -1,16 +1,14 @@
-defmodule Risen.School do
+defmodule Risen.AccountRole do
   use Risen.Web, :model
 
-  schema "schools" do
-    field :name, :string
-    field :logo, :string
-    field :slug, :string
+  schema "account_roles" do
+    belongs_to :account, Risen.Account
+    belongs_to :role, Risen.Role
 
-    has_many :students, Risen.Student
     timestamps
   end
 
-  @required_fields ~w(name logo slug)
+  @required_fields ~w()
   @optional_fields ~w()
 
   @doc """

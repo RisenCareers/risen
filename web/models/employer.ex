@@ -1,16 +1,16 @@
-defmodule Risen.School do
+defmodule Risen.Employer do
   use Risen.Web, :model
 
-  schema "schools" do
+  schema "employers" do
     field :name, :string
     field :logo, :string
-    field :slug, :string
 
-    has_many :students, Risen.Student
+    has_many :employer_majors, Risen.EmployerMajor
+    has_many :majors, through: [:employer_majors, :major]
     timestamps
   end
 
-  @required_fields ~w(name logo slug)
+  @required_fields ~w(name logo)
   @optional_fields ~w()
 
   @doc """
