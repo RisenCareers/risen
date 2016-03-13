@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-content">
+        <div class="pic-container">
+            <div class="student-pic-sm round-pic">
+            </div>
+        </div>
+        <div class="student-info-container">
+            <p><span class="student-name">Sam Smith</span><i class="status-badge">Pending</i></p>
+            <p><span class="school-name">Pensacola Christian College</span> - <span class="student-major">Computer Science</span></p>
+        </div>
+        <div class="date-info-container">
+            <p>Sent on</p>
+            <p>January 4, 2016</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-content {
+        display: flex;
+    }
+    .pic-container {
+        flex: 0;
+    }
+    .student-info-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 2rem;
+    }
+    .date-info-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .student-name {
+        font-size: 24pt;
+    }
+    .status-badge {
+        background-color: green;
+        color: white;
+        font-size: 12pt;
+        padding: 5px;
+        margin-left: 1rem;
+        vertical-align: super;
+    }
+</style>

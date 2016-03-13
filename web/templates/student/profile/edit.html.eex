@@ -3,7 +3,7 @@
     <form class="form" action="">
       <div class="pic-container">
         <img class="student-pic" title="Student Picture">
-        <div class="icn-btn">+</div>
+        <input type="file" class="">
       </div>
       <p><input name="full-name" type="text" placeholder="Full Name"></p>
       <p><input name="major" type="text" placeholder="Major"></p>
