@@ -1,3 +1,59 @@
-<div>
-  <h1>Risen - Student Register Profile</h1>
+<div class="container container-mid">
+  <h2>Complete registration</h2>
+  <hr />
+  <!-- Probably will need to change method to POST once hooked up. Gets invalid CSRF right now. -->
+  <form class="registration-form" action="" method="GET">
+    <div class="info-container">
+      <p><input name="full-name" type="text" class="input-default" placeholder="Full Name" required></p>
+      <p>
+        <input name="major" type="text" class="input-default" list="major-list" placeholder="Major">
+        <datalist id="major-list">
+          <option value="Computer Science"></option>
+          <option value="Graphic Design"></option>
+          <option value="Business Management"></option>
+          <option value="Marketing"></option>
+          <option value="Criminal Justice"></option>
+        </list>
+      </p>
+      <p>
+        <input name="phone" type="tel" pattern="([\(]\d{3}[\)]|\d{3}[\-])\d{3}[\-]\d{4}" class="input-default" placeholder="Phone (xxx)xxx-xxxx" title="Format is (xxx)xxx-xxx or xxx-xxx-xxxx">
+      </p>
+      <p>
+        <input name="visa_status" type="text" class="input-default" list="visa-status-list" placeholder="Visa Status">
+        <datalist id="visa-status-list" multiple="true">
+          <option value="Eligible to work in the US"></option>
+          <option value="Requires work permit now"></option>
+          <option value="Will need work permit in the future"></option>
+        </datalist>
+      </p>
+      <p>
+        <input name="job_type" type="text" class="input-default" list="job-type-list" placeholder="Job Type">
+        <datalist id="job-type-list">
+          <option value="Full-time"></option>
+          <option value="Part-time"></option>
+          <option value="Contract"></option>
+          <option value="Short-Term"></option>
+          <option value="Internship"></option>
+        </datalist>
+      </p>
+      <p>
+        <input name="location_pref" type="text" class="input-default" placeholder="Location Preference">
+        <!-- Insert options here -->
+      </p>
+      <p>
+        <input name="relocate" type="text" class="input-default" list="relocate-list" placeholder="Willing to Relocate?">
+        <datalist id="relocate-list">
+          <option value="Yes"></option>
+          <option value="No"></option>
+          <option value="Maybe"></option>
+        </datalist>
+      </p>
+    </div>
+    <div class="pic-container">
+      <label>Your picture:</label>
+      <img class="student-pic" title="">
+      <input name="pic-file" class="full-width" type="file">
+    </div>
+    <input type="submit" class="action-btn-primary full-width" value="Register">
+  </form>
 </div>

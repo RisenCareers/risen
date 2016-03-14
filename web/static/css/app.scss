@@ -74,8 +74,7 @@ form.link, form.button {
 
 
 /* RISEN CUSTOM STYLE */
-
-body {
+body, * {
   box-sizing: border-box;
   margin: 0;
 }
@@ -87,6 +86,7 @@ body {
   height: 64px;
   background-color: #003366;
   color: #FEFEFE;
+  z-index: 1000;
 }
 .top-bar + .container {
   padding-top: 64px;
@@ -110,10 +110,14 @@ body {
 .status-badge.neutral {
 	color: white;
 }
+.full-width {
+  width: 100%;
+}
 
 .container-mid {
   display: flex;
   justify-content: center;
+  text-align: center;
 }
 .cover {
   width: 100%;
@@ -193,6 +197,7 @@ body {
   color: #FEFEFE;
   border: none;
   padding: 1rem 1.5rem;
+  margin-top: 0.5rem;
 }
 .action-btn-primary:hover {
   background-color: #3366AA;
