@@ -1,5 +1,6 @@
 @import 'student_list_item';
 @import 'signin_form';
+@import 'batch_list_item';
 
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -146,6 +147,7 @@ body, * {
 .round-pic {
   background-color: #AAA;
   border-radius: 50%;
+  overflow: hidden;
 }
 .icn-btn {
   height: 32px;
