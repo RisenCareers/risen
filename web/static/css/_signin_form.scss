@@ -1,4 +1,20 @@
 .sign-in-form {
   text-align: center;
-  margin: 20px;
+  &.container {
+    width: 375px;
+    padding: 0 45px;
+  }
+  .logo {
+    margin: 0 auto 88px;
+  }
+  h2 {
+    margin-bottom: 28px;
+  }
+  .input-default {
+    margin-bottom: 7px;
+  }
+  .btn[name="submit"] {
+    margin: 35px auto 0;
+    width: 160px;
+  }
 }

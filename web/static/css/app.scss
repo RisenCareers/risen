@@ -1,6 +1,7 @@
 $greyish-brown: #555;
 $faded-orange: #F17D5F;
 $white: #FFF;
+$black-10: rgba(0,0,0,0.1);
 
 @import 'landing/home/index';
 @import 'student_list_item';
@@ -15,6 +16,11 @@ $white: #FFF;
 }
 h1, h2, h3, h4, h5, p, span {
   color: $greyish-brown;
+}
+h2 {
+  font-weight: 600;
+  font-size: 18px;
+  line-hei: 26px;
 }
 .logo {
   background-image: url("/images/MainLogo.svg");
@@ -45,6 +51,18 @@ h1, h2, h3, h4, h5, p, span {
     color: $faded-orange;
     background-color: $white;
     text-decoration: none;
+  }
+}
+.input-default {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid $black-10;
+  padding: 7px 11px;
+  font-size: 18px;
+  font-weight: 300;
+  &:focus {
+    outline: none;
+    border-bottom-color: $faded-orange;
   }
 }
 
@@ -131,19 +149,6 @@ h1, h2, h3, h4, h5, p, span {
   background-color: #DDD;
   bottom: 7px;
   right: 7px;
-}
-.input-default {
-  width: 100%;
-  border-right: none;
-  border-left: none;
-  border-top: none;
-  border-bottom: 1px solid #AAA;
-  padding: 0.75rem 0.25rem 0.25rem 0.25rem;
-  font-size: 125%;
-}
-.input-default:focus {
-  outline: none;
-  border-bottom-color: #003366;
 }
 .action-btn-primary {
   background-color: #003366;
