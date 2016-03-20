@@ -1,0 +1,34 @@
+.home {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 375px;
+    padding: 0 50px;
+    text-align: center;
+  }
+  .logo {
+    margin: 0 auto 28px;
+  }
+  .tag-line {
+    margin-bottom: 80px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 28px;
+  }
+  .purpose {
+    h2, p {
+      font-size: 16px;
+      line-height: 26px;
+    }
+    h2 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    p {
+      margin-bottom: 12px;
+    }
+  }
+  .btn {
+    margin: 20px auto;
+  }
+}
