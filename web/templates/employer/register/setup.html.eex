@@ -1,3 +1,46 @@
-<div>
-  <h1>Risen - Employer Register Setup</h1>
+<div class="cover">
+  <div class="employer-setup-form container">
+    <div class="logo logo-sm"></div>
+    <h2 class="tag-line">Looks good! Now finish the profile for <strong>XYZ Nonprofit.</strong></h2>
+    <form action="">
+      <h3>Logo</h3>
+      <div class="pic-chooser">
+        <img class="employer-pic" src="/images/employerPlaceholder.svg"></img>
+        <label for="file-upload" class="btn" type="file">Choose...</label>
+        <input id="file-upload" type="file" accept=".jpg,.jpeg,.png">
+      </div>
+      <h3>Interests</h3>
+      <input name="major" class="input-default" type="text" list="major-list" placeholder="Type a major here...">
+      <datalist id="major-list">
+        <option value="Computer Science">Tech</option>
+        <option value="Business Mgt.">Business</option>
+        <option value="Marketing">Business</option>
+        <option value="Nursing">Health</option>
+      </datalist>
+      <input name="submit" class="btn" type="submit" value="Done!">
+    </form>
+  </div>
 </div>
+
+
+<script type="text/javascript">
+  // NOTE: This function probably needs to go in /web/static/js/utils.js and imported in app.js
+  function previewImage(input, targetSelector) {
+    if (input.files && input.files[0]) {
+      // NOTE: FilReader API is supported in IE10+
+      var reader = new FileReader();
+      reader.readAsDataURL(input.files[0]);
+      reader.onload = function(e) {
+        document.querySelector(targetSelector).src = e.target.result;
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Preview the selected image
+    let uploader = document.querySelector('#file-upload');
+    uploader.addEventListener('change', () => {
+      previewImage(uploader, '.employer-pic');
+    });
+  });
+</script>
