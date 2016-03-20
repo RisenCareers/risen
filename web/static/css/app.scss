@@ -2,17 +2,22 @@ $greyish-brown: #555;
 $faded-orange: #F17D5F;
 $white: #FFF;
 $black-10: rgba(0,0,0,0.1);
+$faded-orange-50: rgba(241,124,95,0.5);
 
 @import 'landing/home/index';
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
+@import 'employer_app_menu';
 
 
 * {
   box-sizing: border-box;
   margin: 0;
   font-family: "proxima-nova", sans-serif;
+}
+body {
+  overflow: hidden;
 }
 h1, h2, h3, h4, h5, p, span {
   color: $greyish-brown;
@@ -41,6 +46,7 @@ h2 {
   font-weight: 600;
   font-size: 18px;
   cursor: pointer;
+  text-decoration: none;
   border: 2px solid $faded-orange;
   transition: background-color 333ms ease,
               color 333ms ease;
@@ -48,10 +54,15 @@ h2 {
     outline: none;
   }
   &:hover {
-    color: $faded-orange;
-    background-color: $white;
+    color: $white;
+    background-color: $faded-orange-50;
+    border-color: $faded-orange-50;
     text-decoration: none;
   }
+}
+.btn-o {
+  background-color : transparent;
+  color: $faded-orange;
 }
 .input-default {
   width: 100%;

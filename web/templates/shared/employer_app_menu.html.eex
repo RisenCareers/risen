@@ -1,0 +1,11 @@
+<div class="employer-app-menu">
+  <div class="menu">
+    <div class="menu-item">Most Recent Batch</div>
+    <div class="menu-item">All Students</div>
+    <div class="menu-item">Settings</div>
+  </div>
+  <div class="footer">
+    <p>You are signed in to manage <strong>XYZ Organization</strong>.</p>
+    <a class="btn btn-o" href="">Sign Out</a>
+  </div>
+</div>
