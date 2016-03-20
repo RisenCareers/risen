@@ -1,0 +1,26 @@
+.container.container-mid {
+  display: block;
+  /*text-align: center;*/
+}
+.registration-form {
+  width: 256px;  /* Follow the width of .student-pic */ 
+  margin: 0 auto;
+}
+.pic-container {
+  position: relative;
+  margin: 2rem 0;
+  width: 256px;
+  text-align: left;
+  label {
+    padding-left: 0.25rem;
+    font-size: 125%;
+    font-weight: normal;
+    color: #AAA;
+  }
+}
+.file-picker {
+  width: 100%;
+}
+.action-btn-primary {
+  margin-top: 2.5rem;
+}

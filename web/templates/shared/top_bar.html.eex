@@ -1,0 +1,10 @@
+<div class="top-bar">
+	<h2 class="app-title">Risen</h2>
+	<div class="middle-space"></div>
+	<div class="right-menu">
+		<ul class="menu">
+			<li>About</li>
+			<li>Contact</li>
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div class="student-list-item card">
+    <div class="card-content">
+        <div class="pic-container">
+            <div class="student-pic-sm round-pic">
+                <!-- static_path errors out: assign @conn not available in eex template. -->
+                <!-- When connected, change # to = -->
+                <img src="<%# static_path(@conn, "/images/ic_face_black_48dp_1x.png") %>">
+            </div>
+        </div>
+        <div class="student-info-container">
+            <p class="row">
+                <span class="student-name">Sam Smith</span>
+                <i class="status-badge neutral">Pending</i>
+            </p>
+            <p class="row">
+                <span class="school-name">Pensacola Christian College</span>
+                <span class="middot"></span>
+                <span class="student-major">Computer Science</span>
+            </p>
+        </div>
+        <div class="date-info-container">
+            <p class="row">Sent on</p>
+            <p class="row">January 4, 2016</p>
+        </div>
+    </div>
+</div>
