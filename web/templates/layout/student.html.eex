@@ -13,6 +13,7 @@
 
   <body>
     <main role="main">
+      <%= render Risen.SharedView, "top_bar.html" %>
       <%= render @view_module, @view_template, assigns %>
     </main>
 
