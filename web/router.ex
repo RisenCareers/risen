@@ -54,11 +54,11 @@ defmodule Risen.Router do
   scope "/s", Risen.Student, as: :student do
     pipe_through :browser
 
-    get   "/:school/register", RegisterController, :register_get
-    post  "/:school/register", RegisterController, :register_post
-
-    get   "/:school/setup", RegisterController, :setup_get
-    post  "/:school/setup", RegisterController, :setup_post
+    get   "/:school/register/account", RegisterController, :account
+    post  "/:school/register/account", RegisterController, :account_create
+    get   "/:school/register/setup", RegisterController, :setup
+    post  "/:school/register/setup", RegisterController, :setup_create
+    get   "/:school/register/done", RegisterController, :done
 
     get   "/:id/edit", ProfileController, :edit_get
     patch "/:id/edit", ProfileController, :edit_patch
