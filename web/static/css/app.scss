@@ -5,6 +5,7 @@ $black-10: rgba(0,0,0,0.1);
 $faded-orange-50: rgba(241,124,95,0.5);
 
 @import 'landing/home/index';
+@import 'employer/register/register';
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
@@ -33,6 +34,13 @@ h2 {
   background-repeat: no-repeat;
   width: 175px;
   height: 100px;
+}
+.logo-sm {
+  width: 126px;
+  height: 73px;
+}
+.tag-line {
+  font-weight: 300;
 }
 .btn {
   width: 210px;

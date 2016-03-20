@@ -1,3 +1,13 @@
-<div>
-  <h1>Risen - Employer Register Register</h1>
+<div class="cover">
+  <div class="employer-registration-form container">
+    <div class="logo logo-sm"></div>
+    <h2 class="tag-line">Risen helps organizations find passionate employees through our Christian college network.</h2>
+    <h2>Get started in 45 seconds.</h2>
+    <form action="">
+      <input name="organization" class="input-default" type="text" placeholder="Organization Name">
+      <input name="email" class="input-default" type="email" placeholder="Email">
+      <input name="password" class="input-default" type="password" placeholder="Password">
+      <input name="submit" class="btn" type="submit" value="Sign Up">
+    </form>
+  </div>
 </div>
