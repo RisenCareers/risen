@@ -8,7 +8,7 @@
         <img class="employer-pic" src="/images/employerPlaceholder.svg"></img>
         <label for="file-upload" class="btn" type="file">Choose...</label>
         <!-- TODO: Verify file types on client and server side -->
-        <input id="file-upload" type="file" accept=".jpg,.jpeg,.png">
+        <input id="file-upload" name="logo" type="file" accept=".jpg,.jpeg,.png">
       </div>
       <h3>Interests</h3>
       <div class="select">
