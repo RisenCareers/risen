@@ -2,6 +2,7 @@ $greyish-brown: #555;
 $faded-orange: #F17D5F;
 $white: #FFF;
 $black-10: rgba(0,0,0,0.1);
+$black-10s : #F2F2F2;
 $black-5: rgba(0,0,0,0.05);
 $faded-orange-50: rgba(241,124,95,0.5);
 
@@ -20,9 +21,9 @@ $faded-orange-50: rgba(241,124,95,0.5);
   font-family: "proxima-nova", sans-serif;
 }
 body {
-  overflow: hidden;
+  // overflow: hidden;
 }
-h1, h2, h3, h4, h5, p, span {
+h1, h2, h3, h4, h5, p, span, ul, ol, input {
   color: $greyish-brown;
 }
 h2 {
@@ -88,6 +89,29 @@ h3 {
   &:focus {
     outline: none;
     border-bottom-color: $faded-orange;
+  }
+}
+.x-mark {
+  width: 11px;
+  height: 11px;
+  position: relative;
+  cursor: pointer;
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #000;
+    left: 50%;
+  }
+  &::before {
+    transform: rotate(-45deg);
+  }
+  &::after {
+    transform: rotate(45deg);
   }
 }
 

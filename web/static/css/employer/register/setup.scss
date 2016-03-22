@@ -5,6 +5,8 @@
     width: 375px;
     padding: 0 45px;
     text-align: center;
+    position: relative;
+    margin: 45px auto;
   }
   .logo {
     margin: 0 auto 37px;
@@ -13,6 +15,9 @@
     font-size: 18px;
     margin-bottom: 54px;
   }
+  form {
+    position: relative;
+  }
   h2 {
     margin-bottom: 28px;
   }
@@ -20,9 +25,7 @@
     text-align: left;
     margin-bottom: 15px;
   }
-  #file-upload {
-    display: none;
-  }
+
   .pic-chooser {
     background-color: rgba(0,0,0,0.05);  //$black-5
     padding: 15px;
@@ -31,6 +34,15 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    #file-upload {
+      display: none;
+    }
+    .employer-pic {
+      width:108px;
+      height: 108px;
+      border: 2px solid rgba(0,0,0,0.1);  // $black-10
+      background-color: #FFF;  // $white
+    }
     .btn {
       margin: 0 0 0 15px;
       width: 114px;
@@ -44,18 +56,84 @@
       }
     }
   }
-  .employer-pic {
-    width:108px;
-    height: 108px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: rgba(0,0,0,0.1);  //$black-10
+
+  .select {
+    position: relative;
+    .input-default {
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .datalist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+      max-height: 250px;
+      min-height: 40px;
+      overflow-y: auto;
+      position: absolute;
+      width: 100%;
+      display: block;
+      top: calc(100% - 15px);  // compensate for margin-bottom in .input-default
+      z-index: 1000;
+      &.hide {
+        display: none;
+      }
+      &.on-top {
+        top: initial;
+        bottom: 100%;
+      }
+    }
+    .empty {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 10px 15px;
+      background-color: #F2F2F2;
+    }
+    .option {
+      padding: 10px 15px;
+      background-color: #F2F2F2;  // $black-10s
+      border-bottom: 2px solid rgba(0,0,0,0.05);  // $black-5
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      &:last-of-type {
+        border-bottom: none;
+      }
+      &:hover {
+        color: rgba(241,124,95,0.5);  // $faded-orange
+      }
+      &.hide {
+        display: none;
+      }
+    }
   }
-  .input-default {
-    margin-bottom: 15px;
+
+  .selected-options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+    .major {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(0,0,0,0.05);  // $black-5
+      padding: 8px 15px;
+      &:hover {
+        background-color: rgba(241,124,95,0.5);  // $faded-orange-50
+      }
+    }
+    input {
+      flex: 1;
+      border: none;
+      font-size: 16px;
+      background-color: transparent;
+    }
   }
+  
   .btn {
-    margin: 30px auto 0;
+    margin: 0 auto;
     width: 160px;
   }
 }
