@@ -1,11 +1,9 @@
-<div class="sign-in-form">
-  <div class="risen-logo">
-    <h1>RISEN</h1>
-    <p>Sign-in to your account</p>
-  </div>
+<div class="sign-in-form container">
+  <div class="logo"></div>
+  <h2>Sign-in to your Risen account.</h2>
   <form action="">
-    <p><input name="email" type="email" class="input-default" placeholder="Email"></p>
-    <p><input name="password" type="password" class="input-default" placeholder="Password"></p>
-    <input name="submit" type="submit" class="action-btn-primary" value="Sign In">
+    <input name="email" class="input-default" type="email" placeholder="Email">
+    <input name="password" class="input-default" type="password" placeholder="Password">
+    <input name="submit" class="btn" type="submit" value="Sign In">
   </form>
 </div>
