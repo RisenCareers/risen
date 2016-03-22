@@ -1,5 +1,6 @@
 defmodule Risen.Student.RegisterController do
   use Risen.Web, :controller
+  import Ecto.Changeset
 
   alias Risen.Student
   alias Risen.Account
@@ -16,7 +17,12 @@ defmodule Risen.Student.RegisterController do
   end
 
   def account_create(conn, %{"account" => account_params}) do
-    changeset = Account.changeset(%Account{}, account_params)
+
+    account_params = Map.merge(account_params, %{ "password_hash" => account_params["password"] })
+    changeset = Account.changeset(%Account{roles:[%Role{name:"Student"}]}, account_params)
+
+    IO.inspect changeset.errors
+
     conn = assign(conn, :school, %{slug: "test"})
     case Repo.insert(changeset) do
       {:ok, _account} ->
