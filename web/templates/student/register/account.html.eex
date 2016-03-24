@@ -2,7 +2,7 @@
   <h2>Start registration</h2>
   <hr />
   <h3>
-    You've been invited by <strong><%= "Pensacola Christian College" %></strong> to register. Start by entering your email and password below.
+    You've been invited by <strong><%= @school.name %></strong> to register. Start by entering your email and password below.
   </h3>
 
   <div class="registration-form">

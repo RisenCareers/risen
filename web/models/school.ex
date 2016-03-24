@@ -4,14 +4,15 @@ defmodule Risen.School do
   schema "schools" do
     field :name, :string
     field :logo, :string
+    field :abbreviation, :string
     field :slug, :string
 
     has_many :students, Risen.Student
     timestamps
   end
 
-  @required_fields ~w(name logo slug)
-  @optional_fields ~w()
+  @required_fields ~w(name slug abbreviation)
+  @optional_fields ~w(logo)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -22,5 +23,6 @@ defmodule Risen.School do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> unique_constraint(:slug)
   end
 end
