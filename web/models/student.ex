@@ -10,14 +10,16 @@ defmodule Risen.Student do
     field :job_type, :string
     field :location_preference, :string
     field :status, :string
+
+    belongs_to :account, Risen.Account
     belongs_to :school, Risen.School
     belongs_to :major, Risen.Major
 
     timestamps
   end
 
-  @required_fields ~w(name pic resume phone visa_status job_type location_preference status)
-  @optional_fields ~w()
+  @required_fields ~w(name account_id)
+  @optional_fields ~w(pic resume phone visa_status job_type location_preference status)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -28,5 +30,6 @@ defmodule Risen.Student do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_length(:name, min: 2)
   end
 end
