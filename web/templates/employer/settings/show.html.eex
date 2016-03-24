@@ -1,3 +1,4 @@
 <div>
   <h1>Risen - Employer Settings Show</h1>
+  <%= render Risen.SharedView, "employer_app_menu.html" %>
 </div>
