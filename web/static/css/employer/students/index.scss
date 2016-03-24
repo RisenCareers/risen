@@ -1,0 +1,59 @@
+@import '../../config';
+
+.employer-students-index {
+  &.container {
+    margin: 0 auto;
+    width: 756px;
+    padding: 0 45px;
+  }
+  &.container--mobile {
+    display: flex;
+    flex-direction: column;
+    width: 375px;
+    padding: 45px;
+    text-align: center;
+    position: relative;
+  }
+  .topbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+  }
+  .logo {
+    flex: 0 0 auto;
+  }
+  .logo--streamlined {
+    background-image: url('/images/StreamlinedLogo.svg');
+    width: 102px;
+    height: 38px;
+    background-position: center;
+  }
+  .menu {
+    flex: 0 0 27px;
+    height: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .menu__line {
+    flex: 0 0 4px;  // Suppose to be 4.6px OR just use an SVG
+    background-color: $faded-orange-50;
+    transition: background-color 250ms ease;
+  }
+  .menu:hover .menu__line {
+    background-color: $faded-orange;
+  }
+  .page-title {
+    text-align: left;
+  }
+  .batch {
+    margin-top: 35px;
+  }
+  .batch__title {
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+}

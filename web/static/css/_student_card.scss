@@ -1,0 +1,34 @@
+@import 'config';
+
+.student-card {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid $black-10;
+  border-radius: 3px;
+  margin-top: 15px;
+  cursor: pointer;
+  &:hover {
+    background-color: $very-light-pink;
+  }
+}
+.student-card__pic {
+  flex: 0 0 48px;
+  height: 48px;
+}
+.student-card__info {
+  flex: 1 1 calc(100% - 48px);
+  text-align: left;
+  margin-left: 15px;
+}
+.student-card__info__name {
+  font-weight: 600;
+  font-size: 18px;
+}
+.student-card__info__school,
+.student-card__info__major {
+  font-size: 16px;
+}
+.student-card__info__major {
+  margin-top: 10px;
+}

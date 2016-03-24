@@ -1,0 +1,10 @@
+<a class="link link--no-decor" href="/e/students/:id/">
+  <div class="student-card">
+    <div class="student-card__pic round-pic"></div>
+    <div class="student-card__info">
+      <p class="student-card__info__name"><%= @name %></p>
+      <p class="student-card__info__school"><%= @school %></p>
+      <p class="student-card__info__major"><%= @major %></p>
+    </div>
+  </div>
+</a>
