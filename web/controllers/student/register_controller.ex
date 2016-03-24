@@ -60,9 +60,12 @@ defmodule Risen.Student.RegisterController do
               {:error, changeset} ->
                 render(conn, "account.html", changeset: changeset)
             end
+
           {:error, changeset} ->
             render(conn, "account.html", changeset: changeset)
+
         end
+        
       {:error, changeset} ->
         render(conn, "account.html", changeset: changeset)
     end
