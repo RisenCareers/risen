@@ -11,17 +11,16 @@
     <div class="batch-students">
       <!-- Good place to put for loop -->
       <!-- (for student in batch)  -->
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
+      <div class="card"><%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %></div>
+      <div class="card"><%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %></div>
     </div>
   </div>
   <div class="batch">
     <h2 class="batch-title">Batch for Feb. 12, 2016</h2>
     <div class="batch-students">
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
-      <%= render Risen.SharedView, "student_card.html", name: name, school: school, major: major %>
+      <div class="card"><%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %></div>
+      <div class="card"><%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %></div>
+      <div class="card"><%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %></div>
     </div>
   </div>
 </div>

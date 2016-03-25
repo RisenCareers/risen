@@ -1,0 +1,8 @@
+<div class="studentSummary">
+  <div class="studentSummary-pic round-pic"></div>
+  <div class="studentSummary-info">
+    <p class="studentSummary-info-name">First Last</p>
+    <p class="studentSummary-info-school">School Name Here</p>
+    <p class="studentSummary-info-major">Interesting Major</p>
+  </div>
+</div>
