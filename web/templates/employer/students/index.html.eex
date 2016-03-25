@@ -1,15 +1,7 @@
 <%= render Risen.SharedView, "employer_app_menu.html" %>
 
 <div class="container container--mobile employerStudentsIndex">
-  <div class="topbar topbar--mobile">
-    <div class="logo logo--streamlined"></div>
-    <!-- 2nd Pass: Make menu an SVG -->
-    <div class="menuIcon js-trigger">
-      <div class="menuIcon-stripe"></div>
-      <div class="menuIcon-stripe"></div>
-      <div class="menuIcon-stripe"></div>
-    </div>
-  </div>
+  <%= render Risen.SharedView, "topbar.html" %>
   <h1 class="pageTitle">Students</h1>
   <!-- Good place to put for loop -->
   <!-- (for batch in employer.batches) -->
