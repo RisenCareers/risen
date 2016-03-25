@@ -4,6 +4,7 @@
 @import 'employer/register/register';
 @import 'employer/register/setup';
 @import 'employer/students/index';
+@import 'employer/students/show';
 
 @import 'student_list_item';
 @import 'signin_form';
@@ -12,6 +13,20 @@
 @import 'topbar';
 @import 'student_summary';
 
+
+// UTILITIES
+
+.u-noDecor {
+  text-decoration: none;
+}
+.u-clickable {
+  cursor: pointer;
+}
+.u-hidden {
+  display: none;
+}
+
+//
 
 * {
   box-sizing: border-box;
@@ -36,8 +51,23 @@ h3 {
   font-weight: 600;
   font-size: 16px;
 }
-.link--no-decor {
-  text-decoration: none;
+hr {
+  border-color: $black-10;
+}
+
+// 
+.container {
+  margin: 0 auto;
+  width: 756px;
+  padding: 0 45px;
+}
+.container--mobile {
+  display: flex;
+  flex-direction: column;
+  width: 375px;
+  padding: 45px;
+  text-align: center;
+  position: relative;
 }
 .logo {
   background-image: url("/images/MainLogo.svg");
@@ -45,6 +75,7 @@ h3 {
   background-repeat: no-repeat;
   width: 175px;
   height: 100px;
+  flex: 0 0 auto;
 }
 .logo--streamlined {
   background-image: url('/images/StreamlinedLogo.svg');
@@ -83,6 +114,9 @@ h3 {
     background-color: $faded-orange-50;
     border-color: $faded-orange-50;
     text-decoration: none;
+  }
+  &.is-hidden {
+    display: none;
   }
 }
 .btn-o {

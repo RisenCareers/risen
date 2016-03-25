@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="36px" viewBox="0 0 30 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Employers" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Employers-&gt;-Student" transform="translate(-88.000000, -805.000000)" stroke-width="2" stroke="#555555">
+            <g id="Content" transform="translate(45.000000, 45.000000)">
+                <g id="Profile" transform="translate(0.000000, 73.000000)">
+                    <g id="Profile-&gt;-Body" transform="translate(0.000000, 339.000000)">
+                        <g id="Resume" transform="translate(24.000000, 334.000000)">
+                            <g id="Content" transform="translate(20.000000, 15.000000)">
+                                <g id="Icon">
+                                    <rect id="Rectangle-path" x="0" y="0" width="28" height="33.4444444"></rect>
+                                    <path d="M6.22222222,9.12121212 L21.7777778,9.12121212" id="Shape"></path>
+                                    <path d="M6.22222222,16.7222222 L21.7777778,16.7222222" id="Shape"></path>
+                                    <path d="M6.22222222,24.3232323 L12.4444444,24.3232323" id="Shape"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
