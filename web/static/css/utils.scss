@@ -1,0 +1,34 @@
+.u-{
+  &cover {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &noDecor {
+    text-decoration: none;
+  }
+  &clickable {
+    cursor: pointer;
+  }
+  &hidden {
+    display: none;
+  }
+  &centerText {
+    text-align: center;
+  }
+  &rightText {
+    text-align: right;
+  }
+  &leftText {
+    text-align: left;
+  }
+  &floatLeft {
+    float: left;
+  }
+  &floatRight {
+    float: right;
+  }
+}

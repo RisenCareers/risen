@@ -1,11 +1,14 @@
-@import 'config.scss';
+@import 'config';
+@import 'utils';
 
+// Pages
 @import 'landing/home/index';
 @import 'employer/register/register';
 @import 'employer/register/setup';
 @import 'employer/students/index';
 @import 'employer/students/show';
 
+// Components
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
@@ -13,31 +16,13 @@
 @import 'topbar';
 @import 'student_summary';
 
-
-// UTILITIES
-
-.u-noDecor {
-  text-decoration: none;
-}
-.u-clickable {
-  cursor: pointer;
-}
-.u-hidden {
-  display: none;
-}
-
-//
-
+// Block overrides
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: "proxima-nova", sans-serif;
-}
-body {
-  // overflow: hidden;
-}
-h1, h2, h3, h4, h5, p, span, ul, ol, input {
+  padding: 0;
   color: $greyish-brown;
+  font-family: "proxima-nova", sans-serif;
 }
 h1 {
   font-size: 24px;
@@ -45,7 +30,6 @@ h1 {
 h2 {
   font-weight: 600;
   font-size: 18px;
-  line-height: 26px;
 }
 h3 {
   font-weight: 600;
@@ -55,7 +39,7 @@ hr {
   border-color: $black-10;
 }
 
-// 
+// App-wide style
 .container {
   margin: 0 auto;
   width: 756px;
@@ -70,18 +54,17 @@ hr {
   position: relative;
 }
 .logo {
-  background-image: url("/images/MainLogo.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
   width: 175px;
   height: 100px;
   flex: 0 0 auto;
+  background-image: url("/images/MainLogo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .logo--streamlined {
-  background-image: url('/images/StreamlinedLogo.svg');
   width: 102px;
   height: 38px;
-  background-position: center;
+  background-image: url('/images/StreamlinedLogo.svg');
 }
 .logo-sm {
   width: 126px;
@@ -110,7 +93,7 @@ hr {
     outline: none;
   }
   &:hover {
-    color: $white;
+    color: $faded-orange;
     background-color: $faded-orange-50;
     border-color: $faded-orange-50;
     text-decoration: none;
@@ -119,7 +102,7 @@ hr {
     display: none;
   }
 }
-.btn-o {
+.btn--o {
   background-color : transparent;
   color: $faded-orange;
 }
@@ -210,14 +193,14 @@ hr {
   justify-content: center;
   text-align: center;
 }
-.cover {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// .cover {
+//   width: 100%;
+//   height: 100vh;
+//   position: absolute;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 // .card {
 //   box-sizing: border-box;
 //   display: block;
