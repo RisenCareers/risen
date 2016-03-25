@@ -1,10 +1,10 @@
 <a class="link link--no-decor" href="/e/students/:id/">
-  <div class="student-card">
-    <div class="student-card__pic round-pic"></div>
-    <div class="student-card__info">
-      <p class="student-card__info__name"><%= @name %></p>
-      <p class="student-card__info__school"><%= @school %></p>
-      <p class="student-card__info__major"><%= @major %></p>
+  <div class="studentCard">
+    <div class="studentCard-pic round-pic"></div>
+    <div class="studentCard-info">
+      <p class="studentCard-info-name"><%= @name %></p>
+      <p class="studentCard-info-school"><%= @school %></p>
+      <p class="studentCard-info-major"><%= @major %></p>
     </div>
   </div>
 </a>

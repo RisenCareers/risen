@@ -1,6 +1,4 @@
-@import 'config';
-
-.student-card {
+.studentCard {
   display: flex;
   align-items: center;
   padding: 15px;
@@ -11,24 +9,24 @@
   &:hover {
     background-color: $very-light-pink;
   }
-}
-.student-card__pic {
-  flex: 0 0 48px;
-  height: 48px;
-}
-.student-card__info {
-  flex: 1 1 calc(100% - 48px);
-  text-align: left;
-  margin-left: 15px;
-}
-.student-card__info__name {
-  font-weight: 600;
-  font-size: 18px;
-}
-.student-card__info__school,
-.student-card__info__major {
-  font-size: 16px;
-}
-.student-card__info__major {
-  margin-top: 10px;
+  &-pic {
+    flex: 0 0 48px;
+    height: 48px;
+  }
+  &-info {
+    flex: 1 1 calc(100% - 48px);
+    text-align: left;
+    margin-left: 15px;
+  }
+  &-info-name {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &-info-school,
+  &-info-major {
+    font-size: 16px;
+  }
+  &-info-major {
+    margin-top: 10px;
+  }
 }

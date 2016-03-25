@@ -44,6 +44,12 @@ h3 {
   width: 175px;
   height: 100px;
 }
+.logo--streamlined {
+  background-image: url('/images/StreamlinedLogo.svg');
+  width: 102px;
+  height: 38px;
+  background-position: center;
+}
 .logo-sm {
   width: 126px;
   height: 73px;
@@ -114,6 +120,29 @@ h3 {
   }
   &::after {
     transform: rotate(45deg);
+  }
+}
+.topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+.menuIcon {
+  flex: 0 0 27px;
+  height: 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  &-stripe {
+    flex: 0 0 4px;  // Suppose to be 4.6px OR just use an SVG
+    background-color: $faded-orange-50;
+    transition: background-color 250ms ease;
+  }
+  &:hover &-stripe {
+    background-color: $faded-orange;
   }
 }
 
