@@ -1,0 +1,42 @@
+<div class="container container-mid">
+  <h2>Start registration</h2>
+  <hr />
+  <h3>
+    You've been invited by <strong><%= @school.name %></strong> to register. Start by entering your email and password below.
+  </h3>
+
+  <div class="registration-form">
+    <%= form_for @changeset, student_register_path(@conn, :account_create, @school.slug), fn f -> %>
+
+      <div class="info-container">
+        <%= if f.errors != [] do %>
+          <div class="alert alert-danger">
+            <p>Oops, something went wrong! Please check the errors below:</p>
+            <ul>
+              <%= for {attr, message} <- f.errors do %>
+                <li><%= humanize(attr) %> <%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <p>
+          <%= text_input f, :name, class: "input-default", placeholder: "Full Name", required: true %>
+        </p>
+
+        <p>
+          <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
+        </p>
+
+        <p>
+          <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
+        </p>
+
+        <div class="form-group">
+          <%= submit "Submit", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>
