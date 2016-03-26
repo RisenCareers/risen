@@ -1,0 +1,22 @@
+.studentSummary {
+  &-pic {
+    width: 128px;
+    height: 128px;
+  }
+  &-pic--sm {
+    width: 88px;
+    height: 88px;
+  }
+  &-pic--xs {
+    width: 48px;
+    height: 48px;
+  }
+  &-info-name {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &-info-school,
+  &-info-major {
+    font-size: 16px;
+  }
+}

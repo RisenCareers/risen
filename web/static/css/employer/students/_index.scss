@@ -27,4 +27,27 @@
       margin-bottom: 10px;
     }
   }
+  .card {
+    margin-top: 15px;
+    cursor: pointer;
+    &:hover {
+      background-color: $very-light-pink;
+    }
+    .studentSummary {
+      display: flex;
+      align-items: center;
+      &-pic {
+        flex: 0 0 48px;
+        height: 48px;
+      }
+      &-info {
+        flex: 1 1 calc(100% - 48px);
+        text-align: left;
+        margin-left: 15px;
+      }
+      &-info-major {
+        margin-top: 10px;
+      }
+    }
+  }
 }

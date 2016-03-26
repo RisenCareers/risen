@@ -1,0 +1,9 @@
+<div class="topBar topBar--mobile">
+  <div class="logo logo--streamlined"></div>
+  <!-- 2nd Pass: Make menu an SVG -->
+  <div class="menuIcon js-trigger">
+    <div class="menuIcon-stripe"></div>
+    <div class="menuIcon-stripe"></div>
+    <div class="menuIcon-stripe"></div>
+  </div>
+</div>

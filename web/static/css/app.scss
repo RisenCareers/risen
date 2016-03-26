@@ -4,11 +4,13 @@
 @import 'employer/register/register';
 @import 'employer/register/setup';
 @import 'employer/students/index';
+
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
 @import 'employer_app_menu';
-@import 'student_card';
+@import 'topbar';
+@import 'student_summary';
 
 
 * {
@@ -145,6 +147,11 @@ h3 {
     background-color: $faded-orange;
   }
 }
+.card {
+  padding: 15px;
+  border: 1px solid $black-10;
+  border-radius: 3px;
+}
 
 // Need to refactor below this line
 
@@ -177,25 +184,25 @@ h3 {
   justify-content: center;
   align-items: center;
 }
-.card {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  background-color: #FAFAFA;
-  border: 1px solid #F4F4F4;
-  box-shadow: 0px 1px 3px 1px #DDD;
-  margin: 0.5rem;
-}
-.card-content {
-  margin: 1rem;
-}
-.card-md {
-  width: 640px;
-}
-.card-sm {
-  width: 480px;
-}
+// .card {
+//   box-sizing: border-box;
+//   display: block;
+//   width: 100%;
+//   padding: 1rem;
+//   background-color: #FAFAFA;
+//   border: 1px solid #F4F4F4;
+//   box-shadow: 0px 1px 3px 1px #DDD;
+//   margin: 0.5rem;
+// }
+// .card-content {
+//   margin: 1rem;
+// }
+// .card-md {
+//   width: 640px;
+// }
+// .card-sm {
+//   width: 480px;
+// }
 .sign-up {
   text-align: center;
   margin: 20px;

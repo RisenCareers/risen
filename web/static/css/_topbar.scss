@@ -1,0 +1,10 @@
+.topBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  .logo {
+    flex: 0 0 auto;
+  }
+}
