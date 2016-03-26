@@ -3,7 +3,6 @@ defmodule Risen.Student do
 
   schema "students" do
     field :name, :string
-    field :pic, :string
     field :resume, :string
     field :phone, :string
     field :visa_status, :string
@@ -19,7 +18,7 @@ defmodule Risen.Student do
   end
 
   @required_fields ~w(name account_id)
-  @optional_fields ~w(pic resume phone visa_status job_type location_preference status)
+  @optional_fields ~w(resume phone visa_status job_type location_preference status)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

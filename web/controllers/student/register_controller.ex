@@ -13,9 +13,7 @@ defmodule Risen.Student.RegisterController do
   def account(conn, params) do
     school = Repo.get_by(School, slug: params["school"])
     changeset = Account.changeset(%Account{})
-    conn
-    |> assign(:school, school)
-    |> render("account.html", changeset: changeset)
+    render(conn, "account.html", changeset: changeset, school: school)
   end
 
   def account_create(conn, params) do
@@ -65,7 +63,7 @@ defmodule Risen.Student.RegisterController do
             render(conn, "account.html", changeset: changeset)
 
         end
-        
+
       {:error, changeset} ->
         render(conn, "account.html", changeset: changeset)
     end

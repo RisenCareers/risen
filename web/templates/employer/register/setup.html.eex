@@ -1,27 +1,43 @@
 <div class="cover">
   <div class="employer-setup-form container">
     <div class="logo logo-sm"></div>
-    <h2 class="tag-line">Looks good! Now finish the profile for <strong>XYZ Nonprofit.</strong></h2>
-    <form action="">
+    <h2 class="tag-line">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</h2>
+    <%= form_for @changeset, employer_register_path(@conn, :setup_post, @employer.slug), [multipart: true], fn f -> %>
+
+      <%= if f.errors != [] do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below:</p>
+          <ul>
+            <%= for {attr, message} <- f.errors do %>
+              <li><%= humanize(attr) %> <%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <h3>Logo</h3>
       <div class="pic-chooser">
         <img class="employer-pic" src="/images/employerPlaceholder.svg"></img>
         <label for="file-upload" class="btn" type="file">Choose...</label>
+        <input type="hidden" name="employer[logo]" value="2">
         <!-- TODO: Verify file types on client and server side -->
         <input id="file-upload" name="logo" type="file" accept=".jpg,.jpeg,.png">
       </div>
+
       <h3>Interests</h3>
       <div class="select">
-        <input name="interests" class="input-default" type="text" placeholder="Select a major here..." readonly>
+        <input id="interests-input" class="input-default" type="text" placeholder="Select a major here..." readonly>
         <ul class="datalist hide">
-          <li class="empty"><i>No major found</i></li>
-          <li class="option">Computer Science</li>
-          <li class="option">Environmental Law</li>
+          <%= for item <- @majors do %>
+            <li class="option" data-id="<%= item.id %>"><%= item.name %></li>
+          <% end %>
         </ul>
       </div>
       <div class="selected-options"></div>
-      <input class="btn" type="submit" value="Done!">
-    </form>
+
+      <%= submit "Done!", class: "btn" %>
+
+    <% end %>
   </div>
 </div>
 
@@ -58,23 +74,33 @@
   };
 
   //
-  function createSelectedOption(text, count) {
+  function createSelectedOption(text, id, isHidden) {
     let div = document.createElement('div'),
         el = document.createElement('input'),
         x = document.createElement('div');
-    x.classList.add('x-mark');
-    x.onclick = removeSelectedOption;
-    el.type = 'text';
-    el.name = 'major-' + count;
+
+    if (!isHidden) {
+      x.classList.add('x-mark');
+      x.onclick = removeSelectedOption;
+    }
+
+    el.type = isHidden ? 'hidden' : 'text';
+    if (isHidden) {
+      el.name = 'employer[majors][]';
+    }
     el.readOnly = true;
-    el.value = text;
-    div.classList.add('major');
+    el.value = isHidden ? id : text;
+
     div.appendChild(el);
-    div.appendChild(x);
+    if (!isHidden) {
+      div.classList.add('major');
+      div.appendChild(x);
+    }
+
     return div;
   }
 
-  // 
+  //
   function removeSelectedOption(e) {
     // NOTE: Are the following assignments unclear? I feel like these aren't easy to read/understand
     let el = e.target.parentNode,
@@ -96,12 +122,11 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     let uploader = document.querySelector('#file-upload'),
-        major = document.querySelector('input[name="interests"]'),
+        major = document.querySelector('#interests-input'),
         list = document.querySelector('.datalist'),
-        counter = 0,
         options = document.querySelectorAll('.datalist .option'),
         selectedList = document.querySelector('.selected-options');
-    
+
     // Preview the selected image
     uploader.onchange = () => { previewImage(uploader, '.employer-pic'); };
 
@@ -119,8 +144,10 @@
     // Select a major
     for (var i = 0; i < options.length; i++) {
       options[i].addEventListener('mousedown', (e) => {
-        let el = createSelectedOption(e.target.innerHTML, counter++);
+        let el = createSelectedOption(e.target.innerHTML, e.target.getAttribute("data-id"), false);
+        let elH = createSelectedOption(e.target.innerHTML, e.target.getAttribute("data-id"), true);
         selectedList.appendChild(el);
+        selectedList.appendChild(elH);
         e.target.classList.add('hide');
       });
     }

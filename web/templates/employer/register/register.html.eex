@@ -3,11 +3,22 @@
     <div class="logo logo-sm"></div>
     <h2 class="tag-line">Risen helps organizations find passionate employees through our Christian college network.</h2>
     <h2>Get started in 45 seconds.</h2>
-    <form action="">
-      <input name="organization" class="input-default" type="text" placeholder="Organization Name">
-      <input name="email" class="input-default" type="email" placeholder="Email">
-      <input name="password" class="input-default" type="password" placeholder="Password">
-      <input name="submit" class="btn" type="submit" value="Sign Up">
-    </form>
+    <%= form_for @changeset, employer_register_path(@conn, :register_post), fn f -> %>
+      <%= if f.errors != [] do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below:</p>
+          <ul>
+            <%= for {attr, message} <- f.errors do %>
+              <li><%= humanize(attr) %> <%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= text_input f, :name, class: "input-default", placeholder: "Organization Name", required: true %>
+      <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
+      <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
+      <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
+      <%= submit "Sign Up", class: "btn" %>
+    <% end %>
   </div>
 </div>
