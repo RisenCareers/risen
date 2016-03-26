@@ -28,7 +28,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    let employerMenu = document.querySelector('.employer-app-menu');
+    let employerMenu = document.querySelector('.employerAppMenu');
     // Prevent propagation pass menu
     employerMenu.addEventListener('click', (e) => {
       e.stopPropagation();
