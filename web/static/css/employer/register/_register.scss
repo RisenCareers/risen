@@ -1,17 +1,8 @@
-.employer-registration-form {
-  &.container {
-    display: flex;
-    flex-direction: column;
-    width: 375px;
-    padding: 0 45px;
-    text-align: center;
-  }
+.employerRegistrationForm {
   .logo {
     margin: 0 auto 37px;
-    width: 126px;
-    height: 73px;
   }
-  .tag-line {
+  .tagLine {
     font-size: 18px;
     line-height: 24px;
     margin-bottom: 54px;
@@ -24,6 +15,5 @@
   }
   .btn {
     margin: 30px auto 0;
-    width: 160px;
   }
 }
