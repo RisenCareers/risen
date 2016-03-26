@@ -1,8 +1,8 @@
 <div class="studentSummary">
-  <div class="studentSummary-pic round-pic"></div>
+  <img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({@student.pic, @student}) %>" />
   <div class="studentSummary-info">
-    <p class="studentSummary-info-name">First Last</p>
-    <p class="studentSummary-info-school">School Name Here</p>
-    <p class="studentSummary-info-major">Interesting Major</p>
+    <p class="studentSummary-info-name"><%= @student.name %></p>
+    <p class="studentSummary-info-school"><%= @student.school.name %></p>
+    <p class="studentSummary-info-major"><%= @student.major.name %></p>
   </div>
 </div>

@@ -5,7 +5,7 @@
     <div class="menu-item">Settings</div>
   </div>
   <div class="footer">
-    <p>You are signed in to manage <strong>XYZ Organization</strong>.</p>
+    <p>You are signed in to manage <strong><%= @employer.name %></strong>.</p>
     <a class="btn btn-o" href="">Sign Out</a>
   </div>
 </div>
