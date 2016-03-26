@@ -1,0 +1,32 @@
+.studentCard {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid $black-10;
+  border-radius: 3px;
+  margin-top: 15px;
+  cursor: pointer;
+  &:hover {
+    background-color: $very-light-pink;
+  }
+  &-pic {
+    flex: 0 0 48px;
+    height: 48px;
+  }
+  &-info {
+    flex: 1 1 calc(100% - 48px);
+    text-align: left;
+    margin-left: 15px;
+  }
+  &-info-name {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &-info-school,
+  &-info-major {
+    font-size: 16px;
+  }
+  &-info-major {
+    margin-top: 10px;
+  }
+}

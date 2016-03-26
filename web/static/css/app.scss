@@ -1,18 +1,14 @@
-$greyish-brown: #555;
-$faded-orange: #F17D5F;
-$white: #FFF;
-$black-10: rgba(0,0,0,0.1);
-$black-10s : #F2F2F2;
-$black-5: rgba(0,0,0,0.05);
-$faded-orange-50: rgba(241,124,95,0.5);
+@import 'config.scss';
 
 @import 'landing/home/index';
 @import 'employer/register/register';
 @import 'employer/register/setup';
+@import 'employer/students/index';
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
 @import 'employer_app_menu';
+@import 'student_card';
 
 
 * {
@@ -26,6 +22,9 @@ body {
 h1, h2, h3, h4, h5, p, span, ul, ol, input {
   color: $greyish-brown;
 }
+h1 {
+  font-size: 24px;
+}
 h2 {
   font-weight: 600;
   font-size: 18px;
@@ -35,12 +34,21 @@ h3 {
   font-weight: 600;
   font-size: 16px;
 }
+.link--no-decor {
+  text-decoration: none;
+}
 .logo {
   background-image: url("/images/MainLogo.svg");
   background-size: contain;
   background-repeat: no-repeat;
   width: 175px;
   height: 100px;
+}
+.logo--streamlined {
+  background-image: url('/images/StreamlinedLogo.svg');
+  width: 102px;
+  height: 38px;
+  background-position: center;
 }
 .logo-sm {
   width: 126px;
@@ -112,6 +120,29 @@ h3 {
   }
   &::after {
     transform: rotate(45deg);
+  }
+}
+.topbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+.menuIcon {
+  flex: 0 0 27px;
+  height: 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  &-stripe {
+    flex: 0 0 4px;  // Suppose to be 4.6px OR just use an SVG
+    background-color: $faded-orange-50;
+    transition: background-color 250ms ease;
+  }
+  &:hover &-stripe {
+    background-color: $faded-orange;
   }
 }
 

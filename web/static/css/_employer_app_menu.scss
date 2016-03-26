@@ -1,16 +1,16 @@
 .employer-app-menu {
   width: 265px;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: -265px;
   z-index: 1000;
   padding: 35px;
-  background-color: $black-10;
+  background-color: $black-10s;
   display: flex;
   flex-direction: column;
   transition: right 333ms ease;
-  &.in {
+  &.is-in {
     right: 0;
   }
   .menu {
