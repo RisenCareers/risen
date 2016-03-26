@@ -1,22 +1,4 @@
 .employerStudentsIndex {
-  // Extract on 2nd Pass
-  &.container {
-    margin: 0 auto;
-    width: 756px;
-    padding: 0 45px;
-  }
-  // Extract on 2nd Pass
-  &.container--mobile {
-    display: flex;
-    flex-direction: column;
-    width: 375px;
-    padding: 45px;
-    text-align: center;
-    position: relative;
-  }
-  .logo {
-    flex: 0 0 auto;
-  }
   .pageTitle {
     text-align: left;
   }

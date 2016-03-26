@@ -1,3 +1,67 @@
-<div>
-  <h1>Risen - Employer Students Show</h1>
+<%= render Risen.SharedView, "employer_app_menu.html" %>
+
+<div class="container container--mobile employerStudentsShow">
+  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "student_summary.html" %>
+  <!-- TODO: Change test to real condition (if not student.alreadyInterested)-->
+  <%= if not false do %>
+    <hr>
+  <% end %>
+  <div class="profile">
+    <div class="field">
+      <p class="field-key">Ideal Role</p>
+      <p class="field-value">Front-end Web Developer</p>
+    </div>
+    <div class="field">
+      <p class="field-key">Job Type</p>
+      <p class="field-value">Full-time position</p>
+    </div>
+    <div class="field">
+      <p class="field-key">Visa Sponsorship</p>
+      <p class="field-value">Required</p>
+    </div>
+    <div class="field">
+      <p class="field-key">Location Preference</p>
+      <p class="field-value">New York, NY; Remote</p>
+    </div>
+  </div>
+  <div class="viewResume"><span>View Resume</span></div>
+  <!-- TODO: Change test to real condition (if not student.alreadyInterested) -->
+  <%= if not false do %>
+    <button class="btn btn--interested">I'm interested!</button>
+  <% end %>
+  <!-- TODO: Change test to real condition (if student.alreadyInterested, else) -->
+  <div class="interested <%= if false do %>alreadyInterested<% else %>u-hidden<% end %>">
+    <h2 class="interested-title">Hooray! You're interested.</h2>
+    <p class="interested-message">We sent them an email letting them know. Your next step is to contact them directly:</p>
+    <p class="interested-contactInfo">jane.fonda@example.com</p>
+    <p class="interested-contactInfo">(555) 734-8523</p>
+  </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let employerMenu = document.querySelector('.employer-app-menu');
+    // Prevent propagation pass menu
+    employerMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    // Toggle employer app menu
+    document.querySelector('.menuIcon.js-trigger').addEventListener('click', (e) => {
+      e.stopPropagation();
+      employerMenu.classList.toggle('is-in');
+    });
+    // Click outside to exit app menu
+    document.querySelector('main').addEventListener('click', (e) => {
+      employerMenu.classList.remove('is-in');
+    });
+    // Click I'm Interested to swap between button and interested message
+    let btnInterested = document.querySelector('.btn--interested');
+    btnInterested.addEventListener('click', () => {
+      // TODO: Ajax request to change alreadyInterested status in server
+      btnInterested.classList.add('is-hidden');
+      document.querySelector('.interested').classList.remove('u-hidden');
+    });
+  });
+</script>

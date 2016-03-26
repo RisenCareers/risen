@@ -1,0 +1,90 @@
+.employerStudentsShow {
+  .studentSummary {
+    order: 1;
+    margin-bottom: 45px;
+  }
+  .studentSummary-pic {
+    margin: 0 auto 25px;
+  }
+  .studentSummary-info-name {
+  font-size: 24px;
+  margin-bottom: 15px;
+  }
+  .studentSummary-info-school,
+  .studentSummary-info-major {
+    font-size: 18px;
+  }
+  .studentSummary-info-school {
+    margin-bottom: 5px;
+  }
+  hr {
+    order: 2;
+  }
+  .profile {
+    order: 3;
+    margin: 45px 0 30px;
+  }
+  .field {
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 25px;
+    &-key {
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+  }
+  .viewResume {
+    order: 4;
+    display: inline-flex;
+    align-items: center;
+    margin: 0 auto 45px;
+    padding: 15px 20px;
+    border-radius: 3px;
+    background-color: $black-10;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 250ms ease;
+    &::before {
+      content: "";
+      display: block;
+      height: 34px;
+      width: 28px;
+      margin-right: 15px;  // Matches parent's side padding
+      background-image: url('/images/resume.svg');
+      background-size: cover;
+    }
+    &:hover {
+      background-color: $black-20;
+    }
+  }
+  .btn {
+    order: 5;
+    font-size: 18px;
+    margin: 0 auto;
+    width: 205px;
+  }
+  .interested {
+    order: 5;
+    border: 2px solid $faded-orange;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: left;
+    &.alreadyInterested {
+      order: 2;
+    }
+    &-title {
+      margin-bottom: 10px;
+    }
+    &-message {
+      margin-bottom: 15px;
+    }
+    &-contactInfo {
+      font-weight: 600;
+      margin-bottom: 10px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
