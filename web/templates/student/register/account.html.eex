@@ -19,19 +19,15 @@
             </ul>
           </div>
         <% end %>
-
         <p>
           <%= text_input f, :name, class: "input-default", placeholder: "Full Name", required: true %>
         </p>
-
         <p>
           <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
         </p>
-
         <p>
           <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
         </p>
-
         <div class="form-group">
           <%= submit "Submit", class: "btn btn-primary" %>
         </div>

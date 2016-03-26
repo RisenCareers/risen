@@ -3,14 +3,16 @@ defmodule Risen.Employer do
 
   schema "employers" do
     field :name, :string
-    field :logo, :string
+    field :slug, :string
 
     has_many :employer_majors, Risen.EmployerMajor
     has_many :majors, through: [:employer_majors, :major]
+    has_many :employer_admins, Risen.EmployerAdmin
+    has_many :admins, through: [:employer_admins, :account]
     timestamps
   end
 
-  @required_fields ~w(name logo)
+  @required_fields ~w(name slug)
   @optional_fields ~w()
 
   @doc """
@@ -22,5 +24,7 @@ defmodule Risen.Employer do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> update_change(:slug, &String.downcase/1)
+    |> unique_constraint(:slug)
   end
 end

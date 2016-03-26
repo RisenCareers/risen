@@ -9,6 +9,10 @@ defmodule Risen.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   scope "/", Risen.Landing do
     pipe_through :browser
 
@@ -39,16 +43,16 @@ defmodule Risen.Router do
     get   "/register", RegisterController, :register_get
     post  "/register", RegisterController, :register_post
 
-    get   "/setup", RegisterController, :setup_get
-    post  "/setup", RegisterController, :setup_post
+    get   "/:employer_slug/setup", RegisterController, :setup_get
+    post  "/:employer_slug/setup", RegisterController, :setup_post
 
-    get   "/students", StudentsController, :index
-    get   "/students/:id", StudentsController, :show
+    get   "/:employer_slug/students", StudentsController, :index
+    get   "/:employer_slug/students/:id", StudentsController, :show
 
-    get   "/batches/:id", BatchesController, :show
+    get   "/:employer_slug/batches/:id", BatchesController, :show
 
-    get   "/settings", SettingsController, :show
-    patch "/settings", SettingsController, :update
+    get   "/:employer_slug/settings", SettingsController, :show
+    patch "/:employer_slug/settings", SettingsController, :update
   end
 
   scope "/s", Risen.Student, as: :student do
