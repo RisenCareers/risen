@@ -9,6 +9,7 @@ defmodule Risen.Student do
     field :job_type, :string
     field :location_preference, :string
     field :status, :string
+    field :pic, :string
 
     belongs_to :account, Risen.Account
     belongs_to :school, Risen.School

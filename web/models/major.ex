@@ -1,6 +1,7 @@
 defmodule Risen.Major do
   use Risen.Web, :model
 
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "majors" do
     field :name, :string
 

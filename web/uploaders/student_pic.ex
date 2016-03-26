@@ -19,4 +19,8 @@ defmodule Risen.StudentPic do
   def default_url(version, scope) do
     "https://placehold.it/500x500"
   end
+
+  def s3_object_headers(version, {file, scope}) do
+    [content_type: Plug.MIME.path(file.file_name)]
+  end
 end

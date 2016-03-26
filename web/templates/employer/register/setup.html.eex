@@ -2,7 +2,7 @@
   <div class="employer-setup-form container">
     <div class="logo logo-sm"></div>
     <h2 class="tag-line">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</h2>
-    <%= form_for @changeset, employer_register_path(@conn, :setup_post, @employer.slug), [multipart: true], fn f -> %>
+    <%= form_for @changeset, employer_register_path(@conn, :setup_update, @employer.slug), [multipart: true], fn f -> %>
 
       <%= if f.errors != [] do %>
         <div class="alert alert-danger">
@@ -17,7 +17,7 @@
 
       <h3>Logo</h3>
       <div class="pic-chooser">
-        <img class="employer-pic" src="/images/employerPlaceholder.svg"></img>
+        <img class="employer-pic" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>"></img>
         <label for="file-upload" class="btn" type="file">Choose...</label>
         <input type="hidden" name="employer[logo]" value="2">
         <!-- TODO: Verify file types on client and server side -->
@@ -75,14 +75,7 @@
 
   //
   function createSelectedOption(text, id, isHidden) {
-    let div = document.createElement('div'),
-        el = document.createElement('input'),
-        x = document.createElement('div');
-
-    if (!isHidden) {
-      x.classList.add('x-mark');
-      x.onclick = removeSelectedOption;
-    }
+    let el = document.createElement('input');
 
     el.type = isHidden ? 'hidden' : 'text';
     if (isHidden) {
@@ -91,11 +84,19 @@
     el.readOnly = true;
     el.value = isHidden ? id : text;
 
-    div.appendChild(el);
-    if (!isHidden) {
-      div.classList.add('major');
-      div.appendChild(x);
+    if (isHidden) {
+      return el;
     }
+
+    var div = document.createElement('div'),
+        x = document.createElement('div');
+
+    x.classList.add('x-mark');
+    x.onclick = removeSelectedOption;
+
+    div.appendChild(el);
+    div.classList.add('major');
+    div.appendChild(x);
 
     return div;
   }
@@ -103,8 +104,9 @@
   //
   function removeSelectedOption(e) {
     // NOTE: Are the following assignments unclear? I feel like these aren't easy to read/understand
-    let el = e.target.parentNode,
-        major = el.firstChild.value,
+    let el = e.target.parentNode.parentNode,
+        majorEl = e.target.parentNode,
+        major = majorEl.firstChild.value,
         options = document.querySelectorAll('.datalist .option');
 
     // NOTE: Possibly need to polyfill remove()
@@ -141,15 +143,42 @@
       window.addEventListener('keydown', navigateList);
     });
 
+    var selectMajor = function(opts) {
+      var div = document.createElement('div');
+      div.classList.add('js-selected-option');
+
+      let el = createSelectedOption(opts.text, opts.id, false);
+      let elH = createSelectedOption(opts.text, opts.id, true);
+      div.appendChild(el);
+      div.appendChild(elH);
+
+      selectedList.appendChild(div);
+
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].getAttribute("data-id") == opts.id) {
+          options[i].classList.add('hide');
+          break;
+        }
+      }
+    };
+
     // Select a major
     for (var i = 0; i < options.length; i++) {
       options[i].addEventListener('mousedown', (e) => {
-        let el = createSelectedOption(e.target.innerHTML, e.target.getAttribute("data-id"), false);
-        let elH = createSelectedOption(e.target.innerHTML, e.target.getAttribute("data-id"), true);
-        selectedList.appendChild(el);
-        selectedList.appendChild(elH);
-        e.target.classList.add('hide');
+        selectMajor({
+          text: e.target.innerHTML,
+          id: e.target.getAttribute("data-id")
+        });
       });
     }
+
+    var selectedMajors = <%= {:safe, Poison.encode!(@employer.majors)} %>;
+    selectedMajors.forEach(function(m) {
+      selectMajor({
+        text: m.name,
+        id: m.id
+      });
+    });
+
   });
 </script>

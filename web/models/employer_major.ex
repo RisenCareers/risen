@@ -1,6 +1,7 @@
 defmodule Risen.EmployerMajor do
   use Risen.Web, :model
 
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "employer_majors" do
     belongs_to :employer, Risen.Employer
     belongs_to :major, Risen.Major

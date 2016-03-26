@@ -44,7 +44,7 @@ defmodule Risen.Router do
     post  "/register", RegisterController, :register_post
 
     get   "/:employer_slug/setup", RegisterController, :setup_get
-    post  "/:employer_slug/setup", RegisterController, :setup_post
+    put   "/:employer_slug/setup", RegisterController, :setup_update
 
     get   "/:employer_slug/students", StudentsController, :index
     get   "/:employer_slug/students/:id", StudentsController, :show
