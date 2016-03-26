@@ -6,10 +6,10 @@ defmodule Risen.Employer.RegisterController do
   alias Risen.AccountRole
   alias Risen.Role
   alias Risen.Employer
-  alias Risen.EmployerAdmin
 
-  plug :scrub_params, "employer" when action in [:create, :update]
+  plug Risen.Employer.Plugs.Authenticator when action in [:setup_get, :setup_update]
   plug :put_layout, "employer.html"
+  plug :scrub_params, "employer" when action in [:create, :update]
 
   def register_get(conn, _params) do
     changeset = Employer.changeset(%Employer{})
@@ -45,7 +45,7 @@ defmodule Risen.Employer.RegisterController do
         employer = Repo.insert!(employer_changeset)
 
         # Create the employer admin
-        Repo.insert!(%EmployerAdmin{
+        Repo.insert!(%Risen.EmployerAdmin{
           account_id: account.id,
           employer_id: employer.id
         })
@@ -62,78 +62,33 @@ defmodule Risen.Employer.RegisterController do
 
   def setup_get(conn, params) do
 
-    # Get the account tied to the session
-    account_id = get_session(conn, :account_id)
+    # We got our employer from the Employer authenticator plug
+    employer = conn.assigns[:employer]
 
-    unless account_id do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
-
-    # Retrieve the employer based on the URL, preloading admins
-    employer = Repo.get_by(Employer, slug: params["employer_slug"])
-
-    unless employer do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
-
-    # Retrieve the account in the session
-    account = Repo.get(Account, account_id)
-
-    # Preload the employer admins
-    employer = Repo.preload(employer, [:admins])
-
-    # Check if account is an employer admin
-    unless Enum.member?(employer.admins, account) do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
+    # Preload the majors
+    employer = Repo.preload(employer, [:majors])
 
     majors = Repo.all(from m in Risen.Major)
-    changeset = Employer.changeset(%Employer{})
+    changeset = Employer.changeset(employer)
+
     render conn, "setup.html", employer: employer, changeset: changeset, majors: majors
 
   end
 
-  def setup_post(conn, params) do
+  def setup_update(conn, params) do
 
-    # Get the account tied to the session
-    account_id = get_session(conn, :account_id)
+    # We got our employer from the Employer authenticator plug
+    employer = conn.assigns[:employer]
 
-    unless account_id do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
-
-    # Retrieve the employer based on the URL, preloading admins
-    employer = Repo.get_by(Employer, slug: params["employer_slug"])
-
-    unless employer do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
-
-    # Retrieve the account in the session
-    account = Repo.get(Account, account_id)
-
-    # Preload the employer admins
-    employer = Repo.preload(employer, [:admins])
-
-    # Check if account is an employer admin
-    unless Enum.member?(employer.admins, account) do
-      conn
-      |> redirect(to: employer_register_path(conn, :register_get))
-      |> halt()
-    end
+    # Preload the majors
+    employer = Repo.preload(employer, [:majors])
 
     # Update the employer logo
-    Risen.EmployerLogo.store({params["logo"], employer})
+    if params["logo"] do
+      Risen.EmployerLogo.store({params["logo"], employer})
+      employer_changeset = Ecto.Changeset.change(employer, logo: params["logo"].filename)
+      employer = Repo.update!(employer_changeset)
+    end
 
     # Remove all current employer majors
     Ecto.Query.from(
@@ -143,14 +98,16 @@ defmodule Risen.Employer.RegisterController do
     |> Repo.delete_all
 
     # Update the employer interests
-    Repo.transaction fn ->
-      Enum.each(params["employer"]["majors"], fn m ->
-        {m_id, _} = Integer.parse(m)
-        Repo.insert!(%Risen.EmployerMajor{
-          major_id: m_id,
-          employer_id: employer.id
-        })
-      end)
+    if params["employer"]["majors"] do
+      Repo.transaction fn ->
+        Enum.each(params["employer"]["majors"], fn m ->
+          {m_id, _} = Integer.parse(m)
+          Repo.insert!(%Risen.EmployerMajor{
+            major_id: m_id,
+            employer_id: employer.id
+          })
+        end)
+      end
     end
 
     conn

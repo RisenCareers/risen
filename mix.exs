@@ -40,7 +40,7 @@ defmodule Risen.Mixfile do
      {:comeonin, "~> 2.1"},
      {:arc, "~> 0.5.1"},
      {:ex_aws, "~> 0.4.10"},
-     {:poison, "~> 1.2"},
+     {:poison, "~> 2.1", override: true},
      {:httpoison, "~> 0.7"}]
   end
 
