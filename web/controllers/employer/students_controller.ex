@@ -1,13 +1,18 @@
 defmodule Risen.Employer.StudentsController do
   use Risen.Web, :controller
 
+  import Risen.Plugs.Authenticator
+  import Risen.Plugs.Employer.Authenticator
+
   alias Risen.Repo
   alias Risen.Batch
   alias Risen.BatchStudent
   alias Risen.Student
 
   plug :put_layout, "employer.html"
-  plug Risen.Employer.Plugs.Authenticator
+  plug :authenticate
+  plug :require_employer
+  plug :require_employer_admin
 
   # Look through all BatchStudents (via all SENT batches) and see
   # if any majors align with this Employer's interests. If they do,
@@ -37,8 +42,27 @@ defmodule Risen.Employer.StudentsController do
     render conn, "index.html", batches: batches
   end
 
-  def show(conn, _params) do
-    render conn, "show.html"
+  def show(conn, params) do
+    # Retrieve employer via the Authenticator plug
+    employer = conn.assigns[:employer]
+    employer = Repo.preload(employer, [:majors])
+
+    # Retrieve the current student from the path
+    student = Repo.get(Student, params["id"])
+    student = Repo.preload(student, [:school, :major])
+
+    # Redirect back to students if the student does not exist
+    # or if the student does not have any majors that the employer
+    # is interested in
+    unless student && Enum.member?(employer.majors, student.major) do
+      conn
+      |> redirect(to: employer_students_path(conn, :index, employer.slug))
+      |> halt()
+    else
+      conn
+      |> assign(:student, student)
+      |> render "show.html"
+    end
   end
 
 end

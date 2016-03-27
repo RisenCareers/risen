@@ -1,8 +1,19 @@
 <div class="sign-in-form container">
   <div class="logo"></div>
   <h2>Sign-in to your Risen account.</h2>
-  <form action="">
-    <input name="email" class="input-default" type="email" placeholder="Email">
+  <form action="<%= account_path(@conn, :signin_post) %>" method="post">
+    <%= if @errors != [] do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below:</p>
+        <ul>
+          <%= for {attr, message} <- @errors do %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+    <input name="email" class="input-default" type="email" placeholder="Email" value="<%= if @conn.params["email"], do: @conn.params["email"], else: "" %>">
     <input name="password" class="input-default" type="password" placeholder="Password">
     <input name="submit" class="btn" type="submit" value="Sign In">
   </form>

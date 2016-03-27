@@ -1,8 +1,8 @@
-<%= render Risen.SharedView, "employer_app_menu.html" %>
+<%= render Risen.SharedView, "employer_app_menu.html", employer: @employer %>
 
 <div class="container container--mobile employerStudentsShow">
   <%= render Risen.SharedView, "topbar.html" %>
-  <%= render Risen.SharedView, "student_summary.html" %>
+  <%= render Risen.SharedView, "student_summary.html", student: @student %>
   <!-- TODO: Change test to real condition (if not student.alreadyInterested)-->
   <%= if not false do %>
     <hr>
@@ -10,19 +10,19 @@
   <div class="profile">
     <div class="field">
       <p class="field-key">Ideal Role</p>
-      <p class="field-value">Front-end Web Developer</p>
+      <p class="field-value"><%= @student.ideal_role %></p>
     </div>
     <div class="field">
       <p class="field-key">Job Type</p>
-      <p class="field-value">Full-time position</p>
+      <p class="field-value"><%= @student.job_type %></p>
     </div>
     <div class="field">
       <p class="field-key">Visa Sponsorship</p>
-      <p class="field-value">Required</p>
+      <p class="field-value"><%= @student.visa_status %></p>
     </div>
     <div class="field">
       <p class="field-key">Location Preference</p>
-      <p class="field-value">New York, NY; Remote</p>
+      <p class="field-value"><%= @student.location_preference || "None" %></p>
     </div>
   </div>
   <div class="viewResume"><span>View Resume</span></div>

@@ -20,6 +20,8 @@ defmodule Risen.Router do
 
     get  "/signin", AccountController, :signin_get
     post "/signin", AccountController, :signin_post
+
+    get  "/signout", AccountController, :signout_get
   end
 
   scope "/a", Risen.Admin, as: :admin do
@@ -40,11 +42,11 @@ defmodule Risen.Router do
 
     get   "/", IndexController, :index
 
-    get   "/register", RegisterController, :register_get
-    post  "/register", RegisterController, :register_post
+    get   "/register", RegisterController, :new
+    post  "/register", RegisterController, :create
 
-    get   "/:employer_slug/setup", RegisterController, :setup_get
-    put   "/:employer_slug/setup", RegisterController, :setup_update
+    get   "/:employer_slug/setup", SetupController, :edit
+    put   "/:employer_slug/setup", SetupController, :update
 
     get   "/:employer_slug/students", StudentsController, :index
     get   "/:employer_slug/students/:id", StudentsController, :show
