@@ -25,18 +25,24 @@
       <p class="field-value"><%= @student.location_preference || "None" %></p>
     </div>
   </div>
-  <div class="viewResume"><span>View Resume</span></div>
-  <!-- TODO: Change test to real condition (if not student.alreadyInterested) -->
-  <%= if not false do %>
-    <button class="btn btn--interested">I'm interested!</button>
-  <% end %>
-  <!-- TODO: Change test to real condition (if student.alreadyInterested, else) -->
-  <div class="interested <%= if false do %>alreadyInterested<% else %>u-hidden<% end %>">
+  <a href="<%= Risen.StudentResume.url({@student.resume, @student}) %>" class="viewResume" target="_blank">
+    <span>View Resume</span>
+  </a>
+  <%= if not @employer_interested do %>
+  <form action="<%= employer_students_path(@conn, :update, @employer.slug, @student.id) %>" method="post">
+    <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="interested" value="true">
+    <button type="submit" class="btn btn--interested">I'm interested!</button>
+  </form>
+  <% else %>
+  <div class="interested <%= if @employer_interested do %>alreadyInterested<% else %>u-hidden<% end %>">
     <h2 class="interested-title">Hooray! You're interested.</h2>
     <p class="interested-message">We sent them an email letting them know. Your next step is to contact them directly:</p>
-    <p class="interested-contactInfo">jane.fonda@example.com</p>
-    <p class="interested-contactInfo">(555) 734-8523</p>
+    <p class="interested-contactInfo"><%= @student.account.email %></p>
+    <p class="interested-contactInfo"><%= @student.phone %></p>
   </div>
+  <% end %>
 </div>
 
 <script>

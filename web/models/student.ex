@@ -8,9 +8,9 @@ defmodule Risen.Student do
     field :visa_status, :string
     field :job_type, :string
     field :location_preference, :string
-    field :status, :string
     field :pic, :string
     field :resume, :string
+    field :status, :string
 
     belongs_to :account, Risen.Account
     belongs_to :school, Risen.School
@@ -19,8 +19,8 @@ defmodule Risen.Student do
     timestamps
   end
 
-  @required_fields ~w(name account_id)
-  @optional_fields ~w(resume phone visa_status job_type location_preference status)
+  @required_fields ~w(name account_id school_id)
+  @optional_fields ~w(phone ideal_role visa_status job_type location_preference pic resume major_id status)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -32,5 +32,23 @@ defmodule Risen.Student do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:name, min: 2)
+  end
+
+  def visa_statuses() do
+    [
+      "Eligible to work in the US",
+      "Requires work permit now",
+      "Will need work permit in the future"
+    ]
+  end
+
+  def job_types() do
+    [
+      "Full-time",
+      "Part-time",
+      "Contract",
+      "Short-Term",
+      "Internship"
+    ]
   end
 end

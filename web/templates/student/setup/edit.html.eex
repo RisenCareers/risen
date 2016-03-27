@@ -1,0 +1,36 @@
+<div class="container container-mid">
+  <h2>Complete registration</h2>
+  <hr />
+  <!-- Probably will need to change method to POST once hooked up. Gets invalid CSRF right now. -->
+  <%= form_for @changeset, student_setup_path(@conn, :update, @school.slug, @student.id), [multipart: true], fn f -> %>
+    <div class="info-container">
+      <div>
+        <%= select(f, :major_id, Enum.map(@majors, fn(m) -> {m.name, m.id} end), class: "input-default", prompt: "Select Major") %>
+      </div>
+      <p>
+        <%= telephone_input f, :phone, class: "input-default", placeholder: "Phone number", required: true %>
+      </p>
+      <p>
+        <%= text_input f, :ideal_role, class: "input-default", placeholder: "Type your ideal role...", required: true %>
+      </p>
+      <p>
+        <%= select(f, :visa_status, Risen.Student.visa_statuses, class: "input-default", prompt: "Select Visa Status") %>
+      </p>
+      <p>
+        <%= select(f, :job_type, Risen.Student.job_types, class: "input-default", prompt: "Select Job Type") %>
+      </p>
+      <p>
+        <%= text_input f, :location_preference, class: "input-default", placeholder: "Type your location preference...", required: true %>
+      </p>
+    </div>
+    <div>
+      <label>Your picture</label>
+      <input name="pic" class="full-width" type="file">
+    </div>
+    <div>
+      <label>Your resume</label>
+      <input name="resume" class="full-width" type="file">
+    </div>
+    <input type="submit" class="action-btn-primary full-width" value="Register">
+  <% end %>
+</div>

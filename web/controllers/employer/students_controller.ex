@@ -6,13 +6,16 @@ defmodule Risen.Employer.StudentsController do
 
   alias Risen.Repo
   alias Risen.Batch
-  alias Risen.BatchStudent
   alias Risen.Student
+  alias Risen.EmployerStudentInterest
 
   plug :put_layout, "employer.html"
   plug :authenticate
   plug :require_employer
   plug :require_employer_admin
+  plug :load_employer_majors
+  plug :load_student when action in [:show, :update]
+  plug :employer_interested? when action in [:show, :update]
 
   # Look through all BatchStudents (via all SENT batches) and see
   # if any majors align with this Employer's interests. If they do,
@@ -21,11 +24,10 @@ defmodule Risen.Employer.StudentsController do
   # This means batches are living - they change based on the employer's
   # interests changing. If we did not want to do this, it gets quite a bit
   # more complicated in the batch logic.
-  def index(conn, params) do
+  def index(conn, _params) do
 
     # Retrieve employer via the Authenticator plug
     employer = conn.assigns[:employer]
-    employer = Repo.preload(employer, [:majors])
 
     # This subquery grabs only students of the employer interested majors
     student_query = from s in Student,
@@ -39,17 +41,59 @@ defmodule Risen.Employer.StudentsController do
       preload: [students: ^student_query]
     )
 
-    render conn, "index.html", batches: batches
+    conn
+    |> assign(:batches, batches)
+    |> render("index.html")
   end
 
-  def show(conn, params) do
-    # Retrieve employer via the Authenticator plug
+  def show(conn, _params) do
+    conn |> render("show.html")
+  end
+
+  def update(conn, params) do
+    employer = conn.assigns[:employer]
+    student = conn.assigns[:student]
+    employer_interested = conn.assigns[:employer_interested]
+
+    if params["interested"] do
+      unless employer_interested do
+        Repo.insert!(%EmployerStudentInterest{
+          employer_id: employer.id,
+          student_id: student.id
+        })
+      end
+    end
+
+    conn
+    |> redirect(to: employer_students_path(conn, :show, employer.slug, student.id))
+    |> halt()
+  end
+
+  def employer_interested?(conn, _) do
+    employer = conn.assigns[:employer]
+    student = conn.assigns[:student]
+
+    count = Repo.one(
+      from i in EmployerStudentInterest,
+      where: i.employer_id == ^employer.id and i.student_id == ^student.id,
+      select: count(i.id)
+    )
+
+    conn |> assign(:employer_interested, count > 0)
+  end
+
+  def load_employer_majors(conn, _) do
     employer = conn.assigns[:employer]
     employer = Repo.preload(employer, [:majors])
+    conn |> assign(:employer, employer)
+  end
+
+  def load_student(conn, _) do
+    employer = conn.assigns[:employer]
 
     # Retrieve the current student from the path
-    student = Repo.get(Student, params["id"])
-    student = Repo.preload(student, [:school, :major])
+    student = Repo.get(Student, conn.params["id"])
+    student = Repo.preload(student, [:account, :school, :major])
 
     # Redirect back to students if the student does not exist
     # or if the student does not have any majors that the employer
@@ -59,9 +103,7 @@ defmodule Risen.Employer.StudentsController do
       |> redirect(to: employer_students_path(conn, :index, employer.slug))
       |> halt()
     else
-      conn
-      |> assign(:student, student)
-      |> render "show.html"
+      conn |> assign(:student, student)
     end
   end
 
