@@ -18,7 +18,9 @@
       <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
       <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
       <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
-      <%= submit "Sign Up", class: "btn" %>
+      <button type="submit" class="btn">
+        Sign Up
+      </button>
     <% end %>
   </div>
 </div>

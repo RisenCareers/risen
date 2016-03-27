@@ -15,7 +15,7 @@ defmodule Risen.Employer do
   end
 
   @required_fields ~w(name slug)
-  @optional_fields ~w()
+  @optional_fields ~w(logo)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
