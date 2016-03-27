@@ -1,0 +1,46 @@
+.employerSetupForm {
+  .logo {
+    margin: 0 auto 37px;
+  }
+  .tagLine {
+    font-size: 18px;
+    margin-bottom: 54px;
+  }
+  form {
+    position: relative;
+  }
+  h2 {
+    margin-bottom: 28px;
+  }
+  h3 {
+    text-align: left;
+    margin-bottom: 15px;
+  }
+  .picChooser {
+    margin-bottom: 35px;
+  }
+  .selectedOptions {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+    .major {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      border: 1px solid $black-5;
+      padding: 8px 15px;
+      &:hover {
+        background-color: $faded-orange-50;
+      }
+    }
+    input {
+      flex: 1;
+      border: none;
+      font-size: 16px;
+      background-color: transparent;
+    }
+  }
+  .btn {
+    margin: 0 auto;
+  }
+}

@@ -148,6 +148,9 @@ hr {
 .btn--short {
   width: 160px;
 }
+.btn--xshort {
+  width: 114px;
+}
 .input-default {
   width: 100%;
   border: none;
@@ -210,6 +213,88 @@ hr {
   padding: 15px;
   border: 1px solid $black-10;
   border-radius: 3px;
+}
+.picChooser {
+  background-color: $black-5;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &-file {
+    display: none;
+  }
+  &-pic {
+    width:108px;
+    height: 108px;
+    border: 2px solid $black-10;
+    background-color: $white;
+  }
+  &-btn {
+    height: 42px;
+    margin: 0 0 0 15px;
+    border-color: transparent;
+    background-color: $black-10;
+    font-size: 16px;
+    color: $greyish-brown;
+    &:hover {
+      background-color: rgba(0,0,0,0.2);
+      border-color: transparent;
+      color: initial;
+    }
+  }
+}
+.select {
+  position: relative;
+  &-input {
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  &-datalist {
+    display: block;
+    position: absolute;
+    top: calc(100% - 15px);  // compensate for margin-bottom in .input-default
+    width: 100%;
+    min-height: 40px;  // The height of 1 option
+    max-height: 250px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    z-index: 1000;
+    &.is-hidden {
+      display: none;
+    }
+    &.is-onTop {
+      top: initial;
+      bottom: 100%;
+    }
+    &-empty {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 10px 15px;
+      background-color: $black-10s;
+    }
+    &-option {
+      position: relative;
+      padding: 10px 15px;
+      background-color: $black-10s;
+      border-bottom: 2px solid $black-5;
+      cursor: pointer;
+      z-index: 1;
+      &:last-of-type {
+        border-bottom: none;
+      }
+      &:hover {
+        color: $faded-orange;
+      }
+      &.is-hidden {
+        display: none;
+      }
+    }
+  }
 }
 
 // Need to refactor below this line
