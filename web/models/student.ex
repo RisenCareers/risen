@@ -3,13 +3,14 @@ defmodule Risen.Student do
 
   schema "students" do
     field :name, :string
-    field :resume, :string
     field :phone, :string
+    field :ideal_role, :string
     field :visa_status, :string
     field :job_type, :string
     field :location_preference, :string
     field :status, :string
     field :pic, :string
+    field :resume, :string
 
     belongs_to :account, Risen.Account
     belongs_to :school, Risen.School

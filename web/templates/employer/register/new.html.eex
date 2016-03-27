@@ -3,7 +3,7 @@
     <div class="logo logo-sm"></div>
     <h2 class="tag-line">Risen helps organizations find passionate employees through our Christian college network.</h2>
     <h2>Get started in 45 seconds.</h2>
-    <%= form_for @changeset, employer_register_path(@conn, :register_post), fn f -> %>
+    <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>
       <%= if f.errors != [] do %>
         <div class="alert alert-danger">
           <p>Oops, something went wrong! Please check the errors below:</p>

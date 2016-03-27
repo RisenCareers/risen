@@ -1,43 +1,33 @@
-defmodule Risen.Employer.Plugs.Authenticator do
+defmodule Risen.Plugs.Employer.Authenticator do
   import Plug.Conn
   import Risen.Router.Helpers
+  import Phoenix.Controller, only: [put_flash: 3, redirect: 2]
 
   alias Risen.Repo
-  alias Risen.Account
   alias Risen.Employer
 
-  def init(default), do: default
-
-  def call(conn, _) do
-
-    # Get the account tied to the session
-    account_id = get_session(conn, :account_id)
-
-    unless account_id, do: conn |> inauthenticated
-
-    # Retrieve the employer based on the URL, preloading admins
+  def require_employer(conn, _) do
     employer = Repo.get_by(Employer, slug: conn.params["employer_slug"])
+    unless employer do
+      conn |> inauthenticated
+    else
+      employer = Repo.preload(employer, [:admins])
+      conn |> assign(:employer, employer)
+    end
+  end
 
-    unless employer, do: conn |> inauthenticated
-
-    # Retrieve the account in the session
-    account = Repo.get(Account, account_id)
-
-    # Preload the employer admins
-    employer = Repo.preload(employer, [:admins])
-
-    # Check if account is an employer admin
-    unless Enum.member?(employer.admins, account), do: conn |> inauthenticated
-
-    conn
-    |> assign(:account, account)
-    |> assign(:employer, employer)
-
+  def require_employer_admin(conn, _) do
+    unless Enum.member?(conn.assigns[:employer].admins, conn.assigns[:account]) do
+      conn |> inauthenticated
+    else
+      conn
+    end
   end
 
   defp inauthenticated(conn) do
     conn
-    |> Phoenix.Controller.redirect(to: employer_register_path(conn, :register_get))
+    |> put_flash(:info, "You must be a registered employer")
+    |> redirect(to: employer_register_path(conn, :register_get))
     |> halt()
   end
 

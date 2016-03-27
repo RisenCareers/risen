@@ -2,7 +2,7 @@
   <div class="employer-setup-form container">
     <div class="logo logo-sm"></div>
     <h2 class="tag-line">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</h2>
-    <%= form_for @changeset, employer_register_path(@conn, :setup_update, @employer.slug), [multipart: true], fn f -> %>
+    <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true], fn f -> %>
 
       <%= if f.errors != [] do %>
         <div class="alert alert-danger">

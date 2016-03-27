@@ -1,22 +1,23 @@
 defmodule Risen.Employer.RegisterController do
   use Risen.Web, :controller
+
   import Comeonin.Bcrypt
 
   alias Risen.Account
   alias Risen.AccountRole
   alias Risen.Role
   alias Risen.Employer
+  alias Risen.EmployerAdmin
 
-  plug Risen.Employer.Plugs.Authenticator when action in [:setup_get, :setup_update]
   plug :put_layout, "employer.html"
-  plug :scrub_params, "employer" when action in [:create, :update]
+  plug :scrub_params, "employer" when action in [:create]
 
-  def register_get(conn, _params) do
+  def new(conn, _params) do
     changeset = Employer.changeset(%Employer{})
-    render conn, "register.html", changeset: changeset
+    render conn, "new.html", changeset: changeset
   end
 
-  def register_post(conn, params) do
+  def create(conn, params) do
 
     # Hash the password for security
     hash = hashpwsalt(params["employer"]["password"])
@@ -45,7 +46,7 @@ defmodule Risen.Employer.RegisterController do
         employer = Repo.insert!(employer_changeset)
 
         # Create the employer admin
-        Repo.insert!(%Risen.EmployerAdmin{
+        Repo.insert!(%EmployerAdmin{
           account_id: account.id,
           employer_id: employer.id
         })
@@ -53,66 +54,11 @@ defmodule Risen.Employer.RegisterController do
         conn
         |> put_session(:account_id, account.id)
         |> put_flash(:info, "Organization created successfully.")
-        |> redirect(to: employer_register_path(conn, :setup_get, employer.slug))
+        |> redirect(to: employer_setup_path(conn, :edit, employer.slug))
 
       {:error, changeset} ->
-        render(conn, "register.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def setup_get(conn, params) do
-
-    # We got our employer from the Employer authenticator plug
-    employer = conn.assigns[:employer]
-
-    # Preload the majors
-    employer = Repo.preload(employer, [:majors])
-
-    majors = Repo.all(from m in Risen.Major)
-    changeset = Employer.changeset(employer)
-
-    render conn, "setup.html", employer: employer, changeset: changeset, majors: majors
-
-  end
-
-  def setup_update(conn, params) do
-
-    # We got our employer from the Employer authenticator plug
-    employer = conn.assigns[:employer]
-
-    # Preload the majors
-    employer = Repo.preload(employer, [:majors])
-
-    # Update the employer logo
-    if params["logo"] do
-      Risen.EmployerLogo.store({params["logo"], employer})
-      employer_changeset = Ecto.Changeset.change(employer, logo: params["logo"].filename)
-      employer = Repo.update!(employer_changeset)
-    end
-
-    # Remove all current employer majors
-    Ecto.Query.from(
-      em in Risen.EmployerMajor,
-      where: em.employer_id == ^employer.id
-    )
-    |> Repo.delete_all
-
-    # Update the employer interests
-    if params["employer"]["majors"] do
-      Repo.transaction fn ->
-        Enum.each(params["employer"]["majors"], fn m ->
-          {m_id, _} = Integer.parse(m)
-          Repo.insert!(%Risen.EmployerMajor{
-            major_id: m_id,
-            employer_id: employer.id
-          })
-        end)
-      end
-    end
-
-    conn
-    |> redirect(to: employer_students_path(conn, :index, employer.slug))
-    |> halt()
-
-  end
 end
