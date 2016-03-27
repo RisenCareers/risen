@@ -16,6 +16,7 @@
 @import 'topbar';
 @import 'student_summary';
 
+
 // Block overrides
 * {
   box-sizing: border-box;
@@ -39,6 +40,7 @@ h3 {
 hr {
   border-color: $black-10;
 }
+
 
 // App-wide style
 .container {
