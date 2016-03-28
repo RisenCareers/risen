@@ -49,7 +49,7 @@
       // NOTE: FilReader API is supported in IE10+
       var reader = new FileReader();
       reader.readAsDataURL(input.files[0]);
-      reader.onload = (e) => {
+      reader.onload = function(e) {
         document.querySelector(targetSelector).src = e.target.result;
       }
     }
@@ -67,15 +67,17 @@
 
   // NOTE: This function can also go into utils.js
   function placeList(input, list) {
-    let { top: inputTop, left: inputLeft} = input.getBoundingClientRect(),
-        compoundedHeight = inputTop + input.offsetHeight + list.offsetHeight,
+    var bounds = input.getBoundingClientRect();
+    top = bounds.inputTop;
+    left = bounds.inputLeft;
+    var compoundedHeight = inputTop + input.offsetHeight + list.offsetHeight,
         windowHeight = window.innerHeight;
     compoundedHeight > windowHeight ? list.classList.add('on-top') : list.classList.remove('on-top');
   };
 
   //
   function createSelectedOption(text, id, isHidden) {
-    let el = document.createElement('input');
+    var el = document.createElement('input');
 
     el.type = isHidden ? 'hidden' : 'text';
     if (isHidden) {
@@ -104,7 +106,7 @@
   //
   function removeSelectedOption(e) {
     // NOTE: Are the following assignments unclear? I feel like these aren't easy to read/understand
-    let el = e.target.parentNode.parentNode,
+    var el = e.target.parentNode.parentNode,
         majorEl = e.target.parentNode,
         major = majorEl.firstChild.value,
         options = document.querySelectorAll('.datalist .option');
@@ -122,22 +124,22 @@
   }
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-    let uploader = document.querySelector('#file-upload'),
+  document.addEventListener('DOMContentLoaded', function() {
+    var uploader = document.querySelector('#file-upload'),
         major = document.querySelector('#interests-input'),
         list = document.querySelector('.datalist'),
         options = document.querySelectorAll('.datalist .option'),
         selectedList = document.querySelector('.selected-options');
 
     // Preview the selected image
-    uploader.onchange = () => { previewImage(uploader, '.employer-pic'); };
+    uploader.onchange = function() { previewImage(uploader, '.employer-pic'); };
 
     // Toggle the major list
-    major.addEventListener('blur', () => {
+    major.addEventListener('blur', function() {
       list.classList.add('hide');
       window.removeEventListener('keydown', navigateList);
     });
-    major.addEventListener('focus', () => {
+    major.addEventListener('focus', function() {
       list.classList.remove('hide');
       placeList(major, list);
       window.addEventListener('keydown', navigateList);
@@ -147,8 +149,8 @@
       var div = document.createElement('div');
       div.classList.add('js-selected-option');
 
-      let el = createSelectedOption(opts.text, opts.id, false);
-      let elH = createSelectedOption(opts.text, opts.id, true);
+      var el = createSelectedOption(opts.text, opts.id, false);
+      var elH = createSelectedOption(opts.text, opts.id, true);
       div.appendChild(el);
       div.appendChild(elH);
 
@@ -164,7 +166,7 @@
 
     // Select a major
     for (var i = 0; i < options.length; i++) {
-      options[i].addEventListener('mousedown', (e) => {
+      options[i].addEventListener('mousedown', function(e) {
         selectMajor({
           text: e.target.innerHTML,
           id: e.target.getAttribute("data-id")
