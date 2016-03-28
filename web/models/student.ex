@@ -51,4 +51,10 @@ defmodule Risen.Student do
       "Internship"
     ]
   end
+
+  def statuses() do
+    [
+      "Pending"
+    ]
+  end
 end
