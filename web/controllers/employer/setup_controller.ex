@@ -15,7 +15,7 @@ defmodule Risen.Employer.SetupController do
   plug :put_layout, "employer.html"
   plug :scrub_params, "employer" when action in [:update]
 
-  def show(conn, params) do
+  def edit(conn, params) do
 
     # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
