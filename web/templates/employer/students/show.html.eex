@@ -4,7 +4,7 @@
   <%= render Risen.SharedView, "topbar.html" %>
   <%= render Risen.SharedView, "student_summary.html", student: @student %>
   <!-- TODO: Change test to real condition (if not student.alreadyInterested)-->
-  <%= if not false do %>
+  <%= if not @employer_interested do %>
     <hr>
   <% end %>
   <div class="profile">
