@@ -1,5 +1,5 @@
 <div class="employerSetupForm container container--mobile">
-  <div class="logo logo-sm"></div>
+  <div class="logo logo--sm"></div>
   <p class="tagLine">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</p>
   <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true], fn f -> %>
 
@@ -34,7 +34,7 @@
         <% end %>
       </ul>
     </div>
-    <div class="selected-options"></div>
+    <div class="selectedOptions"></div>
 
     <%= submit "Done!", class: "btn btn--short" %>
 
@@ -68,8 +68,8 @@
   // NOTE: This function can also go into utils.js
   function placeList(input, list) {
     var bounds = input.getBoundingClientRect();
-    top = bounds.inputTop;
-    left = bounds.inputLeft;
+    inputTop = bounds.top;
+    inputLeft = bounds.top;
     var compoundedHeight = inputTop + input.offsetHeight + list.offsetHeight,
         windowHeight = window.innerHeight;
     compoundedHeight > windowHeight ? list.classList.add('is-onTop') : list.classList.remove('is-onTop');
@@ -128,7 +128,7 @@
     var uploader = document.querySelector('.picChooser-file'),
         major = document.querySelector('.select-input'),
         list = document.querySelector('.select-datalist'),
-        options = document.querySelectorAll('select-datalist-option'),
+        options = document.querySelectorAll('.select-datalist-option'),
         selectedList = document.querySelector('.selectedOptions');
 
     // Preview the selected image
@@ -146,6 +146,7 @@
     });
 
     var selectMajor = function(opts) {
+
       var div = document.createElement('div');
       div.classList.add('js-selected-option');
 
