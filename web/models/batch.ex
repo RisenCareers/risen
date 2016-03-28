@@ -2,7 +2,7 @@ defmodule Risen.Batch do
   use Risen.Web, :model
 
   schema "batches" do
-    field :sent_at, Ecto.DateTime
+    field :sent_at, Timex.Ecto.DateTime
 
     has_many :batch_students, Risen.BatchStudent
     has_many :students, through: [:batch_students, :student]

@@ -9,6 +9,10 @@ defmodule Risen.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
   scope "/", Risen.Landing do
     pipe_through :browser
 
@@ -16,6 +20,8 @@ defmodule Risen.Router do
 
     get  "/signin", AccountController, :signin_get
     post "/signin", AccountController, :signin_post
+
+    get  "/signout", AccountController, :signout_get
   end
 
   scope "/a", Risen.Admin, as: :admin do
@@ -36,29 +42,31 @@ defmodule Risen.Router do
 
     get   "/", IndexController, :index
 
-    get   "/register", RegisterController, :register_get
-    post  "/register", RegisterController, :register_post
+    get   "/register", RegisterController, :new
+    post  "/register", RegisterController, :create
 
-    get   "/setup", RegisterController, :setup_get
-    post  "/setup", RegisterController, :setup_post
+    get   "/:employer_slug/setup", SetupController, :edit
+    put   "/:employer_slug/setup", SetupController, :update
 
-    get   "/students", StudentsController, :index
-    get   "/students/:id", StudentsController, :show
+    get   "/:employer_slug/students", StudentsController, :index
+    get   "/:employer_slug/students/:id", StudentsController, :show
+    patch "/:employer_slug/students/:id", StudentsController, :update
 
-    get   "/batches/:id", BatchesController, :show
+    get   "/:employer_slug/batches/:id", BatchesController, :show
 
-    get   "/settings", SettingsController, :show
-    patch "/settings", SettingsController, :update
+    get   "/:employer_slug/settings", SettingsController, :show
+    patch "/:employer_slug/settings", SettingsController, :update
   end
 
   scope "/s", Risen.Student, as: :student do
     pipe_through :browser
 
-    get   "/:school/register/account", RegisterController, :account
-    post  "/:school/register/account", RegisterController, :account_create
-    get   "/:school/register/setup", RegisterController, :setup
-    post  "/:school/register/setup", RegisterController, :setup_create
-    get   "/:school/register/done", RegisterController, :done
+    get   "/:school_slug/register", RegisterController, :new
+    post  "/:school_slug/register", RegisterController, :create
+
+    get   "/:school_slug/:id/setup", SetupController, :edit
+    put   "/:school_slug/:id/setup", SetupController, :update
+    get   "/:school_slug/:id/done", SetupController, :done
 
     get   "/:id/edit", ProfileController, :edit_get
     patch "/:id/edit", ProfileController, :edit_patch

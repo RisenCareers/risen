@@ -1,15 +1,14 @@
-defmodule Risen.EmployerMajor do
+defmodule Risen.EmployerStudentInterest do
   use Risen.Web, :model
 
-  @derive {Poison.Encoder, except: [:__meta__]}
-  schema "employer_majors" do
+  schema "employer_student_interests" do
     belongs_to :employer, Risen.Employer
-    belongs_to :major, Risen.Major
+    belongs_to :student, Risen.Student
 
     timestamps
   end
 
-  @required_fields ~w()
+  @required_fields ~w(employer_id, student_id)
   @optional_fields ~w()
 
   @doc """

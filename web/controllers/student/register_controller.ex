@@ -7,19 +7,17 @@ defmodule Risen.Student.RegisterController do
   alias Risen.Role
   alias Risen.School
 
-  plug :scrub_params, "account" when action in [:create, :update]
+  plug :scrub_params, "account" when action in [:create]
   plug :put_layout, "student.html"
 
-  def account(conn, params) do
-    school = Repo.get_by(School, slug: params["school"])
+  def new(conn, params) do
+    school = Repo.get_by(School, slug: params["school_slug"])
     changeset = Account.changeset(%Account{})
-    conn
-    |> assign(:school, school)
-    |> render("account.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, school: school)
   end
 
-  def account_create(conn, params) do
-    school = Repo.get_by(School, slug: params["school"])
+  def create(conn, params) do
+    school = Repo.get_by(School, slug: params["school_slug"])
     conn = assign(conn, :school, %{slug: school.slug})
 
     # Hash the password for security
@@ -55,31 +53,20 @@ defmodule Risen.Student.RegisterController do
             case Repo.insert(student_changeset) do
               {:ok, student} ->
                 conn
+                |> put_session(:account_id, account.id)
                 |> put_flash(:info, "Account created successfully.")
-                |> redirect(to: student_register_path(conn, :done, "test"))
+                |> redirect(to: student_setup_path(conn, :edit, school.slug, student.id))
               {:error, changeset} ->
-                render(conn, "account.html", changeset: changeset)
+                render(conn, "new.html", changeset: changeset)
             end
 
           {:error, changeset} ->
-            render(conn, "account.html", changeset: changeset)
+            render(conn, "new.html", changeset: changeset)
 
         end
-        
+
       {:error, changeset} ->
-        render(conn, "account.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def setup(conn, _params) do
-    render conn, "setup.html"
-  end
-
-  def setup_create(conn, _params) do
-    render conn, "setup.html"
-  end
-
-  def done(conn, _params) do
-    render conn, "done.html"
   end
 end

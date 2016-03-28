@@ -19,7 +19,8 @@ defmodule Risen.Mixfile do
   def application do
     [mod: {Risen, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :comeonin, :ex_aws, :httpoison,
+                    :timex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +38,13 @@ defmodule Risen.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:comeonin, "~> 2.1"}]
+     {:comeonin, "~> 2.1"},
+     {:arc, "~> 0.5.1"},
+     {:ex_aws, "~> 0.4.10"},
+     {:poison, "~> 2.1", override: true},
+     {:httpoison, "~> 0.7"},
+     {:timex, "~> 2.1.1"},
+     {:timex_ecto, "~> 1.0.3"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

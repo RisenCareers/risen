@@ -8,7 +8,7 @@
     </div>
     <div class="action">
       <a class="btn">For Graduates</a>
-      <a class="btn btn--o" href="/e/register/">For Organizations</a>
+      <a class="btn btn--o" href="<%= employer_register_path(@conn, :new) %>">For Organizations</a>
     </div>
   </div>
 </div>

@@ -1,10 +1,9 @@
-defmodule Risen.EmployerMajor do
+defmodule Risen.EmployerAdmin do
   use Risen.Web, :model
 
-  @derive {Poison.Encoder, except: [:__meta__]}
-  schema "employer_majors" do
+  schema "employer_admins" do
     belongs_to :employer, Risen.Employer
-    belongs_to :major, Risen.Major
+    belongs_to :account, Risen.Account
 
     timestamps
   end

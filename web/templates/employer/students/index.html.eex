@@ -1,30 +1,28 @@
-<%= render Risen.SharedView, "employer_app_menu.html" %>
+<%= render Risen.SharedView, "employer_app_menu.html", employer: @employer %>
 
 <div class="container container--mobile employerStudentsIndex">
   <%= render Risen.SharedView, "topbar.html" %>
   <h1 class="pageTitle">Students</h1>
-  <!-- Good place to put for loop -->
-  <!-- (for batch in employer.batches) -->
-  <!-- 2nd Pass: Maybe extract batch as its own component? -->
-  <div class="batch">
-    <h2 class="batch-title">Batch for Feb. 12, 2016</h2>
-    <div class="batch-students">
-      <!-- Good place to put for loop -->
-      <!-- (for student in batch)  -->
-      <a class="u-noDecor" href="/e/students/:id">
-        <div class="card">
-        <%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %>
-        </div>
-      </a>
-      <a class="u-noDecor" href="/e/students/:id">
-        <div class="card">
-        <%= render Risen.SharedView, "student_summary.html", name: name, school: school, major: major %>
-        </div>
-      </a>
+  <%= if length(@batches) == 0 do %>
+    <div>Uh oh. No students just yet, but we're working on it!</div>
+  <% else %>
+    <!-- 2nd Pass: Maybe extract batch as its own component? -->
+    <%= for batch <- @batches do %>
+    <div class="batch">
+      <h2 class="batch-title">Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %></h2>
+      <div class="batch-students">
+        <%= for student <- batch.students do %>
+        <a class="u-noDecor" href="<%= employer_students_path(@conn, :show, @employer.slug, student.id) %>">
+          <div class="card">
+            <%= render Risen.SharedView, "student_summary.html", student: student %>
+          </div>
+        </a>
+        <% end %>
+      </div>
     </div>
-  </div>
+    <% end %>
+  <% end %>
 </div>
-
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
