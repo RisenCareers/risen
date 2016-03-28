@@ -1,9 +1,4 @@
-.sign-in-form {
-  text-align: center;
-  &.container {
-    width: 375px;
-    padding: 0 45px;
-  }
+.signInForm {
   .logo {
     margin: 0 auto 88px;
   }
@@ -15,6 +10,5 @@
   }
   .btn[name="submit"] {
     margin: 35px auto 0;
-    width: 160px;
   }
 }

@@ -1,7 +1,7 @@
-<div class="cover">
-  <div class="employer-registration-form container">
-    <div class="logo logo-sm"></div>
-    <h2 class="tag-line">Risen helps organizations find passionate employees through our Christian college network.</h2>
+<div class="u-cover">
+  <div class="employerRegistrationForm container container--mobile">
+    <div class="logo logo--sm"></div>
+    <p class="tagLine">Risen helps organizations find passionate employees through our Christian college network.</p>
     <h2>Get started in 45 seconds.</h2>
     <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>
       <%= if f.errors != [] do %>
@@ -18,7 +18,7 @@
       <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
       <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
       <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
-      <button type="submit" class="btn">
+      <button type="submit" class="btn btn--short">
         Sign Up
       </button>
     <% end %>

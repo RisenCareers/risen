@@ -1,4 +1,4 @@
-<div class="sign-in-form container">
+<div class="signInForm container container--mobile">
   <div class="logo"></div>
   <h2>Sign-in to your Risen account.</h2>
   <form action="<%= account_path(@conn, :signin_post) %>" method="post">
@@ -15,6 +15,6 @@
     <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
     <input name="email" class="input-default" type="email" placeholder="Email" value="<%= if @conn.params["email"], do: @conn.params["email"], else: "" %>">
     <input name="password" class="input-default" type="password" placeholder="Password">
-    <input name="submit" class="btn" type="submit" value="Sign In">
+    <input name="submit" class="btn btn--short" type="submit" value="Sign In">
   </form>
 </div>

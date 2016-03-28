@@ -1,44 +1,44 @@
-<div class="cover">
-  <div class="employer-setup-form container">
-    <div class="logo logo-sm"></div>
-    <h2 class="tag-line">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</h2>
-    <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true], fn f -> %>
+<div class="employerSetupForm container container--mobile">
+  <div class="logo logo--sm"></div>
+  <p class="tagLine">Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.</p>
+  <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true], fn f -> %>
 
-      <%= if f.errors != [] do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below:</p>
-          <ul>
-            <%= for {attr, message} <- f.errors do %>
-              <li><%= humanize(attr) %> <%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <h3>Logo</h3>
-      <div class="pic-chooser">
-        <img class="employer-pic" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>"></img>
-        <label for="file-upload" class="btn" type="file">Choose...</label>
-        <input type="hidden" name="employer[logo]" value="2">
-        <!-- TODO: Verify file types on client and server side -->
-        <input id="file-upload" name="logo" type="file" accept=".jpg,.jpeg,.png">
-      </div>
-
-      <h3>Interests</h3>
-      <div class="select">
-        <input id="interests-input" class="input-default" type="text" placeholder="Select a major here..." readonly>
-        <ul class="datalist hide">
-          <%= for item <- @majors do %>
-            <li class="option" data-id="<%= item.id %>"><%= item.name %></li>
+    <%= if f.errors != [] do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below:</p>
+        <ul>
+          <%= for {attr, message} <- f.errors do %>
+            <li><%= humanize(attr) %> <%= message %></li>
           <% end %>
         </ul>
       </div>
-      <div class="selected-options"></div>
-
-      <%= submit "Done!", class: "btn" %>
-
     <% end %>
-  </div>
+
+    <h3>Logo</h3>
+    <div class="picChooser">
+      <img class="picChooser-pic" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>"></img>
+      <label for="file-upload" class="picChooser-btn btn btn--xshort" type="file">Choose...</label>
+      <input type="hidden" name="employer[logo]" value="2">
+      <!-- TODO: Verify file types on client and server side -->
+      <input id="file-upload" name="logo" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png">
+    </div>
+
+    <h3>Interests</h3>
+    <div class="select">
+      <input id="interests-input" class="select-input input-default" type="text" placeholder="Select a major here..." readonly>
+      <ul class="select-datalist is-hidden">
+        <!-- Remove li.select-datalist-empty if not wanted -->
+        <li class="select-datalist-empty"><i>No major found</i></li>
+        <%= for item <- @majors do %>
+          <li class="select-datalist-option" data-id="<%= item.id %>"><%= item.name %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="selectedOptions"></div>
+
+    <%= submit "Done!", class: "btn btn--short" %>
+
+  <% end %>
 </div>
 
 
@@ -68,11 +68,11 @@
   // NOTE: This function can also go into utils.js
   function placeList(input, list) {
     var bounds = input.getBoundingClientRect();
-    top = bounds.inputTop;
-    left = bounds.inputLeft;
+    inputTop = bounds.top;
+    inputLeft = bounds.top;
     var compoundedHeight = inputTop + input.offsetHeight + list.offsetHeight,
         windowHeight = window.innerHeight;
-    compoundedHeight > windowHeight ? list.classList.add('on-top') : list.classList.remove('on-top');
+    compoundedHeight > windowHeight ? list.classList.add('is-onTop') : list.classList.remove('is-onTop');
   };
 
   //
@@ -109,7 +109,7 @@
     var el = e.target.parentNode.parentNode,
         majorEl = e.target.parentNode,
         major = majorEl.firstChild.value,
-        options = document.querySelectorAll('.datalist .option');
+        options = document.querySelectorAll('.select-datalist-option');
 
     // NOTE: Possibly need to polyfill remove()
     el.remove();
@@ -118,34 +118,35 @@
     // document.querySelector('.option[data-major="' + major + '"]');
     for (var i = 0; i < options.length; i++) {
       if (options[i].textContent === major) {
-        options[i].classList.remove('hide');
+        options[i].classList.remove('is-hidden');
       }
     }
   }
 
 
   document.addEventListener('DOMContentLoaded', function() {
-    var uploader = document.querySelector('#file-upload'),
-        major = document.querySelector('#interests-input'),
-        list = document.querySelector('.datalist'),
-        options = document.querySelectorAll('.datalist .option'),
-        selectedList = document.querySelector('.selected-options');
+    var uploader = document.querySelector('.picChooser-file'),
+        major = document.querySelector('.select-input'),
+        list = document.querySelector('.select-datalist'),
+        options = document.querySelectorAll('.select-datalist-option'),
+        selectedList = document.querySelector('.selectedOptions');
 
     // Preview the selected image
-    uploader.onchange = function() { previewImage(uploader, '.employer-pic'); };
+    uploader.onchange = function() { previewImage(uploader, '.picChooser-pic'); };
 
     // Toggle the major list
     major.addEventListener('blur', function() {
-      list.classList.add('hide');
+      list.classList.add('is-hidden');
       window.removeEventListener('keydown', navigateList);
     });
     major.addEventListener('focus', function() {
-      list.classList.remove('hide');
+      list.classList.remove('is-hidden');
       placeList(major, list);
       window.addEventListener('keydown', navigateList);
     });
 
     var selectMajor = function(opts) {
+
       var div = document.createElement('div');
       div.classList.add('js-selected-option');
 
@@ -158,7 +159,7 @@
 
       for (var i = 0; i < options.length; i++) {
         if (options[i].getAttribute("data-id") == opts.id) {
-          options[i].classList.add('hide');
+          options[i].classList.add('is-hidden');
           break;
         }
       }

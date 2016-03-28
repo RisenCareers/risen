@@ -1,11 +1,14 @@
-@import 'config.scss';
+@import 'config';
+@import 'utils';
 
+// Pages
 @import 'landing/home/index';
-@import 'employer/register/register';
-@import 'employer/register/setup';
+@import 'employer/register/new';
+@import 'employer/setup/edit';
 @import 'employer/students/index';
 @import 'employer/students/show';
 
+// Components
 @import 'student_list_item';
 @import 'signin_form';
 @import 'batch_list_item';
@@ -14,48 +17,32 @@
 @import 'student_summary';
 
 
-// UTILITIES
-
-.u-noDecor {
-  text-decoration: none;
-}
-.u-clickable {
-  cursor: pointer;
-}
-.u-hidden {
-  display: none;
-}
-
-//
-
+// Block overrides
 * {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  color: $greyish-brown;
   font-family: "proxima-nova", sans-serif;
 }
-body {
-  // overflow: hidden;
-}
-h1, h2, h3, h4, h5, p, span, ul, ol, input {
-  color: $greyish-brown;
+h1, h2, h3, h4 {
+  font-weight: 600;
 }
 h1 {
   font-size: 24px;
 }
 h2 {
-  font-weight: 600;
   font-size: 18px;
-  line-height: 26px;
 }
 h3 {
-  font-weight: 600;
   font-size: 16px;
 }
 hr {
   border-color: $black-10;
 }
 
-// 
+
+// App-wide style
 .container {
   margin: 0 auto;
   width: 756px;
@@ -69,26 +56,63 @@ hr {
   text-align: center;
   position: relative;
 }
+.drawer {
+  width: 265px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -265px;
+  z-index: 1000;
+  padding: 35px;
+  background-color: $black-10s;
+  display: flex;
+  flex-direction: column;
+  transition: right 333ms ease;
+  &.is-in {
+    right: 0;
+  }
+  .navMenu {
+    text-align: right;
+    a {
+      li {
+        display: block;
+        padding: 15px 0;
+        border-top: 1px solid $black-10;
+      }
+      &:first-of-type li {
+        padding-top: 0;
+        border-top: none;
+      }
+    }
+  }
+}
+.navMenu {
+  list-style-type: none;
+  li {
+    font-size: 18px;
+    cursor: pointer;
+    display: inline-block;
+    &:hover {
+      color: $faded-orange;
+    }
+  }
+}
 .logo {
-  background-image: url("/images/MainLogo.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
   width: 175px;
   height: 100px;
   flex: 0 0 auto;
+  background-image: url("/images/MainLogo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .logo--streamlined {
-  background-image: url('/images/StreamlinedLogo.svg');
   width: 102px;
   height: 38px;
-  background-position: center;
+  background-image: url('/images/StreamlinedLogo.svg');
 }
 .logo-sm {
   width: 126px;
   height: 73px;
-}
-.tag-line {
-  font-weight: 300;
 }
 .btn {
   width: 210px;
@@ -110,7 +134,7 @@ hr {
     outline: none;
   }
   &:hover {
-    color: $white;
+    color: $faded-orange;
     background-color: $faded-orange-50;
     border-color: $faded-orange-50;
     text-decoration: none;
@@ -119,9 +143,15 @@ hr {
     display: none;
   }
 }
-.btn-o {
+.btn--o {
   background-color : transparent;
   color: $faded-orange;
+}
+.btn--short {
+  width: 160px;
+}
+.btn--xshort {
+  width: 114px;
 }
 .input-default {
   width: 100%;
@@ -186,6 +216,88 @@ hr {
   border: 1px solid $black-10;
   border-radius: 3px;
 }
+.picChooser {
+  background-color: $black-5;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &-file {
+    display: none;
+  }
+  &-pic {
+    width:108px;
+    height: 108px;
+    border: 2px solid $black-10;
+    background-color: $white;
+  }
+  &-btn {
+    height: 42px;
+    margin: 0 0 0 15px;
+    border-color: transparent;
+    background-color: $black-10;
+    font-size: 16px;
+    color: $greyish-brown;
+    &:hover {
+      background-color: rgba(0,0,0,0.2);
+      border-color: transparent;
+      color: initial;
+    }
+  }
+}
+.select {
+  position: relative;
+  &-input {
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  &-datalist {
+    display: block;
+    position: absolute;
+    top: calc(100% - 15px);  // compensate for margin-bottom in .input-default
+    width: 100%;
+    min-height: 40px;  // The height of 1 option
+    max-height: 250px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    z-index: 1000;
+    &.is-hidden {
+      display: none;
+    }
+    &.is-onTop {
+      top: initial;
+      bottom: 100%;
+    }
+    &-empty {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 10px 15px;
+      background-color: $black-10s;
+    }
+    &-option {
+      position: relative;
+      padding: 10px 15px;
+      background-color: $black-10s;
+      border-bottom: 2px solid $black-5;
+      cursor: pointer;
+      z-index: 1;
+      &:last-of-type {
+        border-bottom: none;
+      }
+      &:hover {
+        color: $faded-orange;
+      }
+      &.is-hidden {
+        display: none;
+      }
+    }
+  }
+}
 
 // Need to refactor below this line
 
@@ -193,31 +305,23 @@ hr {
     content: "\b7";
     display: inline;
 }
-.neutral {
-    background-color: #449D44;
-}
-.warning {
-    background-color: #EC971F;
-}
+// .neutral {
+//     background-color: #449D44;
+// }
+// .warning {
+//     background-color: #EC971F;
+// }
 .status-badge.neutral {
     color: white;
 }
-.full-width {
-  width: 100%;
-}
-.container-mid {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-.cover {
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// .full-width {
+//   width: 100%;
+// }
+// .container-mid {
+//   display: flex;
+//   justify-content: center;
+//   text-align: center;
+// }
 // .card {
 //   box-sizing: border-box;
 //   display: block;

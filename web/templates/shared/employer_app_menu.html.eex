@@ -1,11 +1,13 @@
-<div class="employer-app-menu">
-  <div class="menu">
-    <div class="menu-item">Most Recent Batch</div>
-    <div class="menu-item">All Students</div>
-    <div class="menu-item">Settings</div>
+<div class="drawer employerAppMenu">
+  <div class="drawer-content">
+    <ul class="navMenu">
+      <a class="u-noDecor" href=""><li>Most Recent Batch</li></a>
+      <a class="u-noDecor" href=""><li>All Students</li></a>
+      <a class="u-noDecor" href=""><li>Settings</li></a>
+    </ul>
   </div>
-  <div class="footer">
+  <div class="drawer-footer">
     <p>You are signed in to manage <strong><%= @employer.name %></strong>.</p>
-    <a class="btn btn-o" href="">Sign Out</a>
+    <a class="btn btn--short btn--o" href="">Sign Out</a>
   </div>
 </div>

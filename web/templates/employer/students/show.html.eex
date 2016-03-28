@@ -4,7 +4,7 @@
   <%= render Risen.SharedView, "topbar.html" %>
   <%= render Risen.SharedView, "student_summary.html", student: @student %>
   <!-- TODO: Change test to real condition (if not student.alreadyInterested)-->
-  <%= if not false do %>
+  <%= if not @employer_interested do %>
     <hr>
   <% end %>
   <div class="profile">
@@ -25,7 +25,7 @@
       <p class="field-value"><%= @student.location_preference || "None" %></p>
     </div>
   </div>
-  <a href="<%= Risen.StudentResume.url({@student.resume, @student}) %>" class="viewResume" target="_blank">
+  <a href="<%= Risen.StudentResume.url({@student.resume, @student}) %>" class="viewResume u-noDecor" target="_blank">
     <span>View Resume</span>
   </a>
   <%= if not @employer_interested do %>
@@ -47,7 +47,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    let employerMenu = document.querySelector('.employer-app-menu');
+    let employerMenu = document.querySelector('.employerAppMenu');
     // Prevent propagation pass menu
     employerMenu.addEventListener('click', (e) => {
       e.stopPropagation();

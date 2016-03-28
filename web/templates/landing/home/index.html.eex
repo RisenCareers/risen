@@ -1,14 +1,14 @@
-<div class="cover home">
-  <div class="container">
+<div class="u-cover home">
+  <div class="container container--mobile">
     <div class="logo"></div>
-    <h2 class="tag-line">Simple recruiting for when the mission matters.</h2>
-    <div class="purpose">
-      <h2>Our Purpose is Simple</h2>
+    <h1 class="tagLine">Simple recruiting for when the mission matters.</h1>
+    <div class="story">
+      <h3>Our Purpose is Simple</h3>
       <p>Risen connects graduates of Christian colleges with missional organizations.</p>
     </div>
     <div class="action">
       <a class="btn">For Graduates</a>
-      <a href="<%= employer_register_path(@conn, :new) %>" class="btn">For Organizations</a>
+      <a class="btn btn--o" href="<%= employer_register_path(@conn, :new) %>">For Organizations</a>
     </div>
   </div>
 </div>
