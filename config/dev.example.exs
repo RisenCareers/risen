@@ -40,3 +40,17 @@ config :risen, Risen.Repo,
   database: "risen_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :arc,
+  bucket: "doctrines.co.development.attachments",
+  asset_host: "https://s3-us-west-2.amazonaws.com/doctrines.co.development.attachments"
+
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
+  region: "us-west-2",
+  s3: [
+    scheme: "https://",
+    host: "s3-us-west-2.amazonaws.com",
+    region: "us-west-2"
+  ]
