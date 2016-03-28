@@ -25,7 +25,7 @@
       <p class="field-value"><%= @student.location_preference || "None" %></p>
     </div>
   </div>
-  <a href="<%= Risen.StudentResume.url({@student.resume, @student}) %>" class="viewResume" target="_blank">
+  <a href="<%= Risen.StudentResume.url({@student.resume, @student}) %>" class="viewResume u-noDecor" target="_blank">
     <span>View Resume</span>
   </a>
   <%= if not @employer_interested do %>
