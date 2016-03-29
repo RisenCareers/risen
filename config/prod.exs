@@ -27,6 +27,20 @@ config :risen, Risen.Repo,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :arc,
+  bucket: "doctrines.co.development.attachments",
+  asset_host: "https://s3-us-west-2.amazonaws.com/doctrines.co.development.attachments"
+
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
+  region: "us-west-2",
+  s3: [
+    scheme: "https://",
+    host: "s3-us-west-2.amazonaws.com",
+    region: "us-west-2"
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
