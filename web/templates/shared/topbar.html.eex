@@ -7,3 +7,24 @@
     <div class="menuIcon-stripe"></div>
   </div>
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  	console.log('ready');
+    var employerMenu = document.querySelector('.employerAppMenu');
+    // Prevent propagation pass menu
+    employerMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    // Toggle employer app menu
+    document.querySelector('.menuIcon.js-trigger').addEventListener('click', (e) => {
+      e.stopPropagation();
+      employerMenu.classList.toggle('is-in');
+    });
+    // Click outside to exit app menu
+    document.querySelector('main').addEventListener('click', (e) => {
+      employerMenu.classList.remove('is-in');
+    });
+  });
+</script>

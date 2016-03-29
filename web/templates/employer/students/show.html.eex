@@ -3,7 +3,6 @@
 <div class="container container--mobile employerStudentsShow">
   <%= render Risen.SharedView, "topbar.html" %>
   <%= render Risen.SharedView, "student_summary.html", student: @student %>
-  <!-- TODO: Change test to real condition (if not student.alreadyInterested)-->
   <%= if not @employer_interested do %>
     <hr>
   <% end %>
@@ -47,20 +46,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    let employerMenu = document.querySelector('.employerAppMenu');
-    // Prevent propagation pass menu
-    employerMenu.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-    // Toggle employer app menu
-    document.querySelector('.menuIcon.js-trigger').addEventListener('click', (e) => {
-      e.stopPropagation();
-      employerMenu.classList.toggle('is-in');
-    });
-    // Click outside to exit app menu
-    document.querySelector('main').addEventListener('click', (e) => {
-      employerMenu.classList.remove('is-in');
-    });
     // Click I'm Interested to swap between button and interested message
     let btnInterested = document.querySelector('.btn--interested');
     btnInterested.addEventListener('click', () => {
