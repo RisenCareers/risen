@@ -3,7 +3,7 @@
     <ul class="navMenu">
       <a class="u-noDecor" href=""><li>Most Recent Batch</li></a>
       <a class="u-noDecor" href=""><li>All Students</li></a>
-      <a class="u-noDecor" href=""><li>Settings</li></a>
+      <a class="u-noDecor" href="<%= employer_settings_path(@conn, :show, @employer.slug) %>"><li>Settings</li></a>
     </ul>
   </div>
   <div class="drawer-footer">

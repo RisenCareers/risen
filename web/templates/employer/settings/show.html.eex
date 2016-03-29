@@ -1,4 +1,206 @@
-<div>
-  <h1>Risen - Employer Settings Show</h1>
-  <%= render Risen.SharedView, "employer_app_menu.html" %>
+<%= render Risen.SharedView, "employer_app_menu.html", employer: @employer, conn: @conn %>
+
+<div class="container container--mobile employerSettings">
+  <%= render Risen.SharedView, "topbar.html" %>
+  <h1 class="pageTitle u-leftText">Settings</h1>
+
+  <%= form_for @changeset, employer_settings_path(@conn, :update, @employer.slug), [multipart: true, method: "patch"], fn f -> %>
+
+    <%= if f.errors != [] do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below:</p>
+        <ul>
+          <%= for {attr, message} <- f.errors do %>
+            <li><%= humanize(attr) %> <%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <h3>Logo</h3>
+    <div class="picChooser">
+      <img class="picChooser-pic" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>"></img>
+      <label for="file-upload" class="picChooser-btn btn btn--xshort" type="file">Choose...</label>
+      <input type="hidden" name="employer[logo]" value="2">
+      <input id="file-upload" name="logo" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png">
+    </div>
+
+    <h3>Interests</h3>
+    <div class="select">
+      <input id="interests-input" class="select-input input-default" type="text" placeholder="Select a major here..." readonly>
+      <ul class="select-datalist is-hidden">
+        <!-- Remove li.select-datalist-empty if not wanted -->
+        <li class="select-datalist-empty"><i>No major found</i></li>
+        <%= for item <- @majors do %>
+          <li class="select-datalist-option" data-id="<%= item.id %>"><%= item.name %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="selectedOptions"></div>
+
+    <%= submit "Save", class: "btn btn--short" %>
+
+  <% end %>
 </div>
+
+
+<script>
+  // NOTE: This function probably needs to go in /web/static/js/utils.js and imported in app.js
+  function previewImage(input, targetSelector) {
+    if (input.files && input.files[0]) {
+      // NOTE: FilReader API is supported in IE10+
+      var reader = new FileReader();
+      reader.readAsDataURL(input.files[0]);
+      reader.onload = function(e) {
+        document.querySelector(targetSelector).src = e.target.result;
+      }
+    }
+  }
+
+  // TODO: Add ability to navigate the major list with arrow up and arrow down
+  function navigateList({ keyCode }) {
+    if (keyCode === 38) {
+      console.log('arrowUp');
+    }
+    else if (keyCode === 40) {
+      console.log('arrowDown');
+    }
+  }
+
+  // NOTE: This function can also go into utils.js
+  function placeList(input, list) {
+    var bounds = input.getBoundingClientRect();
+    inputTop = bounds.top;
+    inputLeft = bounds.top;
+    var compoundedHeight = inputTop + input.offsetHeight + list.offsetHeight,
+        windowHeight = window.innerHeight;
+    compoundedHeight > windowHeight ? list.classList.add('is-onTop') : list.classList.remove('is-onTop');
+  };
+
+  //
+  function createSelectedOption(text, id, isHidden) {
+    var el = document.createElement('input');
+
+    el.type = isHidden ? 'hidden' : 'text';
+    if (isHidden) {
+      el.name = 'employer[majors][]';
+    }
+    el.readOnly = true;
+    el.value = isHidden ? id : text;
+
+    if (isHidden) {
+      return el;
+    }
+
+    var div = document.createElement('div'),
+        x = document.createElement('div');
+
+    x.classList.add('x-mark');
+    x.onclick = removeSelectedOption;
+
+    div.appendChild(el);
+    div.classList.add('major');
+    div.appendChild(x);
+
+    return div;
+  }
+
+  //
+  function removeSelectedOption(e) {
+    // NOTE: Are the following assignments unclear? I feel like these aren't easy to read/understand
+    var el = e.target.parentNode.parentNode,
+        majorEl = e.target.parentNode,
+        major = majorEl.firstChild.value,
+        options = document.querySelectorAll('.select-datalist-option');
+
+    // NOTE: Possibly need to polyfill remove()
+    el.remove();
+    // NOTE: Is there a faster/clearer way to search for the element with the desired innerText?
+    //   Maybe if the element has data- attribute, we can look it up like this:
+    // document.querySelector('.option[data-major="' + major + '"]');
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].textContent === major) {
+        options[i].classList.remove('is-hidden');
+      }
+    }
+  }
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // TODO: Extract event listeners for app menu into a module
+    let employerMenu = document.querySelector('.employerAppMenu');
+    // Prevent propagation pass menu
+    employerMenu.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    // Toggle employer app menu
+    document.querySelector('.menuIcon.js-trigger').addEventListener('click', (e) => {
+      e.stopPropagation();
+      employerMenu.classList.toggle('is-in');
+    });
+    // Click outside to exit app menu
+    document.querySelector('main').addEventListener('click', (e) => {
+      employerMenu.classList.remove('is-in');
+    });
+
+
+    var uploader = document.querySelector('.picChooser-file'),
+        major = document.querySelector('.select-input'),
+        list = document.querySelector('.select-datalist'),
+        options = document.querySelectorAll('.select-datalist-option'),
+        selectedList = document.querySelector('.selectedOptions');
+
+    // Preview the selected image
+    uploader.onchange = function() { previewImage(uploader, '.picChooser-pic'); };
+
+    // Toggle the major list
+    major.addEventListener('blur', function() {
+      list.classList.add('is-hidden');
+      window.removeEventListener('keydown', navigateList);
+    });
+    major.addEventListener('focus', function() {
+      list.classList.remove('is-hidden');
+      placeList(major, list);
+      window.addEventListener('keydown', navigateList);
+    });
+
+    var selectMajor = function(opts) {
+
+      var div = document.createElement('div');
+      div.classList.add('js-selected-option');
+
+      var el = createSelectedOption(opts.text, opts.id, false);
+      var elH = createSelectedOption(opts.text, opts.id, true);
+      div.appendChild(el);
+      div.appendChild(elH);
+
+      selectedList.appendChild(div);
+
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].getAttribute("data-id") == opts.id) {
+          options[i].classList.add('is-hidden');
+          break;
+        }
+      }
+    };
+
+    // Select a major
+    for (var i = 0; i < options.length; i++) {
+      options[i].addEventListener('mousedown', function(e) {
+        selectMajor({
+          text: e.target.innerHTML,
+          id: e.target.getAttribute("data-id")
+        });
+      });
+    }
+
+    var selectedMajors = <%= {:safe, Poison.encode!(@employer.majors)} %>;
+    selectedMajors.forEach(function(m) {
+      selectMajor({
+        text: m.name,
+        id: m.id
+      });
+    });
+  });
+</script>

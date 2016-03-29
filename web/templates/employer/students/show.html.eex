@@ -1,4 +1,4 @@
-<%= render Risen.SharedView, "employer_app_menu.html", employer: @employer %>
+<%= render Risen.SharedView, "employer_app_menu.html", employer: @employer, conn: @conn %>
 
 <div class="container container--mobile employerStudentsShow">
   <%= render Risen.SharedView, "topbar.html" %>
