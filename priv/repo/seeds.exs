@@ -73,14 +73,11 @@ student = Repo.insert!(%Student{
 # Batch
 #
 
-batch = Repo.insert!(%Batch{
-  sent_at: DateTime.now
-})
+batch_1 = Repo.insert!(%Batch{ sent_at: DateTime.now })
+Repo.insert!(%BatchStudent{ batch_id: batch_1.id, student_id: student.id })
 
-Repo.insert!(%BatchStudent{
-  batch_id: batch.id,
-  student_id: student.id
-})
+batch_2 = Repo.insert!(%Batch{ sent_at: Timex.shift(DateTime.now, days: -3) })
+Repo.insert!(%BatchStudent{ batch_id: batch_2.id, student_id: student.id })
 
 #
 # Employer
