@@ -1,3 +1,45 @@
 <div>
-  <h1>Risen - Admin Students Index</h1>
+  <h1>Students</h1>
+  <ul class="batch-list">
+    <li class="batch">
+      <div>PENDING STUDENTS:</div>
+      <ul class="student-list">
+        <%= for student <- @pending_students do %>
+        <li class="student" style="margin-top: 16px;">
+          <div><strong><%= student.name %></strong></div>
+          <div><%= student.status %></div>
+          <div><%= student.school.abbreviation %></div>
+          <div><%= student.major.name %></div>
+          <div>Applied on <%= Timex.format!(student.inserted_at, "%b. %e, %Y", :strftime) %></div>
+        </li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="batch" style="margin-top: 32px;">
+      <div>UPCOMING BATCH:</div>
+      <ul class="student-list">
+        <%= for student <- @upcoming_batch.students do %>
+        <li class="student" style="margin-top: 16px;">
+          <div><strong><%= student.name %></strong></div>
+          <div><%= student.school.abbreviation %></div>
+          <div><%= student.major.name %></div>
+        </li>
+        <% end %>
+      </ul>
+    </li>
+    <%= for batch <- @sent_batches do %>
+      <li class="batch" style="margin-top: 32px;">
+        <div>BATCH SENT ON <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %>:</div>
+        <ul class="student-list">
+          <%= for student <- batch.students do %>
+          <li class="student" style="margin-top: 16px;">
+            <div><strong><%= student.name %></strong></div>
+            <div><%= student.school.abbreviation %></div>
+            <div><%= student.major.name %></div>
+          </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
 </div>

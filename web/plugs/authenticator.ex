@@ -12,6 +12,7 @@ defmodule Risen.Plugs.Authenticator do
       conn |> inauthenticated
     else
       account = Repo.get(Account, account_id)
+      account = Repo.preload(account, [:roles])
       unless account do
         conn |> inauthenticated
       else
