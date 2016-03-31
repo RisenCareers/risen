@@ -1,0 +1,17 @@
+.schoolBanner {
+  &-logo {
+    width: 96px;
+    height: 96px;
+    background-color: $black-10;
+  }
+  &-title {
+    font-family: 'FreightDispProMedium';
+    letter-spacing: 2.7px;
+    text-transform: uppercase;
+  }
+  &-text {
+    font-style: italic;
+    font-size: 14px;
+    color: $warm_grey;
+  }
+}

@@ -12,11 +12,12 @@
   </head>
 
   <body>
-    <main role="main">
-      <%= render Risen.SharedView, "top_bar.html" %>
+    <main role="main" class="studentSite">
       <%= render @view_module, @view_template, assigns %>
     </main>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="https://use.typekit.net/aby2cij.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </body>
 </html>

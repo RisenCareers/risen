@@ -8,6 +8,7 @@
 @import 'employer/students/index';
 @import 'employer/students/show';
 @import 'employer/settings/show';
+@import 'student/register/new';
 
 // Components
 @import 'student_list_item';
@@ -17,6 +18,7 @@
 @import 'topbar';
 @import 'student_summary';
 @import 'employer_settings';
+@import 'school_banner';
 
 
 // Block overrides
@@ -45,6 +47,14 @@ hr {
 
 
 // App-wide style
+.studentSite {
+  min-height: 100vh;
+  background-color: $white-two;
+}
+.section {
+  width: 100%;
+  border-bottom: 2px solid $black-10;
+}
 .container {
   margin: 0 auto;
   width: 756px;
@@ -155,6 +165,15 @@ hr {
 .btn--xshort {
   width: 114px;
 }
+.btn--dark {
+  border-color: $greyish-brown;
+  background-color: $greyish-brown;
+  &:hover {
+    border-color: $greyish-brown;
+    color: $greyish-brown;
+    background-color: $black-10;
+  }
+}
 .input-default {
   width: 100%;
   border: none;
@@ -162,9 +181,15 @@ hr {
   padding: 7px 11px;
   font-size: 18px;
   font-weight: 300;
+  background-color: transparent;
   &:focus {
     outline: none;
     border-bottom-color: $faded-orange;
+  }
+}
+.input-default--black {
+  &:focus {
+    border-color: $greyish-brown;
   }
 }
 .x-mark {
@@ -298,6 +323,13 @@ hr {
         display: none;
       }
     }
+  }
+}
+.linkDefault {
+  border-bottom: 2px solid $black-10;
+  &:hover {
+    color: $faded-orange;
+    border-color: $faded-orange-50;
   }
 }
 
