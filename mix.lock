@@ -18,6 +18,7 @@
   "hackney": {:hex, :hackney, "1.5.7"},
   "httpoison": {:hex, :httpoison, "0.8.2"},
   "idna": {:hex, :idna, "1.2.0"},
+  "inflex": {:hex, :inflex, "1.5.0"},
   "metrics": {:hex, :metrics, "1.0.1"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
   "phoenix": {:hex, :phoenix, "1.1.4"},
