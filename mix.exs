@@ -44,7 +44,8 @@ defmodule Risen.Mixfile do
      {:poison, "~> 2.1", override: true},
      {:httpoison, "~> 0.7"},
      {:timex, "~> 2.1.1"},
-     {:timex_ecto, "~> 1.0.3"}]
+     {:timex_ecto, "~> 1.0.3"},
+     {:inflex, "~> 1.5.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
