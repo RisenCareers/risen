@@ -63,7 +63,7 @@ defmodule Risen.Router do
     post  "/:school_slug/register", RegisterController, :create
 
     get   "/:school_slug/:id/setup", SetupController, :edit
-    put   "/:school_slug/:id/setup", SetupController, :update
+    patch "/:school_slug/:id/setup", SetupController, :update
     get   "/:school_slug/:id/done", SetupController, :done
 
     get   "/:id/edit", ProfileController, :edit_get
