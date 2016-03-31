@@ -1,0 +1,9 @@
+<div class="section">
+  <div class="container container--mobile">
+    <div class="schoolBanner">
+      <img class="schoolBanner-logo" src="<%= @school.logo %>">
+      <h1 class="schoolBanner-title"><%= @school.name %></h1>
+      <p class="schoolBanner-text">Apply to jobs through Risen.Careers</p>
+    </div>
+  </div>
+</div>
