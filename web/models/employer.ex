@@ -11,6 +11,7 @@ defmodule Risen.Employer do
     has_many :majors, through: [:employer_majors, :major]
     has_many :employer_admins, Risen.EmployerAdmin
     has_many :admins, through: [:employer_admins, :account]
+    has_many :students, through: [:employer_majors, :major]
     timestamps
   end
 

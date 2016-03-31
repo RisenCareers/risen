@@ -6,6 +6,7 @@
       <ul class="student-list">
         <%= for student <- @pending_students do %>
         <li class="student" style="margin-top: 16px;">
+          <div><img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({student.pic, student}) %>" /></div>
           <div><strong><%= student.name %></strong></div>
           <div><%= student.status %></div>
           <div><%= student.school.abbreviation %></div>
@@ -20,6 +21,7 @@
       <ul class="student-list">
         <%= for student <- @upcoming_batch.students do %>
         <li class="student" style="margin-top: 16px;">
+          <div><img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({student.pic, student}) %>" /></div>
           <div><strong><%= student.name %></strong></div>
           <div><%= student.school.abbreviation %></div>
           <div><%= student.major.name %></div>
@@ -33,6 +35,7 @@
         <ul class="student-list">
           <%= for student <- batch.students do %>
           <li class="student" style="margin-top: 16px;">
+            <div><img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({student.pic, student}) %>" /></div>
             <div><strong><%= student.name %></strong></div>
             <div><%= student.school.abbreviation %></div>
             <div><%= student.major.name %></div>
