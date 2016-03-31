@@ -24,7 +24,7 @@ defmodule Risen.Employer.StudentsController do
   # This means batches are living - they change based on the employer's
   # interests changing. If we did not want to do this, it gets quite a bit
   # more complicated in the batch logic.
-  def index(conn, _params) do
+  def index(conn, params) do
 
     # Retrieve employer via the Authenticator plug
     employer = conn.assigns[:employer]
@@ -35,8 +35,14 @@ defmodule Risen.Employer.StudentsController do
       preload: [:major, :school]
 
     # Grab all sent batches along with relevant students
+    filters = []
+    filters = filters ++ cond do
+      params["batch"] -> [id: String.to_integer(params["batch"])]
+      true -> []
+    end
     batches = Repo.all(
       from b in Batch,
+      where: ^filters,
       where: not(is_nil(b.sent_at)),
       preload: [students: ^student_query]
     )
