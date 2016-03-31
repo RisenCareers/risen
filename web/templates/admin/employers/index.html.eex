@@ -1,0 +1,16 @@
+<div>
+  <h1>Employers</h1>
+  <ul class="employer-list">
+    <%= for employer <- @employers do %>
+    <li class="employer" style="margin-top: 16px;">
+      <div>
+        <img class="studentSummary-pic round-pic" src="<%= Risen.EmployerLogo.url({employer.logo, employer}) %>" />
+      </div>
+      <div>
+        <strong><%= employer.name %></strong>
+      </div>
+      <div><%= length(employer.students) %> Students Sent</div>
+    </li>
+    <% end %>
+  </ul>
+</div>

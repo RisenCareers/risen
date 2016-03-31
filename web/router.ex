@@ -33,6 +33,8 @@ defmodule Risen.Router do
     get   "/students/:id/edit", StudentsController, :edit_get
     patch "/students/:id/edit", StudentsController, :edit_patch
 
+    get   "/employers", EmployersController, :index
+
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show
   end
