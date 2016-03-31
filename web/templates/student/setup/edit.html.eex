@@ -2,7 +2,7 @@
   <h2>Complete registration</h2>
   <hr />
   <!-- Probably will need to change method to POST once hooked up. Gets invalid CSRF right now. -->
-  <%= form_for @changeset, student_setup_path(@conn, :update, @school.slug, @student.id), [multipart: true, method: true], fn f -> %>
+  <%= form_for @changeset, student_setup_path(@conn, :update, @school.slug, @student.id), [multipart: true, method: "patch"], fn f -> %>
     <div class="info-container">
       <div>
         <%= select(f, :major_id, Enum.map(@majors, fn(m) -> {m.name, m.id} end), class: "input-default", prompt: "Select Major") %>
