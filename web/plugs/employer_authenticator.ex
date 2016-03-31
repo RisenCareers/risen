@@ -27,7 +27,7 @@ defmodule Risen.Plugs.Employer.Authenticator do
   defp inauthenticated(conn) do
     conn
     |> put_flash(:info, "You must be a registered employer")
-    |> redirect(to: employer_register_path(conn, :register_get))
+    |> redirect(to: employer_register_path(conn, :new))
     |> halt()
   end
 
