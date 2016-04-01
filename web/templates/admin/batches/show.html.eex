@@ -7,7 +7,21 @@
 }
 </style>
 <div>
+  <%= if @is_upcoming do %>
+  <h1>Upcoming Batch</h1>
+  <form action="<%= admin_batches_path(@conn, :update, @batch.id) %>" method="post">
+    <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="send" value="true">
+    <button type="submit" class="btn btn--interested">Send Batch</button>
+  </form>
+  <% else %>
   <h1>Batch for <%= Timex.format!(@batch.sent_at, "%b. %e, %Y", :strftime) %></h1>
+  <% end %>
+
+  <form>
+    <input type="hidden" name=""
+  </form>
 
   <div>
     <%= length(@employers) %> <%= Inflex.inflect("Employer", length(@employers)) %> with <%= length(@students) %> <%= Inflex.inflect("Student", length(@students)) %>

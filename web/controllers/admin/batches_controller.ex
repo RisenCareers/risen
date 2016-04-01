@@ -1,5 +1,6 @@
 defmodule Risen.Admin.BatchesController do
   use Risen.Web, :controller
+  use Timex
 
   import Risen.Plugs.Authenticator
   import Risen.Plugs.Admin.Authenticator
@@ -12,6 +13,7 @@ defmodule Risen.Admin.BatchesController do
 
   plug :authenticate
   plug :require_admin
+  plug :load_batch when action in [:show, :update]
   plug :put_layout, "admin.html"
 
   def index(conn, _params) do
@@ -37,8 +39,7 @@ defmodule Risen.Admin.BatchesController do
 
   def show(conn, params) do
 
-    batch = Repo.get(Batch, params["id"])
-    batch = Repo.preload(batch, [students: [:major, :school]])
+    batch = conn.assigns[:batch]
     majors = Enum.map(batch.students, fn(s) -> s.major end)
 
     # Get all employer majors based on the majors of the students
@@ -54,13 +55,34 @@ defmodule Risen.Admin.BatchesController do
       preload: [:majors]
     )
 
-    is_upcoming? = (batch.sent_at == nil)
+    is_upcoming = (batch.sent_at == nil)
 
     conn
     |> assign(:batch, batch)
-    |> assign(:is_upcoming?, is_upcoming?)
+    |> assign(:is_upcoming, is_upcoming)
     |> assign(:students, batch.students)
     |> assign(:employers, employers)
     |> render("show.html")
+  end
+
+  def update(conn, params) do
+    batch = conn.assigns[:batch]
+
+    if params["send"] do
+      unless batch.sent_at do
+        batch_changeset = Ecto.Changeset.change(batch, sent_at: DateTime.now)
+        batch = Repo.update!(batch_changeset)
+      end
+    end
+
+    conn
+    |> redirect(to: admin_batches_path(conn, :show, batch.id))
+    |> halt()
+  end
+
+  defp load_batch(conn, _) do
+    batch = Repo.get(Batch, conn.params["id"])
+    batch = Repo.preload(batch, [students: [:major, :school]])
+    conn |> assign(:batch, batch)
   end
 end
