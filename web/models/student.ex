@@ -8,6 +8,7 @@ defmodule Risen.Student do
     field :visa_status, :string
     field :job_type, :string
     field :location_preference, :string
+    field :is_willing_to_relocate, :boolean
     field :pic, :string
     field :resume, :string
     field :status, :string
@@ -20,7 +21,7 @@ defmodule Risen.Student do
   end
 
   @required_fields ~w(name account_id school_id)
-  @optional_fields ~w(phone ideal_role visa_status job_type location_preference pic resume major_id status)
+  @optional_fields ~w(phone ideal_role visa_status job_type location_preference is_willing_to_relocate pic resume major_id status)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
