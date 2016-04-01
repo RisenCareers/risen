@@ -13,12 +13,10 @@ defmodule Risen.Admin.EmployersController do
   plug :put_layout, "admin.html"
 
   def index(conn, _params) do
-
     employers = Repo.all(
       from e in Employer,
       preload: [:students]
     )
-
     conn
     |> assign(:employers, employers)
     |> render("index.html")
