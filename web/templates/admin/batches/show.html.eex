@@ -1,3 +1,44 @@
+<style>
+.employer-list-item {
+  margin-top: 36px;
+}
+.student-list-item {
+  margin-top: 18px;
+}
+</style>
 <div>
-  <h1>Risen - Admin Batches Show</h1>
+  <h1>Batch for <%= Timex.format!(@batch.sent_at, "%b. %e, %Y", :strftime) %></h1>
+
+  <div>
+    <%= length(@employers) %> <%= Inflex.inflect("Employer", length(@employers)) %> with <%= length(@students) %> <%= Inflex.inflect("Student", length(@students)) %>
+  </div>
+
+  <ul class="employer-list">
+    <%= for employer <- @employers do %>
+    <%
+    employer_students = Enum.filter(@students, fn(s) ->
+      Enum.member?(Enum.map(employer.majors, &(&1.id)), s.major_id)
+    end)
+    %>
+    <li class="employer-list-item">
+      <div>
+        <img class="studentSummary-pic round-pic" src="<%= Risen.EmployerLogo.url({employer.logo, employer}) %>" />
+        <div><%= employer.name %></div>
+        <div><%= length(employer_students) %> <%= Inflex.inflect("Student", length(employer_students)) %></div>
+        <ul class="student-list">
+          <%= for student <- employer_students do %>
+          <li class="student-list-item">
+            <div><%= student.name %></div>
+            <div>
+              <span><%= student.school.abbreviation %></span>
+              <span><%= student.major.name %></span>
+            </div>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </li>
+    <% end %>
+  </ul>
 </div>
