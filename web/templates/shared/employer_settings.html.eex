@@ -102,7 +102,7 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', function() {
     var uploader = document.querySelector('.picChooser-file'),
         major = document.querySelector('.select-input'),
         list = document.querySelector('.select-datalist'),

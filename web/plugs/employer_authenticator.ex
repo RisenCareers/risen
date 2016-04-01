@@ -17,7 +17,8 @@ defmodule Risen.Plugs.Employer.Authenticator do
   end
 
   def require_employer_admin(conn, _) do
-    unless Enum.member?(conn.assigns[:employer].admins, conn.assigns[:account]) do
+    admin_ids = Enum.map(conn.assigns[:employer].admins, &(&1.id))
+    unless Enum.member?(admin_ids, conn.assigns[:account].id) do
       conn |> inauthenticated
     else
       conn
