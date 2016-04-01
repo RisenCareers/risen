@@ -11,7 +11,11 @@
   <h1>Batches</h1>
 
   <div class="batch">
-    <div>Upcoming Batch</div>
+    <div>
+      <a href="<%= admin_batches_path(@conn, :show, @upcoming_batch.id) %>">
+        Upcoming Batch
+      </a>
+    </div>
     <div>
       <ul>
         <%= for student <- @upcoming_batch.students do %>
@@ -32,7 +36,11 @@
     <li class="batch-item">
 
       <div class="batch">
-        <div>Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %></div>
+        <div>
+          <a href="<%= admin_batches_path(@conn, :show, batch.id) %>">
+            Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %>
+          </a>
+        </div>
         <div>
           <ul>
             <%= for student <- batch.students do %>
