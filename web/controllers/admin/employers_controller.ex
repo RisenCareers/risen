@@ -17,7 +17,6 @@ defmodule Risen.Admin.EmployersController do
       from e in Employer,
       preload: [:students]
     )
-
     conn
     |> assign(:employers, employers)
     |> render("index.html")
