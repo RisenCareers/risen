@@ -37,6 +37,7 @@ defmodule Risen.Router do
 
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show
+    patch "/batches/:id", BatchesController, :update
   end
 
   scope "/e", Risen.Employer, as: :employer do
