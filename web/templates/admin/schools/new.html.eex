@@ -1,0 +1,28 @@
+<h1>Schools > New</h1>
+<%= form_for @changeset, admin_schools_path(@conn, :create), [multipart: true], fn f -> %>
+  <%= if f.errors != [] do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below:</p>
+      <ul>
+        <%= for {attr, message} <- f.errors do %>
+          <li><%= humanize(attr) %> <%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <label>
+    School Name
+    <%= text_input f, :name, class: "input-default", placeholder: "Type name of school", required: true %>
+  </label>
+  <label>
+    School Colloquial Name
+    <%= text_input f, :abbreviation, class: "input-default", placeholder: "BJU, PCC, etc", required: true %>
+  </label>
+  <label>
+    School logo
+    <input type="file" name="logo" />
+  </label>
+  <button type="submit" class="btn btn--short">
+    Sign Up
+  </button>
+<% end %>
