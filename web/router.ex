@@ -35,6 +35,10 @@ defmodule Risen.Router do
 
     get   "/employers", EmployersController, :index
 
+    get   "/schools", SchoolsController, :index
+    get   "/schools/new", SchoolsController, :new
+    post  "/schools", SchoolsController, :create
+
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show
     patch "/batches/:id", BatchesController, :update

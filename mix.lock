@@ -30,6 +30,7 @@
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "postgrex": {:hex, :postgrex, "0.11.1"},
   "ranch": {:hex, :ranch, "1.2.1"},
+  "slugger": {:hex, :slugger, "0.1.0"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
   "timex": {:hex, :timex, "2.1.1"},
   "timex_ecto": {:hex, :timex_ecto, "1.0.3"},

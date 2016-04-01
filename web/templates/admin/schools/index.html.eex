@@ -1,0 +1,24 @@
+<style>
+  .school {
+    margin-top: 16px;
+  }
+</style>
+<div>
+  <h1>Schools</h1>
+  <div>
+    <a href="<%= admin_schools_path(@conn, :new) %>">New</a>
+  </div>
+  <ul class="school-list">
+    <%= for school <- @schools do %>
+    <li class="school">
+      <div>
+        <img class="studentSummary-pic round-pic" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
+      </div>
+      <div>
+        <strong><%= school.name %></strong>
+      </div>
+      <div><%= length(school.students) %> Student Applicants</div>
+    </li>
+    <% end %>
+  </ul>
+</div>

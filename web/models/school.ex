@@ -11,7 +11,7 @@ defmodule Risen.School do
     timestamps
   end
 
-  @required_fields ~w(name slug abbreviation)
+  @required_fields ~w(name abbreviation)
   @optional_fields ~w(logo)
 
   @doc """
@@ -23,6 +23,15 @@ defmodule Risen.School do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> slugify_name
     |> unique_constraint(:slug)
+  end
+
+  defp slugify_name(changeset) do
+    if abbreviation = get_change(changeset, :abbreviation) do
+      put_change(changeset, :slug, Slugger.slugify_downcase(abbreviation))
+    else
+      changeset
+    end
   end
 end
