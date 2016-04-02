@@ -9,12 +9,14 @@ defmodule Risen.Admin.StudentsController do
   alias Risen.School
   alias Risen.Major
   alias Risen.Batch
+  alias Risen.BatchStudent
 
   plug :authenticate
   plug :require_admin
   plug :load_student when action in [:edit, :update]
   plug :load_school when action in [:edit, :update]
   plug :load_majors when action in [:edit, :update]
+  plug :load_student_batch when action in [:edit, :update]
   plug :put_layout, "admin.html"
 
   def index(conn, _params) do
@@ -59,21 +61,42 @@ defmodule Risen.Admin.StudentsController do
   def update(conn, params) do
     student = conn.assigns[:student]
 
-    student_params = params["student"]
-    student_changeset = Student.changeset(student, student_params)
-    student = Repo.update!(student_changeset)
+    if params["mark_ready"] do
+      unless student.status == "Ready" do
+        upcoming_batch = Repo.one(
+          from b in Batch,
+          where: is_nil(b.sent_at)
+        )
 
-    Enum.each([{StudentPic, "pic"}, {StudentResume, "resume"}], fn({ m, p }) ->
-      if params[p] do
-        m.store({params[p], student})
-        student_changeset = Student.changeset(student, %{ p => params[p].filename })
-        Repo.update!(student_changeset)
+        Repo.transaction fn ->
+          # Assign student to upcoming batch
+          Repo.insert!(%BatchStudent{
+            batch_id: upcoming_batch.id,
+            student_id: student.id
+          })
+          # Mark the student ready
+          student_changeset = Ecto.Changeset.change(student, status: "Ready")
+          student = Repo.update!(student_changeset)
+        end
+        conn = conn |> assign(:student, student)
       end
-    end)
+    else
+      student_params = params["student"]
+      student_changeset = Student.changeset(student, student_params)
+      student = Repo.update!(student_changeset)
+
+      Enum.each([{StudentPic, "pic"}, {StudentResume, "resume"}], fn({ m, p }) ->
+        if params[p] do
+          m.store({params[p], student})
+          student_changeset = Student.changeset(student, %{ p => params[p].filename })
+          Repo.update!(student_changeset)
+        end
+      end)
+    end
 
     conn
     |> put_flash(:info, "Student saved successfully.")
-    |> redirect(to: student_profile_path(conn, :edit, student.id))
+    |> redirect(to: admin_students_path(conn, :edit, student.id))
   end
 
   defp load_student(conn, _) do
@@ -89,5 +112,19 @@ defmodule Risen.Admin.StudentsController do
   defp load_majors(conn, _) do
     majors = Repo.all(Major)
     conn |> assign(:majors, majors)
+  end
+
+  defp load_student_batch(conn, _) do
+    student = conn.assigns[:student]
+    if student.status == "Ready" do
+      batch_student = Repo.one(
+        from bs in BatchStudent,
+        where: bs.student_id == ^student.id,
+        preload: [:batch]
+      )
+      conn |> assign(:student_batch, batch_student.batch)
+    else
+      conn
+    end
   end
 end
