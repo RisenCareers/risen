@@ -1,0 +1,12 @@
+.adminAppMenu {
+  .drawer-content {
+    flex: 1 1 auto;
+  }
+  .drawer-footer {
+    flex: 0 0 auto;
+    text-align: center;
+    .btn--o {
+      margin: 0 auto;
+    }
+  }
+}

@@ -18,6 +18,7 @@
 @import 'signin_form';
 @import 'batch_list_item';
 @import 'employer_app_menu';
+@import 'admin_app_menu';
 @import 'topbar';
 @import 'student_summary';
 @import 'employer_settings';
@@ -225,6 +226,16 @@ option[value=""] {
 .btn--dark {
   border-color: $greyish-brown;
   background-color: $greyish-brown;
+  &:hover {
+    border-color: $greyish-brown;
+    color: $greyish-brown;
+    background-color: $black-10;
+  }
+}
+.btn--dark--o {
+  border-color: $greyish-brown;
+  color: $greyish-brown;
+  background-color: transparent;
   &:hover {
     border-color: $greyish-brown;
     color: $greyish-brown;
