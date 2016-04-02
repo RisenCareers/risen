@@ -19,7 +19,7 @@
       </div>
 
       <div class="resumeUploader">
-        <p class="resumeUploader-attached"></p>
+        <p class="resumeUploader-attached"><%= @student.resume %> attached</p>
         <label for="resume-upload" class="resumeUploader-btn" type="file"><h2>Upload Resume...</h2></label>
         <input id="resume-upload" name="resume" class="resumeUploader-file" type="file" accept=".pdf">
       </div>
@@ -32,7 +32,7 @@
       </label>
       <label for="phone">
         <h3>Phone Number</h3>
-        <%= telephone_input f, :phone, id: "phone", class: "input-default input-default--black", type: "tel", placeholder: "Phone number", required: true %>
+        <%= telephone_input f, :phone, id: "phone", class: "input-default input-default--black", type: "tel", placeholder: "Phone number", required: true, pattern: "\\d{3}[\\-]\\d{3}[\\-]\\d{4}" %>
       </label>
       <label for="role">
         <h3>Ideal Role</h3>

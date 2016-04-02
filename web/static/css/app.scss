@@ -335,6 +335,9 @@ option[value=""] {
     right: 10px;
     transform: rotate(45deg);
   }
+  .input-default {
+    padding-right: 28px;
+  }
 }
 .select {  // Multiple select
   position: relative;
@@ -397,8 +400,9 @@ option[value=""] {
 }
 .resumeUploader {
   &-attached {
-    text-decoration: italic;
     margin-bottom: 10px;
+    font-style: italic;
+    word-break: break-all;
   }
   &-btn {
     display: block;
