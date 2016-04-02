@@ -2,17 +2,18 @@ defmodule Risen.Student.SetupController do
   use Risen.Web, :controller
 
   import Risen.Plugs.Authenticator
+  import Risen.Plugs.Student.Authenticator
 
   alias Risen.Student
   alias Risen.School
   alias Risen.StudentPic
   alias Risen.StudentResume
 
-  plug :put_layout, "student.html"
   plug :authenticate
+  plug :require_student
   plug :load_school
-  plug :load_student
   plug :load_majors
+  plug :put_layout, "student.html"
   plug :scrub_params, "student" when action in [:update]
 
   def edit(conn, _params) do
@@ -29,11 +30,7 @@ defmodule Risen.Student.SetupController do
     student = conn.assigns[:student]
 
     student_params = params["student"]
-
-    student_changeset = Student.changeset(
-      student,
-      Map.merge(student_params, %{ "status" => "Pending" })
-    )
+    student_changeset = Student.changeset(student, student_params)
     student = Repo.update!(student_changeset)
 
     Enum.each([{StudentPic, "pic"}, {StudentResume, "resume"}], fn({ m, p }) ->
@@ -59,20 +56,6 @@ defmodule Risen.Student.SetupController do
       conn |> bad_request("Invalid school.")
     else
       conn |> assign(:school, school)
-    end
-  end
-
-  defp load_student(conn, _) do
-    student = Repo.get(Student, conn.params["id"])
-    student = Repo.preload(student, [:major])
-    unless student do
-      conn |> bad_request("No student.")
-    else
-      unless student.account_id == conn.assigns[:account].id do
-        conn |> bad_request("Not authorized to setup this student.")
-      else
-        conn |> assign(:student, student)
-      end
     end
   end
 

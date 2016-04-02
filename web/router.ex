@@ -30,8 +30,8 @@ defmodule Risen.Router do
     get   "/", IndexController, :index
 
     get   "/students", StudentsController, :index
-    get   "/students/:id/edit", StudentsController, :edit_get
-    patch "/students/:id/edit", StudentsController, :edit_patch
+    get   "/students/:id/edit", StudentsController, :edit
+    patch "/students/:id/edit", StudentsController, :update
 
     get   "/employers", EmployersController, :index
 
@@ -73,8 +73,8 @@ defmodule Risen.Router do
     patch "/:school_slug/:id/setup", SetupController, :update
     get   "/:school_slug/:id/done", SetupController, :done
 
-    get   "/:id/edit", ProfileController, :edit_get
-    patch "/:id/edit", ProfileController, :edit_patch
+    get   "/:id/edit", ProfileController, :edit
+    patch "/:id/edit", ProfileController, :update
   end
 
 end
