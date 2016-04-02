@@ -1,13 +1,16 @@
 <div class="drawer employerAppMenu">
   <div class="drawer-content">
     <ul class="navMenu">
-      <a class="u-noDecor" href=""><li>Most Recent Batch</li></a>
-      <a class="u-noDecor" href=""><li>All Students</li></a>
-      <a class="u-noDecor" href="<%= employer_settings_path(@conn, :show, @employer.slug) %>"><li>Settings</li></a>
+      <li>
+        <a class="u-noDecor" href="<%= employer_students_path(@conn, :index, @employer.slug) %>">All Students</a>
+      </li>
+      <li>
+        <a class="u-noDecor" href="<%= employer_settings_path(@conn, :show, @employer.slug) %>">Settings</a>
+      </li>
     </ul>
   </div>
   <div class="drawer-footer">
     <p>You are signed in to manage <strong><%= @employer.name %></strong>.</p>
-    <a class="btn btn--short btn--o" href="">Sign Out</a>
+    <a class="btn btn--short btn--o" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
   </div>
 </div>

@@ -6,7 +6,6 @@ defmodule Risen.Admin.EmployersController do
 
   alias Risen.Repo
   alias Risen.Employer
-  alias Risen.Student
 
   plug :authenticate
   plug :require_admin

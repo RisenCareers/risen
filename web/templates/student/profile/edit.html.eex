@@ -3,7 +3,7 @@
   <%= render Risen.SharedView, "school_banner.html", school: @school %>
 
   <div class="container container--mobile">
-    
+
     <div class="content">
       <h1>Manage Profile</h2>
       <p><%= @student.name %></p>
@@ -12,9 +12,9 @@
     <%= render Risen.SharedView, "student_settings.html", changeset: @changeset, action: student_profile_path(@conn, :update, @student.id), student: @student, majors: @majors, edit: true %>
 
     <div class="content">
-      <p>Need help? Contact us at info@risen.careers</p>
+      <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
     </div>
-  
+
   </div>
 
 </div>

@@ -119,6 +119,16 @@ option[value=""] {
   text-align: center;
   position: relative;
 }
+.navMenu {
+  list-style-type: none;
+  li {
+    font-size: 18px;
+    display: inline-block;
+    &:hover {
+      color: $faded-orange;
+    }
+  }
+}
 .drawer {
   width: 265px;
   height: 100vh;
@@ -136,27 +146,24 @@ option[value=""] {
   }
   .navMenu {
     text-align: right;
-    a {
-      li {
-        display: block;
+    li {
+      display: block;
+      border-top: 1px solid $black-10;
+      a {
+        display: inline-block;
+        width: 100%;
         padding: 15px 0;
-        border-top: 1px solid $black-10;
+        transition: color .15s ease-in-out;
+        &:hover {
+          color: black;
+        }
       }
-      &:first-of-type li {
-        padding-top: 0;
+      &:first-child {
         border-top: none;
+        a {
+          padding-top: 0;
+        }
       }
-    }
-  }
-}
-.navMenu {
-  list-style-type: none;
-  li {
-    font-size: 18px;
-    cursor: pointer;
-    display: inline-block;
-    &:hover {
-      color: $faded-orange;
     }
   }
 }
@@ -179,13 +186,12 @@ option[value=""] {
 }
 .btn {
   width: 210px;
-  height: 50px;
+  padding: 14px 0;
   border-radius: 40px;
   background-color: $faded-orange;
   color: $white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  text-align: center;
   font-weight: 600;
   font-size: 18px;
   cursor: pointer;
@@ -198,7 +204,7 @@ option[value=""] {
   }
   &:hover {
     color: $faded-orange;
-    background-color: $faded-orange-50;
+    background-color: $faded-orange-25;
     border-color: $faded-orange-50;
     text-decoration: none;
   }
@@ -311,7 +317,7 @@ option[value=""] {
     background-color: $white;
   }
   &-btn {
-    height: 42px;
+    padding: 10px 0;
     margin: 0 0 0 15px;
     border-color: transparent;
     background-color: $black-10;

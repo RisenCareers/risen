@@ -6,15 +6,18 @@ defmodule Risen.Admin.StudentsController do
 
   alias Risen.Repo
   alias Risen.Student
+  alias Risen.School
+  alias Risen.Major
   alias Risen.Batch
 
   plug :authenticate
   plug :require_admin
   plug :load_student when action in [:edit, :update]
+  plug :load_school when action in [:edit, :update]
+  plug :load_majors when action in [:edit, :update]
   plug :put_layout, "admin.html"
 
   def index(conn, _params) do
-
     # Grab all the pending students. We'll show these first,
     # before the sent batches
     pending_students = Repo.all(
@@ -64,7 +67,7 @@ defmodule Risen.Admin.StudentsController do
       if params[p] do
         m.store({params[p], student})
         student_changeset = Student.changeset(student, %{ p => params[p].filename })
-        student = Repo.update!(student_changeset)
+        Repo.update!(student_changeset)
       end
     end)
 
@@ -76,5 +79,15 @@ defmodule Risen.Admin.StudentsController do
   defp load_student(conn, _) do
     student = Repo.get(Student, conn.params["id"])
     conn |> assign(:student, student)
+  end
+
+  defp load_school(conn, _) do
+    school = Repo.get(School, conn.assigns[:student].school_id)
+    conn |> assign(:school, school)
+  end
+
+  defp load_majors(conn, _) do
+    majors = Repo.all(Major)
+    conn |> assign(:majors, majors)
   end
 end
