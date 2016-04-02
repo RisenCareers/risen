@@ -1,4 +1,4 @@
-.studentSetup {
+.studentDone {
   .section {
     background-color: $white;
     padding: 60px;
@@ -7,13 +7,16 @@
       padding-bottom: 0;
     }
   }
+  .container {
+    padding-top: 60px;
+  }
   .pic {
     margin: 0 auto 35px;
   }
   .content {
     font-size: 18px;
     line-height: 24px;
-    margin: 15px auto 65px;
+    margin: 0 auto 65px;
     h2, p {
       margin-bottom: 25px;
     }

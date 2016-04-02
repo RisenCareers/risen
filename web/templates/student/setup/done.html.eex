@@ -1,4 +1,4 @@
-<div class="studentSetup">
+<div class="studentDone">
 
   <%= render Risen.SharedView, "school_banner.html", school: @school %>
 
