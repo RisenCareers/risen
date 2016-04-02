@@ -19,10 +19,6 @@
   <h1>Batch for <%= Timex.format!(@batch.sent_at, "%b. %e, %Y", :strftime) %></h1>
   <% end %>
 
-  <form>
-    <input type="hidden" name=""
-  </form>
-
   <div>
     <%= length(@employers) %> <%= Inflex.inflect("Employer", length(@employers)) %> with <%= length(@students) %> <%= Inflex.inflect("Student", length(@students)) %>
   </div>
@@ -42,7 +38,7 @@
         <ul class="student-list">
           <%= for student <- employer_students do %>
           <li class="student-list-item">
-            <div><%= student.name %></div>
+            <div><a href="<%= admin_students_path(@conn, :edit, student.id) %>"><strong><%= student.name %></strong></a></div>
             <div>
               <span><%= student.school.abbreviation %></span>
               <span><%= student.major.name %></span>
