@@ -1,3 +1,26 @@
 <div>
   <h1>Risen - Admin Students Edit</h1>
+
+  <div>Applied on <%= Timex.format!(@student.inserted_at, "%b. %e, %Y", :strftime) %></div>
+
+  <!-- Edit Form -->
+
+  <%= if @student.status == "Pending" do %>
+  <form action="<%= admin_students_path(@conn, :update, @student.id) %>" method="post">
+    <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+    <input type="hidden" name="_method" value="patch">
+    <input type="hidden" name="mark_ready" value="true">
+    <button type="submit" class="btn btn--interested">Mark Ready</button>
+  </form>
+  <% else %>
+  <div>
+    <em>Assigned to:</em>
+    <%= if @student_batch.sent_at do %>
+    <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><%= Timex.format!(@student_batch.sent_at, "%b. %e, %Y", :strftime) %> Batch</a>
+    <% else %>
+    <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>">Upcoming Batch</a>
+    <% end %>
+  </div>
+  <% end %>
+
 </div>

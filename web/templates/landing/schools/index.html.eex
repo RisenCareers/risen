@@ -1,0 +1,23 @@
+<div class="u-cover home">
+  <div class="container container--mobile">
+    <div class="logo"></div>
+    <div class="story">
+      <h3>Select the school you attend</h3>
+      <p>We work with select Christian schools to curate a network of excellent graduates.</p>
+    </div>
+    <ul>
+      <%= for school <- @schools do %>
+      <li>
+        <a href="<%= student_register_path(@conn, :new, school.slug) %>">
+          <img style="width:48px;height:48px;" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
+          <div><%= school.name %></div>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+    <div class="story">
+      <p>We’re working hard to get more schools on board. If you don’t see your school listed, please let us know.</p>
+      <p>Tell us at <a href="mailto:info@risen.careers">info@risen.careers</a></p>
+    </div>
+  </div>
+</div>

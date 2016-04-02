@@ -18,6 +18,8 @@ defmodule Risen.Router do
 
     get  "/", HomeController, :index
 
+    get  "/schools", SchoolsController, :index
+
     get  "/signin", AccountController, :signin_get
     post "/signin", AccountController, :signin_post
 

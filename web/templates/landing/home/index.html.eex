@@ -7,7 +7,7 @@
       <p>Risen connects graduates of Christian colleges with missional organizations.</p>
     </div>
     <div class="action">
-      <a class="btn">For Graduates</a>
+      <a class="btn" href="<%= schools_path(@conn, :index) %>">For Graduates</a>
       <a class="btn btn--o" href="<%= employer_register_path(@conn, :new) %>">For Organizations</a>
     </div>
   </div>
