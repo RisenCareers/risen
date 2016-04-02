@@ -10,6 +10,7 @@
 @import 'employer/settings/show';
 @import 'student/register/new';
 @import 'student/setup/edit';
+@import 'student/setup/done';
 
 // Components
 @import 'student_list_item';
@@ -301,7 +302,7 @@ option[value=""] {
   &-file {
     display: none;
   }
-  &-pic {
+  &-pic {  // This might not be needed because of .pic
     width:108px;
     height: 108px;
     border: 2px solid $black-10;
@@ -415,6 +416,14 @@ option[value=""] {
   &-file {
     display: none;
   }
+}
+.pic {
+  border: 2px solid $black-10;
+  background-color: $white;
+}
+.pic--student {
+  width: 108px;
+  height: 108px;
 }
 
 

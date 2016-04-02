@@ -1,1 +1,21 @@
-Success
+<div class="studentSetup">
+
+  <%= render Risen.SharedView, "school_banner.html", school: @school %>
+
+  <div class="container container--mobile">
+
+    <img class="pic pic--student u-round" src="<%= Risen.StudentPic.url({@student.pic, @student}) %>"></img>
+    
+    <div class="content">
+      <h2>Thanks, <%= @student.name %>!</h2>
+      <p>We'll look over your profile and schedule you in an upcoming batch.</p>
+      <p>If we have any questions, we'll contact you at <strong><%= @account.email %></strong>.</p>
+    </div>
+
+    <div class="content">
+      <p>Feel free to contact us at info@risen.careers any time.</p>
+    </div>
+
+  </div>
+
+</div>
