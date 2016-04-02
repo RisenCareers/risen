@@ -9,60 +9,7 @@
       <p>Now finish your profile and we'll add you to an upcoming batch.</p>
     </div>
 
-    <%= form_for @changeset, student_setup_path(@conn, :update, @school.slug, @student.id), [multipart: true, method: "patch"], fn f -> %>
-      
-      <h3>Your Photo</h3>
-      <div class="picChooser">
-        <img class="picChooser-pic u-round" src="<%= Risen.StudentPic.url({@student.pic, @student}) %>"></img>
-        <label for="file-upload" class="picChooser-btn btn btn--xshort" type="file">Choose...</label>
-        <input id="file-upload" name="pic" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png">
-      </div>
-
-      <div class="resumeUploader">
-        <p class="resumeUploader-attached"><% if @student.resume do %><%= @student.resume %> attached<% end %></p>
-        <label for="resume-upload" class="resumeUploader-btn" type="file"><h2>Upload Resume...</h2></label>
-        <input id="resume-upload" name="resume" class="resumeUploader-file" type="file" accept=".pdf">
-      </div>
-
-      <label for="major">
-        <h3>Major</h3>
-        <label class="singleSelect">
-          <%= select(f, :major_id, Enum.map(@majors, fn(m) -> {m.name, m.id} end), id: "major", class: "input-default input-default--black", prompt: "Select Major", required: true) %>
-        </label>
-      </label>
-      <label for="phone">
-        <h3>Phone Number</h3>
-        <%= telephone_input f, :phone, id: "phone", class: "input-default input-default--black", type: "tel", placeholder: "555-555-5555", required: true, pattern: "\\d{3}[\\-]\\d{3}[\\-]\\d{4}" %>
-      </label>
-      <label for="role">
-        <h3>Ideal Role</h3>
-        <%= text_input f, :ideal_role, id: "role", class: "input-default input-default--black", placeholder: "Type your ideal role...", required: true %>
-      </label>
-      <label for="job-type">
-        <h3>Job Type</h3>
-        <label class="singleSelect">
-          <%= select(f, :job_type, Risen.Student.job_types, id: "job-type", class: "input-default input-default--black", prompt: "Select Job Type", required: true) %>
-        </label>
-      </label>
-      <label for="visa-status">
-        <h3>Visa Status</h3>
-        <label class="singleSelect">
-          <%= select(f, :visa_status, Risen.Student.visa_statuses, id: "visa-status", class: "input-default input-default--black", prompt: "Select Visa Status", required: true) %>
-        </label>
-      </label>
-      <label for="location-pref">
-        <h3>Location Preference</h3>
-        <%= text_input f, :location_preference, id: "location-pref", class: "input-default input-default--black", placeholder: "Type your location preference...", required: true %>
-      </label>
-      
-      <div class="checkbox">
-        <%= checkbox f, :is_willing_to_relocate, id: "relocate", class: "inputCheckbox" %>
-        <label for="relocate"><div></div>I'm willing to relocate</label>
-      </div>
-
-      <input type="submit" class="btn btn--short btn--dark" value="Save">
-
-    <% end %>
+    <%= render Risen.SharedView, "student_settings.html", changeset: @changeset, action: student_setup_path(@conn, :update, @school.slug, @student.id), student: @student, majors: @majors, edit: false %>
 
     <div class="content">
       <p>Need help? Contact us at info@risen.careers</p>
@@ -71,32 +18,3 @@
   </div>
 
 </div>
-
-
-<script type="text/javascript">
-  // NOTE: This function probably needs to go in /web/static/js/utils.js and imported in app.js
-  function previewImage(input, targetSelector) {
-    if (input.files && input.files[0]) {
-      // NOTE: FilReader API is supported in IE10+
-      var reader = new FileReader();
-      reader.readAsDataURL(input.files[0]);
-      reader.onload = function(e) {
-        document.querySelector(targetSelector).src = e.target.result;
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var picUploader = document.querySelector('.picChooser-file'),
-        resumeUploader = document.querySelector('.resumeUploader-file');
-
-    // Preview the selected image
-    picUploader.onchange = function() { previewImage(picUploader, '.picChooser-pic'); };
-
-    // Print PDF name when selected
-    resumeUploader.onchange = function() {
-      var fileName = resumeUploader.value.split('\\').pop();
-      document.querySelector('.resumeUploader-attached').innerHTML = fileName + " attached";
-    };
-  });
-</script>

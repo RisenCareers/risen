@@ -1,24 +1,20 @@
-<div class="container container-mid">
-  <div class="container-narrow">
-    <form class="form" action="">
-      <div class="pic-container">
-        <img class="student-pic" title="Student Picture">
-        <input type="file" class="">
-      </div>
-      <p><input name="full-name" type="text" placeholder="Full Name"></p>
-      <p><input name="major" type="text" placeholder="Major"></p>
-      <p><input name="phone" type="tel" placeholder="Phone"></p>
-      <p><input name="visa_status" type="text" placeholder="Visa Status"></p>
-      <p><input name="job_type" type="text" placeholder="Job Type"></p>
-      <p><input name="location_pref" type="text" placeholder="Location Preference"></p>
-      <p><input name="relocate" type="text" placeholder="Willing to Relocate?"></p>
-      <input name="submit" type="submit" class="action-btn-primary" value="Save">
-    </form>
-  </div>
-</div>
+<div class="studentEdit">
 
-<style>
-  .pic-container {
-    position: relative;
-  }
-</style>
+  <%= render Risen.SharedView, "school_banner.html", school: @school %>
+
+  <div class="container container--mobile">
+    
+    <div class="content">
+      <h1>Manage Profile</h2>
+      <p><%= @student.name %></p>
+    </div>
+
+    <%= render Risen.SharedView, "student_settings.html", changeset: @changeset, action: student_profile_path(@conn, :update, @student.id), student: @student, majors: @majors, edit: true %>
+
+    <div class="content">
+      <p>Need help? Contact us at info@risen.careers</p>
+    </div>
+  
+  </div>
+
+</div>
