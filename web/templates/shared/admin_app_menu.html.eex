@@ -1,0 +1,13 @@
+<div class="adminAppMenu drawer">
+  <div class="drawer-content">
+    <ul class="navMenu">
+      <li><a class="u-noDecor" href="<%= admin_students_path(@conn, :index) %>">Students</a></li>
+      <li><a class="u-noDecor" href="<%= admin_employers_path(@conn, :index) %>">Employers</a></li>
+      <li><a class="u-noDecor" href="<%= admin_schools_path(@conn, :index) %>">Schools</a></li>
+      <li><a class="u-noDecor" href="<%= admin_batches_path(@conn, :index) %>">Batches</a></li>
+    </ul>
+  </div>
+  <div class="drawer-footer">
+    <a class="btn btn--short btn--dark--o" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
+  </div>
+</div>
