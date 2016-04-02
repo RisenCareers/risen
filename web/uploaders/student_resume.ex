@@ -7,7 +7,7 @@ defmodule Risen.StudentResume do
 
   # Whitelist file extensions:
   def validate({file, _}) do
-    ~w(.pdf) |> Enum.member?(Path.extname(file.file_name))
+    ~w(.pdf) |> Enum.member?(String.downcase(Path.extname(file.file_name)))
   end
 
   # Override the storage directory:
