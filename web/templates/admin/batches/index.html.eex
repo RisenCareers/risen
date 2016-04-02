@@ -10,6 +10,7 @@
 <div>
   <h1>Batches</h1>
 
+  <%= if @upcoming_batch do %>
   <div class="batch">
     <div>
       <a href="<%= admin_batches_path(@conn, :show, @upcoming_batch.id) %>">
@@ -29,6 +30,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <div style="margin-top: 48px;"><strong>Sent Batches</strong></div>
   <ul class="sent-batch-list">

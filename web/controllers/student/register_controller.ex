@@ -46,7 +46,8 @@ defmodule Risen.Student.RegisterController do
             student_params = %{
               name: params["account"]["name"],
               account_id: account.id,
-              school_id: school.id
+              school_id: school.id,
+              status: "Pending"
             }
             student_changeset = Student.changeset(%Student{}, student_params)
 
