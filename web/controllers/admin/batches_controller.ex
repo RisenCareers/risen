@@ -7,7 +7,6 @@ defmodule Risen.Admin.BatchesController do
 
   alias Risen.Repo
   alias Risen.Batch
-  alias Risen.Student
   alias Risen.Employer
   alias Risen.EmployerMajor
 
@@ -37,7 +36,7 @@ defmodule Risen.Admin.BatchesController do
     |> render("index.html")
   end
 
-  def show(conn, params) do
+  def show(conn, _params) do
 
     batch = conn.assigns[:batch]
     majors = Enum.map(batch.students, fn(s) -> s.major end)

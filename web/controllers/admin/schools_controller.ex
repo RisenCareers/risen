@@ -39,7 +39,7 @@ defmodule Risen.Admin.SchoolsController do
     if params["logo"] do
       SchoolLogo.store({params["logo"], school})
       school_changeset = Ecto.Changeset.change(school, logo: params["logo"].filename)
-      school = Repo.update!(school_changeset)
+      Repo.update!(school_changeset)
     end
 
     conn

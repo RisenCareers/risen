@@ -7,20 +7,20 @@ defmodule Risen.Student.ProfileController do
   alias Risen.Repo
   alias Risen.Student
   alias Risen.School
+  alias Risen.Major
 
   plug :authenticate
   plug :require_student
+  plug :load_school
   plug :load_majors
   plug :put_layout, "student.html"
 
   def edit(conn, _params) do
     student = conn.assigns[:student]
-    school = Repo.preload(student, :school).school
     changeset = Ecto.Changeset.change(student)
 
     conn
     |> assign(:changeset, changeset)
-    |> assign(:school, school)
     |> render("edit.html")
   end
 
@@ -35,7 +35,7 @@ defmodule Risen.Student.ProfileController do
       if params[p] do
         m.store({params[p], student})
         student_changeset = Student.changeset(student, %{ p => params[p].filename })
-        student = Repo.update!(student_changeset)
+        Repo.update!(student_changeset)
       end
     end)
 
@@ -44,15 +44,13 @@ defmodule Risen.Student.ProfileController do
     |> redirect(to: student_profile_path(conn, :edit, student.id))
   end
 
-  defp load_majors(conn, _) do
-    majors = Repo.all(Risen.Major)
-    conn |> assign(:majors, majors)
+  defp load_school(conn, _) do
+    school = Repo.get(School, conn.assigns[:student].school_id)
+    conn |> assign(:school, school)
   end
 
-  defp bad_request(conn, error) do
-    conn
-    |> put_flash(:error, error)
-    |> redirect(to: home_path(conn, :index))
-    |> halt()
+  defp load_majors(conn, _) do
+    majors = Repo.all(Major)
+    conn |> assign(:majors, majors)
   end
 end

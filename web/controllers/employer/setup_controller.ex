@@ -15,8 +15,7 @@ defmodule Risen.Employer.SetupController do
   plug :put_layout, "employer.html"
   plug :scrub_params, "employer" when action in [:update]
 
-  def edit(conn, params) do
-
+  def edit(conn, _params) do
     # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
 
@@ -26,12 +25,14 @@ defmodule Risen.Employer.SetupController do
     majors = Repo.all(from m in Major)
     changeset = Employer.changeset(employer)
 
-    render conn, "edit.html", employer: employer, changeset: changeset, majors: majors
-
+    conn
+    |> assign(:employer, employer)
+    |> assign(:changeset, changeset)
+    |> assign(:majors, majors)
+    |> render("edit.html")
   end
 
   def update(conn, params) do
-
     # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
 
@@ -68,6 +69,5 @@ defmodule Risen.Employer.SetupController do
     conn
     |> redirect(to: employer_students_path(conn, :index, employer.slug))
     |> halt()
-
   end
 end

@@ -26,14 +26,14 @@
         <%= text_input f, :name, class: "input-default input-default--black", placeholder: "Full Name", required: true %>
         <%= email_input f, :email, class: "input-default input-default--black", placeholder: "Email", required: true %>
         <%= password_input f, :password, class: "input-default input-default--black", placeholder: "Password", required: true %>
-          
+
         <%= submit "Sign Up", class: "btn btn--short btn--dark" %>
 
       <% end %>
     </div>
 
     <div class="content">
-      <p>Need help? Contact us at info@risen.careers</p>
+      <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
     </div>
 
   </div>

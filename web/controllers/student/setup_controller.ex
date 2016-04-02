@@ -37,7 +37,7 @@ defmodule Risen.Student.SetupController do
       if params[p] do
         m.store({params[p], student})
         student_changeset = Ecto.Changeset.change(student, %{ String.to_atom(p) => params[p].filename })
-        student = Repo.update!(student_changeset)
+        Repo.update!(student_changeset)
       end
     end)
 

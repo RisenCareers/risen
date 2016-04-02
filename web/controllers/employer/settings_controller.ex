@@ -15,8 +15,7 @@ defmodule Risen.Employer.SettingsController do
   plug :require_employer_admin
   plug :scrub_params, "employer" when action in [:update]
 
-  def show(conn, params) do
-
+  def show(conn, _params) do
     # Retrieve employer via the Authenticator plug
     employer = conn.assigns[:employer]
 
@@ -31,11 +30,9 @@ defmodule Risen.Employer.SettingsController do
     |> assign(:majors, majors)
     |> assign(:changeset, changeset)
     |> render("show.html")
-
   end
 
   def update(conn, params) do
-
     # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
 
