@@ -21,7 +21,6 @@ defmodule Risen.Student.ProfileController do
     conn
     |> assign(:changeset, changeset)
     |> assign(:school, school)
-    |> assign(:edit, true)
     |> render("edit.html")
   end
 
