@@ -1,4 +1,4 @@
-<div class="drawer employerAppMenu">
+<div class="drawer js-menu employerAppMenu">
   <div class="drawer-content">
     <ul class="navMenu">
       <li>

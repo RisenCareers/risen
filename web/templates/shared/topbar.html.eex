@@ -11,20 +11,19 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  	console.log('ready');
-    var employerMenu = document.querySelector('.employerAppMenu');
+    var menu = document.querySelector('.js-menu');
     // Prevent propagation pass menu
-    employerMenu.addEventListener('click', function(e) {
+    menu.addEventListener('click', function(e) {
       e.stopPropagation();
     });
     // Toggle employer app menu
     document.querySelector('.menuIcon.js-trigger').addEventListener('click', function(e) {
       e.stopPropagation();
-      employerMenu.classList.toggle('is-in');
+      menu.classList.toggle('is-in');
     });
     // Click outside to exit app menu
     document.querySelector('main').addEventListener('click', function(e) {
-      employerMenu.classList.remove('is-in');
+      menu.classList.remove('is-in');
     });
   });
 </script>
