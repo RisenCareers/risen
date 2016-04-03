@@ -27,3 +27,9 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+config :risen,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_API_KEY")
+
+config :toniq, redis_url: "redis://localhost:6379/0"

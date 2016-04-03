@@ -20,7 +20,7 @@ defmodule Risen.Mixfile do
     [mod: {Risen, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :comeonin, :ex_aws, :httpoison,
-                    :timex]]
+                    :timex, :toniq, :uuid]]
   end
 
   # Specifies which paths to compile per environment.
@@ -46,7 +46,9 @@ defmodule Risen.Mixfile do
      {:timex, "~> 2.1.1"},
      {:timex_ecto, "~> 1.0.3"},
      {:inflex, "~> 1.5.0"},
-     {:slugger, "~> 0.1.0"}]
+     {:slugger, "~> 0.1.0"},
+     {:mailgun, "~> 0.1.2"},
+     {:toniq, "~> 1.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

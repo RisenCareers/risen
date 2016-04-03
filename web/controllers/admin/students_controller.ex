@@ -76,9 +76,8 @@ defmodule Risen.Admin.StudentsController do
           })
           # Mark the student ready
           student_changeset = Ecto.Changeset.change(student, status: "Ready")
-          student = Repo.update!(student_changeset)
+          Repo.update!(student_changeset)
         end
-        conn = conn |> assign(:student, student)
       end
     else
       student_params = params["student"]
