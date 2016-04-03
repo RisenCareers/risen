@@ -3,6 +3,7 @@
 
 // Pages
 @import 'landing/home/index';
+@import 'landing/schools/index';
 @import 'employer/register/new';
 @import 'employer/setup/edit';
 @import 'employer/students/index';
@@ -126,8 +127,8 @@ li {
 .container--mobile {
   display: flex;
   flex-direction: column;
-  width: 375px;
-  padding: 45px;
+  width: 100%;
+  padding: 90px 45px;
   text-align: center;
   position: relative;
 }
@@ -180,10 +181,10 @@ li {
   }
 }
 .logo {
-  width: 175px;
-  height: 100px;
+  width: 143px;
+  height: 121px;
   flex: 0 0 auto;
-  background-image: url("/images/MainLogo.svg");
+  background-image: url("/images/MainLogo_alt.svg");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -212,15 +213,16 @@ li {
   cursor: pointer;
   text-decoration: none;
   border: 2px solid $faded-orange;
-  transition: background-color 333ms ease,
-              color 333ms ease;
+  transition: border-color .2s ease,
+              background-color .2s ease,
+              color .2s ease;
   &:focus {
     outline: none;
   }
   &:hover {
     color: $faded-orange;
     background-color: $faded-orange-25;
-    border-color: $faded-orange-50;
+    border-color: transparent;
     text-decoration: none;
   }
   &.is-hidden {

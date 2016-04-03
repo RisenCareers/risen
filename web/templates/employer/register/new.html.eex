@@ -1,6 +1,6 @@
 <div class="u-cover">
   <div class="employerRegistrationForm container container--mobile">
-    <div class="logo logo--sm"></div>
+    <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
     <p class="tagLine">Risen helps organizations find passionate employees through our Christian college network.</p>
     <h2>Get started in 45 seconds.</h2>
     <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>

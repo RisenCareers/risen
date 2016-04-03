@@ -1,6 +1,6 @@
 <div class="signInForm container container--mobile">
-  <div class="logo"></div>
-  <h2>Sign-in to your Risen account.</h2>
+  <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
+  <h2>Sign-in to your Risen account</h2>
   <form action="<%= account_path(@conn, :signin_post) %>" method="post">
     <%= if @errors != [] do %>
       <div class="alert alert-danger">

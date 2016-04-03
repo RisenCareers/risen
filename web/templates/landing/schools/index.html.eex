@@ -1,13 +1,13 @@
-<div class="u-cover home">
+<div class="u-cover p-schools">
   <div class="container container--mobile">
-    <div class="logo"></div>
+    <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
     <div class="story">
       <h3>Select the school you attend</h3>
       <p>We work with select Christian schools to curate a network of excellent graduates.</p>
     </div>
-    <ul>
+    <ul class="school-list">
       <%= for school <- @schools do %>
-      <li>
+      <li class="school-list-item">
         <a href="<%= student_register_path(@conn, :new, school.slug) %>">
           <img style="width:48px;height:48px;" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
           <div><%= school.name %></div>
