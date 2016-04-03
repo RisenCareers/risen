@@ -1,4 +1,4 @@
-<div class="adminAppMenu drawer">
+<div class="adminAppMenu js-menu drawer">
   <div class="drawer-content">
     <ul class="navMenu">
       <li><a class="u-noDecor" href="<%= admin_students_path(@conn, :index) %>">Students</a></li>

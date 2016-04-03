@@ -1,0 +1,40 @@
+.adminStudentsIndex {
+  .pageTitle {
+    text-align: left;
+    margin-bottom :35px;
+  }
+  .batch {
+    margin-bottom: 35px;
+    &-title {
+      font-weight: 300;
+      margin-bottom: 25px;
+    }
+  }
+  .student {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    &-pic {
+      margin-right: 15px;  // Matches the padding on .card
+    }
+    &-info {
+      text-align: left;
+      &-name {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 18px;
+      }
+      &-status {
+        margin-bottom: 15px;
+      }
+      &-school, &-major {
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+      &-applied {
+        font-size: 14px;
+        font-style: italic;
+      }
+    }
+  }
+}
