@@ -1,0 +1,63 @@
+<div class="batch card">
+  <h2 class="card-title"><a class="u-noDecor" href="<%= @href %>"><%= @title %></a></h2>
+  <div class="card-content">
+    <div class="studentPicsWrapper">
+      <ul class="studentPics">
+        <%= for student <- @batch.students do %>
+        <li><img class="pic pic--student--sm u-round" src="<%= Risen.StudentPic.url({student.pic, student}) %>" /></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="filler"></div>
+    <div class="studentCount">
+      <p><%= length(@batch.students) %> <%= Inflex.inflect("Student", length(@batch.students)) %></p>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // NOTE: I don't think this is efficient because the event listeners are ran
+    //   and the functions are declared multiple times if multiple batch_item are
+    //   rendered in a page.
+    // NOTE: On the 2nd pass, we can at least extract checkBatchPics()
+    var batches = document.querySelectorAll('.batch');
+    for (var i = 0; i < batches.length; i++) {
+      checkBatchPics(batches[i]);
+    }
+
+    function checkBatchPics(batch) {
+      var w = batch.querySelector('.studentPicsWrapper'),
+          s = batch.querySelector('.studentPics'),
+          inners = batch.querySelectorAll('.studentPics li'),
+          wWidth = undefined, sWidth = undefined, switchPoint = undefined;
+
+      function checkFlex() {
+        console.log('check flex');
+        sWidth = s.clientWidth;
+        wWidth = w.clientWidth;
+        if (switchPoint !== undefined && sWidth - 1 - 1 >= switchPoint) {
+          // Remove flex
+          s.classList.remove('flex');
+          for (var i = 0; i < inners.length; i++) {
+            inners[i].classList.remove('flex');
+          }
+          switchPoint = undefined;
+        }
+        else if (wWidth === sWidth) {
+          // Add flex
+          s.classList.add('flex');
+          for (var i = 0; i < inners.length; i++) {
+            inners[i].classList.add('flex');
+          }
+          switchPoint = switchPoint === undefined ? sWidth : switchPoint;
+        }
+      }
+
+      checkFlex();
+      window.addEventListener('resize', checkFlex);
+    }
+  });
+</script>

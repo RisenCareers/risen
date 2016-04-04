@@ -1,0 +1,46 @@
+.batch {
+  margin-bottom: 15px;
+  .card-content {
+    display: flex;
+    min-width: 253px;  // 100% width inside the card
+    text-align: left;
+  }
+  .studentPicsWrapper {
+    flex: 4 1 36px;
+    max-width: 90%;
+  }
+  .studentPics {
+    flex: 1 1 36px;
+    max-width: calc(100%);
+    display: inline-flex;
+    &.flex {
+      display: flex;
+      justify-content: space-between;
+    }
+    li {
+      display: block;
+      flex: 0 0 auto;
+      margin-left: -27px;
+      &.flex {
+        margin-left: -38px;  // pic width + left border + right border
+      }
+    }
+    li:first-of-type {
+      margin-left: 0;
+    }
+  }
+  .pic {
+    border: 1px solid $white;
+    width: 36px;
+    height: 36px;
+  }
+  .filler {
+    flex: 1 1 auto;
+  }
+  .studentCount {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+}
