@@ -15,6 +15,7 @@
 @import 'admin/students/index';
 @import 'admin/batches/index';
 @import 'admin/batches/show';
+@import 'admin/employers/index';
 
 // Components
 @import 'student_list_item';
@@ -27,6 +28,7 @@
 @import 'student_settings';
 @import 'school_banner';
 @import 'batch_item';
+@import 'employer_summary';
 
 
 // Block overrides

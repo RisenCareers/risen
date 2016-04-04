@@ -1,0 +1,6 @@
+<div class="employerSummary">
+<img class="employerSummary-pic pic pic--student--sm u-round" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>" />
+<div class="employerSummary-info">
+  <h2 class="employerSummary-info-name"><%= @employer.name %></h2>
+  <p class="employerSummary-info-studentCount"><%= length(@employer_students) %> <%= Inflex.inflect("Student", length(@employer_students)) %></p>
+</div>

@@ -1,0 +1,7 @@
+.employerSummary {
+  display: flex;
+  align-items: center;
+  &-pic {
+    margin-right: 15px;  // Matches .card padding
+  }
+}
