@@ -41,8 +41,10 @@ defmodule Risen.Employer.SetupController do
 
     # Update the employer logo
     if params["logo"] do
+      IO.inspect params["logo"]
       EmployerLogo.store({params["logo"], employer})
       employer_changeset = Ecto.Changeset.change(employer, logo: params["logo"].filename)
+      IO.inspect employer_changeset
       employer = Repo.update!(employer_changeset)
     end
 
