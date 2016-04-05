@@ -1,26 +1,45 @@
-<div>
-  <h1>Risen - Admin Students Edit</h1>
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
 
-  <div>Applied on <%= Timex.format!(@student.inserted_at, "%b. %e, %Y", :strftime) %></div>
+<div class="adminStudentEdit adminSite">
 
-  <!-- Edit Form -->
+  <section class="section">
+    <div class="container container--mobile">
+      <%= render Risen.SharedView, "topbar.html" %>
+    </div>
+  </section>
 
-  <%= if @student.status == "Pending" do %>
-  <form action="<%= admin_students_path(@conn, :update, @student.id) %>" method="post">
-    <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
-    <input type="hidden" name="_method" value="patch">
-    <input type="hidden" name="mark_ready" value="true">
-    <button type="submit" class="btn btn--interested">Mark Ready</button>
-  </form>
-  <% else %>
-  <div>
-    <em>Assigned to:</em>
-    <%= if @student_batch.sent_at do %>
-    <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><%= Timex.format!(@student_batch.sent_at, "%b. %e, %Y", :strftime) %> Batch</a>
-    <% else %>
-    <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>">Upcoming Batch</a>
-    <% end %>
-  </div>
-  <% end %>
+  <%= render Risen.SharedView, "school_banner.html", school: @school %>
+
+  <div class="container container--mobile">
+
+    <div class="content header">
+      <h1 class="pageTitle">Manage Profile</h2>
+      <h2 class="u-normalWeight"><%= @student.name %></h2>
+      <h2 class="u-normalWeight u-italic">Applied on <%= Timex.format!(@student.inserted_at, "%b. %e, %Y", :strftime) %></h2>
+    </div>
+
+    <div class="content assignedTo card">
+      <%= if @student.status == "Pending" do %>
+        <form action="<%= admin_students_path(@conn, :update, @student.id) %>" method="post">
+          <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="mark_ready" value="true">
+          <button type="submit" class="btn btn--interested btn--o">Mark Ready</button>
+        </form>
+      <% else %>
+        <div>
+          <h2 class="u-normalWeight u-italic">Assigned to:</h2>
+          <%= if @student_batch.sent_at do %>
+          <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><h2 class="pageTitle"><%= Timex.format!(@student_batch.sent_at, "%b. %e, %Y", :strftime) %> Batch</h2></a>
+          <% else %>
+          <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><h2 class="pageTitle">Upcoming Batch</a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="content form">
+      <%= render Risen.SharedView, "student_settings.html", student: @student, changeset: @changeset, action: admin_students_path(@conn, :edit, @student.id), majors: @majors, edit: true  %>
+    </div>
 
 </div>
