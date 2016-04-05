@@ -22,13 +22,6 @@
   .employerList-item {
     margin-bottom: 15px;
     text-align: left;
-    &-employer {
-      display: flex;
-      align-items: center;
-      .employerPic {
-        margin-right: 15px;  // Matches .card padding
-      }
-    }
   }
   .studentList-item {
     margin-bottom: 15px;

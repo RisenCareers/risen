@@ -1,15 +1,14 @@
-<div>
-  <h1>Employers</h1>
-  <ul class="employer-list">
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+
+<div class="container container--mobile adminEmployersIndex adminSite">
+
+  <%= render Risen.SharedView, "topbar.html" %>
+
+  <h1 class="pageTitle">Employers</h1>
+  <ul class="employerList">
     <%= for employer <- @employers do %>
-    <li class="employer" style="margin-top: 16px;">
-      <div>
-        <img class="studentSummary-pic round-pic" src="<%= Risen.EmployerLogo.url({employer.logo, employer}) %>" />
-      </div>
-      <div>
-        <strong><%= employer.name %></strong>
-      </div>
-      <div><%= length(employer.students) %> Students Sent</div>
+    <li class="employer card">
+      <%= render Risen.SharedView, "employer_summary.html", employer: employer, employer_students: employer.students %>
     </li>
     <% end %>
   </ul>

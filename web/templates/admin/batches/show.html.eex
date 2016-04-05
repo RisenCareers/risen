@@ -30,11 +30,7 @@
       %>
       <li class="employerList-item card">
         <div class="employerList-item-employer">
-          <img class="employerPic pic pic--student--sm u-round" src="<%= Risen.EmployerLogo.url({employer.logo, employer}) %>" />
-          <div class="employerInfo">
-            <h2><%= employer.name %></h2>
-            <p><%= length(employer_students) %> <%= Inflex.inflect("Student", length(employer_students)) %></p>
-          </div>
+          <%= render Risen.SharedView, "employer_summary.html", employer: employer, employer_students: employer_students %>
         </div>
         <hr>
         <div class="employerList-item-students">
