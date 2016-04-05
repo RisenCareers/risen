@@ -13,11 +13,11 @@
 @import 'student/setup/done';
 @import 'student/profile/edit';
 @import 'admin/students/index';
+@import 'admin/batches/index';
 
 // Components
 @import 'student_list_item';
 @import 'signin_form';
-@import 'batch_list_item';
 @import 'employer_app_menu';
 @import 'admin_app_menu';
 @import 'topbar';
@@ -25,6 +25,7 @@
 @import 'employer_settings';
 @import 'student_settings';
 @import 'school_banner';
+@import 'batch_item';
 
 
 // Block overrides
@@ -316,6 +317,13 @@ li {
   padding: 15px;
   border: 1px solid $black-10;
   border-radius: 3px;
+}
+.card-title {
+  margin-bottom: 25px;
+  text-align: left;
+  font-size: 18px;
+  font-style: italic;
+  color: $greyish-brown;
 }
 .picChooser {
   background-color: $black-5;

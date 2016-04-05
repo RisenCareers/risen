@@ -1,62 +1,19 @@
-<style>
-.batch-item {
-  margin-top: 48px;
-}
-.batch {
-  background-color: #eee;
-  border-radius: 3px;
-}
-</style>
-<div>
-  <h1>Batches</h1>
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
 
+<div class="container container--mobile adminBatchesIndex adminSite">
+
+  <%= render Risen.SharedView, "topbar.html" %>
+  
+  <h1 class="pageTitle">Batches</h1>
   <%= if @upcoming_batch do %>
-  <div class="batch">
-    <div>
-      <a href="<%= admin_batches_path(@conn, :show, @upcoming_batch.id) %>">
-        Upcoming Batch
-      </a>
-    </div>
-    <div>
-      <ul>
-        <%= for student <- @upcoming_batch.students do %>
-        <li>
-          <img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({student.pic, student}) %>" />
-        </li>
-        <% end %>
-      </ul>
-      <div>
-        <div><%= length(@upcoming_batch.students) %> <%= Inflex.inflect("Student", length(@upcoming_batch.students)) %></div>
-      </div>
-    </div>
-  </div>
+    <%= render Risen.SharedView, "batch_item.html", title: "Upcoming Batch", batch: @upcoming_batch, href: admin_batches_path(@conn, :show, @upcoming_batch.id) %>
   <% end %>
 
-  <div style="margin-top: 48px;"><strong>Sent Batches</strong></div>
-  <ul class="sent-batch-list">
+  <h2 class="batches-title">Sent Batches</h2>
+  <ul class="batches-list">
     <%= for batch <- @sent_batches do %>
-    <li class="batch-item">
-
-      <div class="batch">
-        <div>
-          <a href="<%= admin_batches_path(@conn, :show, batch.id) %>">
-            Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %>
-          </a>
-        </div>
-        <div>
-          <ul>
-            <%= for student <- batch.students do %>
-            <li>
-              <img class="studentSummary-pic round-pic" src="<%= Risen.StudentPic.url({student.pic, student}) %>" />
-            </li>
-            <% end %>
-          </ul>
-          <div>
-            <div><%= length(batch.students) %> <%= Inflex.inflect("Student", length(batch.students)) %></div>
-          </div>
-        </div>
-      </div>
-
+    <li>
+      <%= render Risen.SharedView, "batch_item.html", title: "Batch for " <> Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) , batch: batch, href: admin_batches_path(@conn, :show, batch.id) %>
     </li>
     <% end %>
   </ul>
