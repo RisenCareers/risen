@@ -17,6 +17,7 @@
 @import 'admin/batches/show';
 @import 'admin/employers/index';
 @import 'admin/schools/index';
+@import 'admin/schools/new';
 
 // Components
 @import 'student_list_item';
@@ -370,6 +371,9 @@ li {
       color: initial;
     }
   }
+}
+.adminSite .picChooser {
+  background-color: transparent;
 }
 .singleSelect {
   position: relative;

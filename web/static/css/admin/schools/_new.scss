@@ -1,0 +1,19 @@
+.adminSchoolsNew {
+  .pageTitle {
+    text-align: left;
+    margin-bottom: 35px;
+  }
+  form {
+    text-align: left;
+    h3 {
+      margin-bottom: 8px;
+    }
+    input {
+      margin-bottom: 36px;
+    }
+  }
+  button[type="submit"] {
+    display: block;
+    margin: 45px auto;
+  }
+}
