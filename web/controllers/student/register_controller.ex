@@ -53,6 +53,7 @@ defmodule Risen.Student.RegisterController do
 
             case Repo.insert(student_changeset) do
               {:ok, student} ->
+                Risen.Mailer.send_student_welcome_email(student)
                 conn
                 |> put_session(:account_id, account.id)
                 |> put_flash(:info, "Account created successfully.")

@@ -71,7 +71,7 @@ defmodule Risen.Admin.BatchesController do
       unless batch.sent_at do
         Repo.transaction fn ->
           batch_changeset = Ecto.Changeset.change(batch, sent_at: DateTime.now)
-          batch = Repo.update!(batch_changeset)
+          Repo.update!(batch_changeset)
           Repo.insert!(%Batch{})
         end
       end

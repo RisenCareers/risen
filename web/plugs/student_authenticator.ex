@@ -8,7 +8,7 @@ defmodule Risen.Plugs.Student.Authenticator do
 
   def require_student(conn, _) do
     student = Repo.get(Student, conn.params["id"])
-    student = Repo.preload(student, [:major])
+    student = Repo.preload(student, [:account, :major])
     unless student do
       conn |> inauthenticated
     else

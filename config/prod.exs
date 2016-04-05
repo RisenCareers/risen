@@ -26,6 +26,12 @@ config :risen, Risen.Repo,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :risen,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_API_KEY")
+
+config :toniq, redis_url: System.get_env("REDIS_PROVIDER")
+
 # Configure Amazon s3
 config :arc,
   bucket: "risen-prod"
