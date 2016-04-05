@@ -1,0 +1,39 @@
+.adminBatchesShow {
+  .pageTitle {
+    text-align: left;
+    margin-bottom :35px;
+  }
+  form {
+    margin-bottom: 35px;
+    &.card {
+      padding: 25px;
+    }
+  }
+  .batch {
+    margin-bottom: 35px;
+    &-title {
+      font-weight: 300;
+      margin-bottom: 35px;
+    }
+  }
+  hr {
+    margin: 15px 0;
+  }
+  .employerList-item {
+    margin-bottom: 15px;
+    text-align: left;
+    &-employer {
+      display: flex;
+      align-items: center;
+      .employerPic {
+        margin-right: 15px;  // Matches .card padding
+      }
+    }
+  }
+  .studentList-item {
+    margin-bottom: 15px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
