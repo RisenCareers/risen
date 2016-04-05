@@ -55,9 +55,7 @@ defmodule Risen.Mailer do
   end
 
   defp send_email(opts) do
-    Logger.debug "Sending email"
-    Logger.debug "#{opts}"
-
+    Logger.debug "Sending email #{inspect opts}"
     Toniq.enqueue(Risen.MailerWorker, opts)
   end
 end

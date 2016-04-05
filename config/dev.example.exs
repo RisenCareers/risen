@@ -41,6 +41,12 @@ config :risen, Risen.Repo,
   hostname: "localhost",
   pool_size: 10
 
+config :risen,
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_API_KEY")
+
+config :toniq, redis_url: System.get_env("REDIS_PROVIDER")
+
 # Configure Amazon s3
 config :arc,
   bucket: "risen-dev"
