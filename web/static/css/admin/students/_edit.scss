@@ -1,0 +1,30 @@
+.adminStudentEdit {
+  section.section .container {
+    .topBar {
+      margin-bottom: 0;
+    }
+  }
+  div.section .container--mobile {
+    padding: 60px 45px;
+  }
+  .schoolBanner-text {
+    display: none;
+  }
+  .container:last-of-type {
+    padding-top: 60px;
+  }
+  .content.header {
+    margin-bottom: 45px;
+    h1 {
+      margin-bottom: 15px;
+    }
+  }
+  .content.assignedTo {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-bottom: 45px;
+    h2:first-of-type{
+      margin-bottom: 5px;
+    }
+  }
+}
