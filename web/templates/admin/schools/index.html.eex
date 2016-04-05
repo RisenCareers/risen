@@ -1,23 +1,20 @@
-<style>
-  .school {
-    margin-top: 16px;
-  }
-</style>
-<div>
-  <h1>Schools</h1>
-  <div>
-    <a href="<%= admin_schools_path(@conn, :new) %>">New</a>
-  </div>
-  <ul class="school-list">
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+
+<div class="container container--mobile adminSchoolsIndex adminSite">
+
+  <%= render Risen.SharedView, "topbar.html" %>
+  
+  <h1 class="pageTitle">Schools<a class="linkBtn" href="<%= admin_schools_path(@conn, :new) %>">New</a></h1>
+  <ul class="schoolList">
     <%= for school <- @schools do %>
-    <li class="school">
-      <div>
-        <img class="studentSummary-pic round-pic" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
+    <li class="school card">
+      <div class="school-pic">
+        <img class="pic pic--student--sm u-round" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
       </div>
-      <div>
-        <strong><%= school.name %></strong>
+      <div class="school-info">
+        <h2 class="school-info-name"><%= school.name %></h2>
+        <p class="school-info-studentCount"><%= length(school.students) %> Student Applicants</p>
       </div>
-      <div><%= length(school.students) %> Student Applicants</div>
     </li>
     <% end %>
   </ul>

@@ -16,6 +16,7 @@
 @import 'admin/batches/index';
 @import 'admin/batches/show';
 @import 'admin/employers/index';
+@import 'admin/schools/index';
 
 // Components
 @import 'student_list_item';
@@ -252,6 +253,18 @@ li {
     color: $greyish-brown;
     background-color: $black-10;
   }
+}
+.linkBtn {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 0.9px;
+  font-weight: 600;
+  color: $white;
+  background-color: $faded-orange;
+  padding: 3px 10px;
+  border-radius: 3px;
+  vertical-align: middle;
 }
 .input-default {
   width: 100%;
