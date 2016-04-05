@@ -4,7 +4,7 @@
 
   <%= render Risen.SharedView, "topbar.html" %>
 
-  <h1 class="pageTitle">Schools > New</h1>
+  <h1 class="pageTitle">Schools  <span class="u-normalWeight">>  New</span></h1>
 
   <%= form_for @changeset, admin_schools_path(@conn, :create), [multipart: true], fn f -> %>
     
