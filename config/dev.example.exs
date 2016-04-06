@@ -45,7 +45,7 @@ config :risen,
   mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
   mailgun_key: System.get_env("MAILGUN_API_KEY")
 
-config :toniq, redis_url: System.get_env("REDIS_PROVIDER")
+config :toniq, redis_url: System.get_env("REDIS_URL")
 
 # Configure Amazon s3
 config :arc,
