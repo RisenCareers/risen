@@ -8,6 +8,9 @@
     &-title {
       font-weight: 300;
       margin-bottom: 25px;
+      @include respond-to(medium) {
+        text-align: left;
+      }
     }
   }
   .student {

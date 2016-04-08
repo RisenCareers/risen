@@ -2,7 +2,7 @@
 
 <div class="container container--mobile adminBatchesShow adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
 
   <%= if @is_upcoming do %>
     <h1 class="pageTitle">Upcoming Batch</h1>

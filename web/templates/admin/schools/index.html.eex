@@ -2,8 +2,8 @@
 
 <div class="container container--mobile adminSchoolsIndex adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
-  
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+
   <h1 class="pageTitle">Schools<a class="linkBtn" href="<%= admin_schools_path(@conn, :new) %>">New</a></h1>
   <ul class="schoolList">
     <%= for school <- @schools do %>

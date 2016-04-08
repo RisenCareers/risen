@@ -1,23 +1,33 @@
 <div class="u-cover p-schools">
   <div class="container container--mobile">
     <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
-    <div class="story">
-      <h3>Select the school you attend</h3>
-      <p>We work with select Christian schools to curate a network of excellent graduates.</p>
+
+    <div class="container--copy">
+      <p class="tagLine">
+        We work with select Christian schools to curate a network of excellent graduates.
+      </p>
     </div>
-    <ul class="school-list">
-      <%= for school <- @schools do %>
-      <li class="school-list-item">
-        <a href="<%= student_register_path(@conn, :new, school.slug) %>">
-          <img style="width:48px;height:48px;" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
-          <div><%= school.name %></div>
-        </a>
-      </li>
-      <% end %>
-    </ul>
-    <div class="story">
-      <p>We’re working hard to get more schools on board. If you don’t see your school listed, please let us know.</p>
-      <p>Tell us at <a href="mailto:info@risen.careers">info@risen.careers</a></p>
+    <h2>Select the school you attend</h2>
+
+    <div class="school-list-wrap">
+      <ul class="school-list">
+        <%= for school <- @schools do %>
+        <li class="school-list-item">
+          <a class="school-list-link" href="<%= student_register_path(@conn, :new, school.slug) %>">
+            <img class="logo" style="width:48px;height:48px;" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
+            <div class="name"><%= school.name %></div>
+          </a>
+        </li>
+        <% end %>
+      </ul>
     </div>
+
+    <div class="container--copy">
+      <div class="content">
+        <p>We’re working hard to get more schools on board. If you don’t see your school listed, please let us know.</p>
+        <p>Tell us at <a href="mailto:info@risen.careers">info@risen.careers</a></p>
+      </div>
+    </div>
+
   </div>
 </div>

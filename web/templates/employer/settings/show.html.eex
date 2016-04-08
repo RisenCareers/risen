@@ -1,25 +1,23 @@
 <%= render Risen.SharedView, "employer_app_menu.html", employer: @employer, conn: @conn %>
 
 <div class="container container--mobile employerSettings">
-  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "employer_topbar.html", conn: @conn, employer: @employer %>
   <h1 class="pageTitle u-leftText">Settings</h1>
 
-  <%= form_for @changeset, employer_settings_path(@conn, :update, @employer.slug), [multipart: true, method: "patch"], fn f -> %>
-
-    <%= if f.errors != [] do %>
-      <div class="alert alert-danger">
-        <p>Oops, something went wrong! Please check the errors below:</p>
-        <ul>
-          <%= for {attr, message} <- f.errors do %>
-            <li><%= humanize(attr) %> <%= message %></li>
-          <% end %>
-        </ul>
-      </div>
+  <div class="container--form">
+    <%= form_for @changeset, employer_settings_path(@conn, :update, @employer.slug), [multipart: true, method: "patch"], fn f -> %>
+      <%= if f.errors != [] do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below:</p>
+          <ul>
+            <%= for {attr, message} <- f.errors do %>
+              <li><%= humanize(attr) %> <%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= render Risen.SharedView, "employer_settings.html", assigns %>
+      <%= submit "Save", class: "btn btn--short" %>
     <% end %>
-
-    <%= render Risen.SharedView, "employer_settings.html", assigns %>
-
-    <%= submit "Save", class: "btn btn--short" %>
-
-  <% end %>
+  </div>
 </div>

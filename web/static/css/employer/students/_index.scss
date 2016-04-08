@@ -5,16 +5,16 @@
   .batch {
     margin-top: 35px;
     &-title {
-      font-weight: 300;
       margin-bottom: 10px;
+      font-weight: 300;
+      @include respond-to(medium) {
+        text-align: left;
+      }
     }
   }
   .card {
     margin-top: 15px;
     cursor: pointer;
-    &:hover {
-      background-color: $very-light-pink;
-    }
     .studentSummary {
       display: flex;
       align-items: center;

@@ -4,7 +4,7 @@
 
   <section class="section">
     <div class="container container--mobile">
-      <%= render Risen.SharedView, "topbar.html" %>
+      <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
     </div>
   </section>
 

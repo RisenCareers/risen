@@ -11,3 +11,19 @@ $black-10: rgba(0,0,0,0.1);
 $black-10s : #F2F2F2;
 $black-5: rgba(0,0,0,0.05);
 $very-light-pink: #FFF7EF;
+
+$break-small: 375px;
+$break-medium: 760px;
+$break-large: 1024px;
+
+@mixin respond-to($media) {
+  @if $media == small {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @else if $media == medium {
+    @media only screen and (min-width: $break-medium + 1) { @content; }
+  }
+  @else if $media == large {
+    @media only screen and (min-width: $break-large + 1) { @content; }
+  }
+}

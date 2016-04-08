@@ -2,8 +2,8 @@
 
 <div class="container container--mobile adminBatchesIndex adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
-  
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+
   <h1 class="pageTitle">Batches</h1>
   <%= if @upcoming_batch do %>
     <%= render Risen.SharedView, "batch_item.html", title: "Upcoming Batch", batch: @upcoming_batch, href: admin_batches_path(@conn, :show, @upcoming_batch.id) %>

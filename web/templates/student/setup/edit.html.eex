@@ -4,15 +4,19 @@
 
   <div class="container container--mobile">
 
-    <div class="content">
-      <h2>Hi, <%= @student.name %>!</h2>
-      <p>Now finish your profile and we'll add you to an upcoming batch.</p>
+    <div class="container--copy">
+      <div class="content">
+        <h2>Hi, <%= @student.name %>!</h2>
+        <p>Now finish your profile and we'll add you to an upcoming batch.</p>
+      </div>
     </div>
 
     <%= render Risen.SharedView, "student_settings.html", changeset: @changeset, action: student_setup_path(@conn, :update, @school.slug, @student.id), student: @student, majors: @majors, edit: false %>
 
-    <div class="content">
-      <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
+    <div class="container--copy">
+      <div class="content">
+        <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
+      </div>
     </div>
 
   </div>

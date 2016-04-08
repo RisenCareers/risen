@@ -22,6 +22,7 @@
 @import 'admin/schools/new';
 
 // Components
+@import 'app_bar_menu';
 @import 'student_list_item';
 @import 'signin_form';
 @import 'employer_app_menu';
@@ -51,9 +52,15 @@ h1 {
 }
 h2 {
   font-size: 18px;
+  @include respond-to(medium) {
+    font-size: 20px;
+  }
 }
 h3 {
   font-size: 16px;
+  @include respond-to(medium) {
+    font-size: 18px;
+  }
 }
 hr {
   border-color: $black-10;
@@ -109,6 +116,10 @@ li {
   list-style-type: none;
 }
 
+// Stop FOUT
+
+html { visibility: hidden; }
+html.wf-active { visibility: visible; }
 
 // App-wide style
 .studentSite {
@@ -121,16 +132,40 @@ li {
 }
 .container {
   margin: 0 auto;
-  width: 756px;
+  max-width: 756px;
+  width: 100%;
   padding: 0 45px;
+  &.is-not-centered {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 .container--mobile {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 90px 45px;
+  padding: 45px;
   text-align: center;
   position: relative;
+}
+.container--form {
+  display: block;
+  max-width: 285px;
+  width: 100%;
+  margin: 0 auto;
+  &.is-not-centered {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+.container--copy {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 480px;
+  &.is-not-centered {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 .navMenu {
   list-style-type: none;
@@ -181,17 +216,22 @@ li {
   }
 }
 .logo {
+  display: block;
   width: 143px;
   height: 121px;
-  flex: 0 0 auto;
   background-image: url("/images/MainLogo_alt.svg");
   background-repeat: no-repeat;
   background-position: center;
 }
 .logo--streamlined {
-  width: 102px;
-  height: 38px;
-  background-image: url('/images/StreamlinedLogo.svg');
+  width: 52px;
+  height: 25px;
+  background-image: url('/images/StreamlinedLogo_alt.svg');
+  background-size: contain;
+  @include respond-to(medium) {
+    width: (52px * 1.25);
+    height: (25px * 1.25);
+  }
 }
 .adminSite .logo {
   filter: grayscale(1) brightness(0.5);
@@ -278,6 +318,10 @@ li {
   font-size: 18px;
   font-weight: 300;
   background-color: transparent;
+  transition: border-color .15s ease-in-out;
+  &:hover {
+    border-bottom-color: rgba(black, .25);
+  }
   &:focus {
     outline: none;
     border-bottom-color: $faded-orange;
@@ -289,10 +333,18 @@ li {
   }
 }
 .x-mark {
-  width: 11px;
-  height: 11px;
+  $_pad: 6px;
+  width: 12px + ($_pad * 2);
+  height: 12px + ($_pad * 2);
+  padding: $_pad;
   position: relative;
   cursor: pointer;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: background-color .15s ease-in-out;
+  &:hover {
+    background-color: rgba(black, .05);
+  }
   &::before,
   &::after {
     content: "";
@@ -300,9 +352,10 @@ li {
     position: absolute;
     top: 0;
     width: 1px;
-    height: 100%;
+    height: calc(100% - #{$_pad});
     background-color: #000;
     left: 50%;
+    margin-top: $_pad / 2;
   }
   &::before {
     transform: rotate(-45deg);
@@ -318,6 +371,9 @@ li {
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  @include respond-to(medium) {
+    display: none;
+  }
   &-stripe {
     flex: 0 0 4px;  // Suppose to be 4.6px OR just use an SVG
     background-color: $faded-orange-50;
@@ -337,6 +393,10 @@ li {
   padding: 15px;
   border: 1px solid $black-10;
   border-radius: 3px;
+  transition: border-color .15s ease-in-out;
+  &:not(.no-hover):hover {
+    border-color: rgba(black, .25);
+  }
 }
 .card-title {
   margin-bottom: 25px;
@@ -346,7 +406,6 @@ li {
   color: $greyish-brown;
 }
 .picChooser {
-  background-color: $black-5;
   padding: 15px;
   display: flex;
   flex-direction: row;
@@ -446,6 +505,32 @@ li {
         display: none;
       }
     }
+  }
+}
+.selectedOptions {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+  > *:not(:last-child) {
+    margin-bottom: 6px;
+  }
+  .major {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 1px solid $black-5;
+    border-radius: 3px;
+    padding: 8px 15px;
+    transition: background-color .15s ease-in-out;
+    &:hover {
+      background-color: rgba($faded-orange, .1);
+    }
+  }
+  input {
+    flex: 1;
+    border: none;
+    font-size: 16px;
+    background-color: transparent;
   }
 }
 .linkDefault {

@@ -1,26 +1,32 @@
 <div class="u-cover">
   <div class="employerRegistrationForm container container--mobile">
     <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
-    <p class="tagLine">Risen helps organizations find passionate employees through our Christian college network.</p>
+    <div class="container--copy">
+      <p class="tagLine">
+        Risen helps organizations find passionate employees through our Christian college network.
+      </p>
+    </div>
     <h2>Get started in 45 seconds.</h2>
-    <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>
-      <%= if f.errors != [] do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below:</p>
-          <ul>
-            <%= for {attr, message} <- f.errors do %>
-              <li><%= humanize(attr) %> <%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+    <div class="container--form">
+      <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>
+        <%= if f.errors != [] do %>
+          <div class="alert alert-danger">
+            <p>Oops, something went wrong! Please check the errors below:</p>
+            <ul>
+              <%= for {attr, message} <- f.errors do %>
+                <li><%= humanize(attr) %> <%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= text_input f, :name, class: "input-default", placeholder: "Organization Name", required: true %>
+        <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
+        <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
+        <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
+        <button type="submit" class="btn btn--short">
+          Sign Up
+        </button>
       <% end %>
-      <%= text_input f, :name, class: "input-default", placeholder: "Organization Name", required: true %>
-      <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
-      <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
-      <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
-      <button type="submit" class="btn btn--short">
-        Sign Up
-      </button>
-    <% end %>
+    </div>
   </div>
 </div>

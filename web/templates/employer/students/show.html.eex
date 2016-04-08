@@ -1,7 +1,7 @@
 <%= render Risen.SharedView, "employer_app_menu.html", employer: @employer, conn: @conn %>
 
 <div class="container container--mobile employerStudentsShow">
-  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "employer_topbar.html", conn: @conn, employer: @employer %>
   <%= render Risen.SharedView, "student_summary.html", student: @student %>
   <%= if not @employer_interested do %>
     <hr>
