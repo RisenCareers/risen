@@ -19,3 +19,31 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+var menuAttached = false;
+var handleMenu = function() {
+  if (menuAttached) { return; }
+  var menu = document.querySelector('.js-menu');
+  if (!menu) { return; }
+
+  // Prevent propagation pass menu
+  menu.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+  // Toggle employer app menu
+  document.querySelector('.menuIcon.js-trigger').addEventListener('click', function(e) {
+    e.stopPropagation();
+    menu.classList.toggle('is-in');
+  });
+  // Click outside to exit app menu
+  document.querySelector('main').addEventListener('click', function(e) {
+    menu.classList.remove('is-in');
+  });
+
+  menuAttached = true;
+};
+
+document.addEventListener('DOMContentLoaded', handleMenu);
+window.onresize = function() {
+  handleMenu();
+};

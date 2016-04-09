@@ -9,6 +9,7 @@
 
     <title>Risen - Jobs for Christian College Graduates</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="icon" type="image/x-icon" href="<%= static_path(@conn, "/images/favicon.png") %>" />
   </head>
 
   <body>

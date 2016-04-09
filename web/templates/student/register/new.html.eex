@@ -1,39 +1,45 @@
 <div class="studentRegistration">
-
   <%= render Risen.SharedView, "school_banner.html", school: @school %>
-
   <div class="container container--mobile">
-    <div class="content">
-      <p>Risen helps graduate find the right fit for them with our network of mission-minded organizations.</p>
-      <a href="<%= home_path(@conn, :index) %>" class="u-noDecor linkDefault">Learn more</a>
+
+    <div class="container--copy">
+      <div class="content">
+        <p>Risen helps graduate find the right fit for them with our network of mission-minded organizations.</p>
+        <a href="<%= home_path(@conn, :index) %>" class="u-noDecor linkDefault">Learn more</a>
+      </div>
     </div>
 
     <div class="studentRegistration-form">
       <h2>Create your applicant profile.</h2>
-      <%= form_for @changeset, student_register_path(@conn, :create, @school.slug), fn f -> %>
 
-        <%= if f.errors != [] do %>
-          <div class="alert alert-danger">
-            <p>Oops, something went wrong! Please check the errors below:</p>
-            <ul>
-              <%= for {attr, message} <- f.errors do %>
-                <li><%= humanize(attr) %> <%= message %></li>
-              <% end %>
-            </ul>
-          </div>
+      <div class="container--form">
+        <%= form_for @changeset, student_register_path(@conn, :create, @school.slug), fn f -> %>
+
+          <%= if f.errors != [] do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below:</p>
+              <ul>
+                <%= for {attr, message} <- f.errors do %>
+                  <li><%= humanize(attr) %> <%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%= text_input f, :name, class: "input-default input-default--black", placeholder: "Full Name", required: true %>
+          <%= email_input f, :email, class: "input-default input-default--black", placeholder: "Email", required: true %>
+          <%= password_input f, :password, class: "input-default input-default--black", placeholder: "Password", required: true %>
+
+          <%= submit "Sign Up", class: "btn btn--short btn--dark" %>
+
         <% end %>
-
-        <%= text_input f, :name, class: "input-default input-default--black", placeholder: "Full Name", required: true %>
-        <%= email_input f, :email, class: "input-default input-default--black", placeholder: "Email", required: true %>
-        <%= password_input f, :password, class: "input-default input-default--black", placeholder: "Password", required: true %>
-
-        <%= submit "Sign Up", class: "btn btn--short btn--dark" %>
-
-      <% end %>
+      </div>
     </div>
 
-    <div class="content">
-      <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
+    <div class="container--copy">
+      <div class="content">
+        <p>Need help? Contact us at <a href="mailto:info@risen.careers">info@risen.careers</a>.</p>
+      </div>
     </div>
 
   </div>

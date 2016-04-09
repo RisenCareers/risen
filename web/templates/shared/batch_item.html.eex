@@ -35,7 +35,6 @@
           wWidth = undefined, sWidth = undefined, switchPoint = undefined;
 
       function checkFlex() {
-        console.log('check flex');
         sWidth = s.clientWidth;
         wWidth = w.clientWidth;
         if (switchPoint !== undefined && sWidth - 1 - 1 >= switchPoint) {

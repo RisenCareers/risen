@@ -9,6 +9,9 @@
       font-weight: 300;
       margin-top: 25px;
       margin-bottom: 25px;
+      @include respond-to(medium) {
+        text-align: left;
+      }
     }
   }
 }

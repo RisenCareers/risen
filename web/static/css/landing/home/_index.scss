@@ -6,7 +6,12 @@
     margin-bottom: 80px;
     font-size: 20px;
     font-weight: 300;
-    line-height: 28px;
+    line-height: (28 / 20);
+
+    @include respond-to(medium) {
+      margin-top: 12px;
+      font-size: 24px;
+    }
   }
   .story {
     line-height: 26px;
@@ -19,8 +24,23 @@
   }
   .action {
     margin-top: 20px;
+    font-size: 0;
   }
   .btn:not(:last-child) {
     margin-bottom: 20px;
+    @include respond-to(medium) {
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
+  }
+  .sign-in {
+    margin-top: 45px;
+
+    font-size: 16px;
+    font-weight: 300;
+
+    a {
+      font-weight: 600;
+    }
   }
 }

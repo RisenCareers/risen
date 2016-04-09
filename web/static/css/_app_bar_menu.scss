@@ -1,0 +1,42 @@
+.appBarMenu {
+}
+
+.appBarMenu-list {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 0;
+  margin: -10px;
+}
+
+.appBarMenu-list-item {
+  display: inline-block;
+  padding: 10px;
+}
+
+.appBarMenu-link {
+  display: none;
+
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #555;
+
+  transition: all .15s ease-in-out;
+
+  &:hover {
+    color: $faded-orange;
+  }
+
+  @include respond-to(medium) {
+    display: block;
+  }
+}
+.appBarMenu-list-item.is-special {
+  margin-left: 15px;
+  .appBarMenu-link {
+    font-weight: 400;
+    &:hover {
+      color: #555;
+    }
+  }
+}

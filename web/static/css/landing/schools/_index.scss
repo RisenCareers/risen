@@ -1,0 +1,70 @@
+.p-schools {
+  .logo {
+    display: block;
+    margin: 0 auto 37px;
+  }
+  .tagLine {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 54px;
+  }
+  .content {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 46px;
+    p {
+      margin-bottom: 15px;
+    }
+  }
+  .school-list-wrap {
+    display: block;
+    margin: 35px auto 60px auto;
+    max-width: 285px;
+    width: 100%;
+  }
+  .school-list {
+    list-style-type: none;
+    margin: -5px;
+    padding-left: 0;
+    font-size: 0;
+  }
+  .school-list-item {
+    padding: 5px;
+    display: inline-block;
+    width: 100%;
+  }
+  .school-list-link {
+    display: block;
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(black, .1);
+    transition: border-color .15s ease-in-out;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .name {
+      width: calc(100% - 48px);
+      padding-left: 15px;
+
+      font-family: 'freight-display-pro', serif;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 2.7px;
+      line-height: (23 / 18);
+      text-align: left;
+      text-transform: uppercase;
+    }
+    .logo {
+      margin: 0;
+      width: 64px;
+      height: 64px;
+    }
+
+    &:hover {
+      border-color: rgba(black, .2);
+    }
+  }
+}

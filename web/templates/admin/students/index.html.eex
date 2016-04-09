@@ -2,11 +2,13 @@
 
 <div class="container container--mobile adminStudentsIndex adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
-  
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+
   <h1 class="pageTitle">Students</h1>
 
   <ul class="batchList">
+
+    <%= if @pending_students do %>
     <li class="batch">
 
       <h2 class="batch-title">Pending Students</h2>
@@ -29,6 +31,7 @@
       </ul>
 
     </li>
+    <% end %>
 
     <%= if @upcoming_batch do %>
     <li class="batch" style="margin-top: 32px;">

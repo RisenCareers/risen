@@ -15,8 +15,28 @@
     font-weight: 600;
     font-size: 18px;
   }
-  &-info-school,
-  &-info-major {
+  &-info-meta {
+    font-size: 0;
+  }
+  &-info-meta-school,
+  &-info-meta-major {
+    display: block;
     font-size: 16px;
+    @include respond-to(medium) {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+  &-info-meta-major {
+    margin-top: 10px;
+    &:before {
+      padding: 0 5px;
+    }
+    @include respond-to(medium) {
+      margin-top: 0;
+      &:before {
+        content: '\00b7';
+      }
+    }
   }
 }

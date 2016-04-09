@@ -1,0 +1,28 @@
+<div class="topBar topBar--mobile">
+  <a href="<%= admin_students_path(@conn, :index) %>" class="logo logo--streamlined"></a>
+  <div class="appBarMenu">
+    <ul class="appBarMenu-list">
+      <li class="appBarMenu-list-item">
+        <a class="appBarMenu-link" href="<%= admin_students_path(@conn, :index) %>">Students</a>
+      </li>
+      <li class="appBarMenu-list-item">
+        <a class="appBarMenu-link" href="<%= admin_employers_path(@conn, :index) %>">Employers</a>
+      </li>
+      <li class="appBarMenu-list-item">
+        <a class="appBarMenu-link" href="<%= admin_schools_path(@conn, :index) %>">Schools</a>
+      </li>
+      <li class="appBarMenu-list-item">
+        <a class="appBarMenu-link" href="<%= admin_batches_path(@conn, :index) %>">Batches</a>
+      </li>
+      <li class="appBarMenu-list-item is-special">
+        <a class="appBarMenu-link" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
+      </li>
+    </ul>
+  </div>
+  <!-- 2nd Pass: Make menu an SVG -->
+  <div class="menuIcon js-trigger">
+    <div class="menuIcon-stripe"></div>
+    <div class="menuIcon-stripe"></div>
+    <div class="menuIcon-stripe"></div>
+  </div>
+</div>

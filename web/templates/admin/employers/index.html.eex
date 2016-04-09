@@ -2,7 +2,7 @@
 
 <div class="container container--mobile adminEmployersIndex adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
 
   <h1 class="pageTitle">Employers</h1>
   <ul class="employerList">

@@ -2,12 +2,12 @@
 
 <div class="container container--mobile adminSchoolsNew adminSite">
 
-  <%= render Risen.SharedView, "topbar.html" %>
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
 
   <h1 class="pageTitle">Schools  <span class="u-normalWeight">>  New</span></h1>
 
   <%= form_for @changeset, admin_schools_path(@conn, :create), [multipart: true], fn f -> %>
-    
+
     <%= if f.errors != [] do %>
       <div class="alert alert-danger">
         <p>Oops, something went wrong! Please check the errors below:</p>

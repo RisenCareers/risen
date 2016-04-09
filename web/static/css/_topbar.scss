@@ -4,6 +4,11 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 35px;
+  @include respond-to(medium) {
+    padding-bottom: 25px;
+    margin-bottom: 45px;
+    border-bottom: 1px solid rgba(black, .05);
+  }
   .logo {
     flex: 0 0 auto;
   }
