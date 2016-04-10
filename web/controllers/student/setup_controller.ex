@@ -42,7 +42,6 @@ defmodule Risen.Student.SetupController do
     end)
 
     conn
-    |> put_flash(:info, "Student setup successfully.")
     |> redirect(to: student_setup_path(conn, :done, school.slug, student.id))
   end
 

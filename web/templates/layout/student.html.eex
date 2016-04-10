@@ -13,6 +13,7 @@
   </head>
 
   <body>
+    <%= render Risen.SharedView, "flash.html", conn: @conn %>
     <main role="main" class="studentSite">
       <%= render @view_module, @view_template, assigns %>
     </main>

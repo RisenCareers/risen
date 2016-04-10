@@ -1,0 +1,13 @@
+<% flash = get_flash(@conn) %>
+<%= if flash do %>
+<ul class="flash-list">
+  <%= for k <- Map.keys(flash) do %>
+  <li class="flash-list-item">
+    <div class="flash is-<%= k %>">
+      <span class="text"><%= flash[k] %></span>
+      <span class="x-mark" onclick="this.parentNode.parentNode.remove()"></span>
+    </div>
+  </li>
+  <% end %>
+</ul>
+<% end %>

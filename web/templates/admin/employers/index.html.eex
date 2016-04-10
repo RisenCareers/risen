@@ -7,7 +7,7 @@
   <h1 class="pageTitle">Employers</h1>
   <ul class="employerList">
     <%= for employer <- @employers do %>
-    <li class="employer card">
+    <li class="employer card no-hover">
       <%= render Risen.SharedView, "employer_summary.html", employer: employer, employer_students: employer.students %>
     </li>
     <% end %>

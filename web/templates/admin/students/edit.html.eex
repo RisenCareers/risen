@@ -18,7 +18,7 @@
       <h2 class="u-normalWeight u-italic">Applied on <%= Timex.format!(@student.inserted_at, "%b. %e, %Y", :strftime) %></h2>
     </div>
 
-    <div class="content assignedTo card">
+    <div class="content assignedTo card no-hover">
       <%= if @student.status == "Pending" do %>
         <form action="<%= admin_students_path(@conn, :update, @student.id) %>" method="post">
           <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">

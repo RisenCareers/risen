@@ -7,7 +7,7 @@
   <h1 class="pageTitle">Schools<a class="linkBtn" href="<%= admin_schools_path(@conn, :new) %>">New</a></h1>
   <ul class="schoolList">
     <%= for school <- @schools do %>
-    <li class="school card">
+    <li class="school card no-hover">
       <div class="school-pic">
         <img class="pic pic--student--sm u-round" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
       </div>

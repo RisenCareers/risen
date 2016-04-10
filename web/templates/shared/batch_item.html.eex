@@ -1,4 +1,4 @@
-<div class="batch card">
+<div class="batch card no-hover">
   <h2 class="card-title"><a class="u-noDecor" href="<%= @href %>"><%= @title %></a></h2>
   <div class="card-content">
     <div class="studentPicsWrapper">

@@ -53,10 +53,9 @@ defmodule Risen.Student.RegisterController do
 
             case Repo.insert(student_changeset) do
               {:ok, student} ->
-                Risen.Mailer.send_student_welcome_email(student)
+                # Risen.Mailer.send_student_welcome_email(student)
                 conn
                 |> put_session(:account_id, account.id)
-                |> put_flash(:info, "Account created successfully.")
                 |> redirect(to: student_setup_path(conn, :edit, school.slug, student.id))
               {:error, changeset} ->
                 render(conn, "new.html", changeset: changeset)

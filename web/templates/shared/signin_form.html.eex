@@ -4,11 +4,13 @@
   <div class="container--form">
     <form action="<%= account_path(@conn, :signin_post) %>" method="post">
       <%= if @errors != [] do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below:</p>
-          <ul>
+        <div class="form-error">
+          <div class="form-error__title">
+            Oops, something went wrong:
+          </div>
+          <ul class="form-error__list">
             <%= for {_attr, message} <- @errors do %>
-              <li><%= message %></li>
+              <li class="form-error__item"><%= message %></li>
             <% end %>
           </ul>
         </div>

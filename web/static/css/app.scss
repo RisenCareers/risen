@@ -34,14 +34,15 @@
 @import 'school_banner';
 @import 'batch_item';
 @import 'employer_summary';
-
+@import 'faq';
+@import 'flash';
+@import 'form_error';
 
 // Block overrides
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: $greyish-brown;
   font-family: "proxima-nova", sans-serif;
 }
 h1, h2, h3, h4 {
@@ -119,7 +120,15 @@ li {
 // Stop FOUT
 
 html { visibility: hidden; }
-html.wf-active { visibility: visible; }
+html.wf-active, html.wf-inactive { visibility: visible; }
+
+body {
+  color: $greyish-brown;
+}
+
+a {
+  color: inherit;
+}
 
 // App-wide style
 .studentSite {
@@ -314,6 +323,7 @@ html.wf-active { visibility: visible; }
   width: 100%;
   border: none;
   border-bottom: 2px solid $black-10;
+  border-radius: 0;
   padding: 7px 11px;
   font-size: 18px;
   font-weight: 300;
@@ -535,6 +545,7 @@ html.wf-active { visibility: visible; }
 }
 .linkDefault {
   border-bottom: 2px solid $black-10;
+  transition: color .15s ease-in-out, border-color .15s ease-in-out;
   &:hover {
     color: $faded-orange;
     border-color: $faded-orange-50;

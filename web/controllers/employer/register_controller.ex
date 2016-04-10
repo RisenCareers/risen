@@ -53,7 +53,6 @@ defmodule Risen.Employer.RegisterController do
 
         conn
         |> put_session(:account_id, account.id)
-        |> put_flash(:info, "Organization created successfully.")
         |> redirect(to: employer_setup_path(conn, :edit, employer.slug))
 
       {:error, changeset} ->

@@ -1,4 +1,14 @@
-<div class="u-cover home">
+<%= if @account do %>
+<div class="home__account">
+  <span class="home__account__prelude">
+    Welcome back, <%= Risen.AccountService.friendly_name(@account) %>!
+  </span>
+  <span class="home__account__cta">
+    <a href="<%= Risen.AccountService.starting_link(@account, @conn) %>">Go to your home</a>.
+  </span>
+</div>
+<% end %>
+<div class="u-cover home <%= unless @account, do: "needs-space" %>">
   <div class="container container--mobile">
     <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
     <h1 class="tagLine">Simple recruiting for when the mission matters.</h1>
@@ -6,12 +16,67 @@
       <h3>Our Purpose is Simple</h3>
       <p>Risen connects graduates of Christian colleges with missional organizations.</p>
     </div>
+    <%= unless @account do %>
     <div class="action">
       <a class="btn" href="<%= schools_path(@conn, :index) %>">For Graduates</a>
       <a class="btn btn--o" href="<%= employer_register_path(@conn, :new) %>">For Organizations</a>
     </div>
     <div class="sign-in">
       Already have an account? <a href="<%= account_path(@conn, :signin_get) %>">Sign in</a>.
+    </div>
+    <% end %>
+  </div>
+  <div class="home__container is-accented">
+    <div class="container--copy">
+      <div class="home__section">
+        <h3 class="home__section__title">How it Works</h3>
+        <div class="home__section__copy u-trim">
+          <p>
+            Christian college graduates send Risen their resume and basic information.
+          </p>
+          <p>
+            Risen reviews and ranks applicants and sends batches to missional organizations in our network.
+          </p>
+          <p>
+            Organizations contact the graduates directly and take them through their hiring process.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="home__container">
+    <div class="container--copy">
+      <div class="home__section">
+        <h3 class="home__section__title">Frequently Asked Questions</h3>
+        <div class="home__section__copy u-trim">
+          <ul class="home__faq-list">
+            <li class="home__faq-list-item">
+              <div class="faq">
+                <div class="faq_q">
+                  What is a batch?
+                </div>
+                <div class="faq_a u-trim">
+                  <p>
+                    Risen hand-picks graduates from a pool of applicants. These applicants are sent in a batch to all the organizations in our network.
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="home__faq-list-item">
+              <div class="faq">
+                <div class="faq_q">
+                  Do companies interview me?
+                </div>
+                <div class="faq_a u-trim">
+                  <p>
+                    Companies use their own hiring process. Risen simply connects you with the company. The rest is up to them.
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

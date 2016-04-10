@@ -1,4 +1,7 @@
 .home {
+  &.u-cover:not(.needs-space) {
+    padding-top: 0;
+  }
   .logo {
     margin: 0 auto 28px;
   }
@@ -34,7 +37,7 @@
     }
   }
   .sign-in {
-    margin-top: 45px;
+    margin: 45px 0;
 
     font-size: 16px;
     font-weight: 300;
@@ -43,4 +46,51 @@
       font-weight: 600;
     }
   }
+  &__container {
+    padding: 45px;
+    &.is-accented {
+      background-color: $very-light-pink;
+    }
+  }
+  .home__section {
+    &__title {
+      margin-bottom: 35px;
+      font-size: 18px;
+      text-align: center;
+      @include respond-to(medium) {
+        font-size: 22px;
+      }
+    }
+    &__copy {
+      font-size: 16px;
+      line-height: (26 / 16);
+      color: #555;
+      p {
+        margin: 1.25em 0;
+      }
+    }
+  }
+  .home__faq-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .home__faq-list-item {
+    &:not(:last-child) {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+.home__account {
+  padding: 15px 45px;
+  font-size: 16px;
+  text-align: center;
+  color: white;
+  background-color: $faded-orange;
+}
+.home__account__prelude {
+  font-weight: 600;
+}
+.home__account__cta {
 }

@@ -6,6 +6,19 @@ defmodule Risen.Plugs.Authenticator do
   alias Risen.Repo
   alias Risen.Account
 
+  def check_authentication(conn, _) do
+    conn = conn |> assign(:account, nil)
+    account_id = get_session(conn, :account_id)
+    if account_id do
+      account = Repo.get(Account, account_id)
+      account = Repo.preload(account, [:roles])
+      if account do
+        conn = conn |> assign(:account, account)
+      end
+    end
+    conn
+  end
+
   def authenticate(conn, _) do
     account_id = get_session(conn, :account_id)
     unless account_id do

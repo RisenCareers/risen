@@ -40,7 +40,7 @@ defmodule Risen.Student.ProfileController do
     end)
 
     conn
-    |> put_flash(:info, "Student saved successfully.")
+    |> put_flash(:success, "Profile saved successfully.")
     |> redirect(to: student_profile_path(conn, :edit, student.id))
   end
 

@@ -4,7 +4,9 @@
   <%= render Risen.SharedView, "employer_topbar.html", conn: @conn, employer: @employer %>
   <h1 class="pageTitle">Students</h1>
   <%= if length(@batches) == 0 do %>
-    <div>Uh oh. No students just yet, but we're working on it!</div>
+    <div class="employerStudentsIndex-empty">
+      No students here just yet. Soon we'll send you a batch <a href="<%= employer_settings_path(@conn, :show, @employer.slug) %>">based on your interests</a>!
+    </div>
   <% else %>
     <!-- 2nd Pass: Maybe extract batch as its own component? -->
     <%= for batch <- @batches do %>

@@ -1,4 +1,3 @@
 <div class="u-cover">
-  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
   <%= render Risen.SharedView, "signin_form.html", conn: @conn, errors: @errors %>
 </div>

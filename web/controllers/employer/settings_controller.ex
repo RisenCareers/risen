@@ -67,7 +67,8 @@ defmodule Risen.Employer.SettingsController do
     end
 
     conn
-    |> redirect(to: employer_students_path(conn, :index, employer.slug))
+    |> put_flash(:success, "Settings saved successfully")
+    |> redirect(to: employer_settings_path(conn, :show, employer.slug))
     |> halt()
   end
 end

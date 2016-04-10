@@ -1,0 +1,41 @@
+.flash-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 0;
+}
+.flash-list-item {
+  display: block;
+}
+.flash {
+  position: relative;
+  padding: 10px 45px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: (24 / 16);
+  text-align: center;
+  color: #555;
+  background-color: rgba(black, .125);
+
+  @include respond-to(medium) {
+  }
+
+  &.is-success {
+    background-color: rgba(green, .25);
+  }
+  &.is-warn {
+    background-color: rgba(orange, .25);
+  }
+  &.is-error {
+    background-color: rgba(red, .25);
+  }
+
+  .x-mark {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+  }
+}

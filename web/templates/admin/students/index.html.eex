@@ -15,7 +15,7 @@
       <ul class="batch-students">
 
         <%= for student <- @pending_students do %>
-        <li class="student card">
+        <li class="student card no-hover">
           <div class="student-pic">
             <img class="pic pic--student--sm u-round" src="<%= Risen.StudentPic.url({student.pic, student}) %>" />
           </div>
