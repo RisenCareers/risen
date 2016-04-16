@@ -7,9 +7,10 @@
         We work with select Christian schools to curate a network of excellent graduates.
       </p>
     </div>
-    <h2>Select the school you attend</h2>
+    <h2>Select the school you attend:</h2>
 
     <div class="school-list-wrap">
+      <%= if length(@schools) > 0 do %>
       <ul class="school-list">
         <%= for school <- @schools do %>
         <li class="school-list-item">
@@ -20,6 +21,13 @@
         </li>
         <% end %>
       </ul>
+      <% else %>
+      <div class="u-trim">
+        <p>
+          This is awkward :) No schools just yet.
+        </p>
+      </div>
+      <% end %>
     </div>
 
     <div class="container--copy">
