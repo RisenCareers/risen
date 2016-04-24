@@ -1,8 +1,11 @@
 defmodule Risen.Account do
   use Risen.Web, :model
 
+  import Comeonin.Bcrypt
+
   schema "accounts" do
     field :email, :string
+    field :password, :string, virtual: true
     field :password_hash, :string
 
     has_many :account_roles, Risen.AccountRole
@@ -15,7 +18,7 @@ defmodule Risen.Account do
     timestamps
   end
 
-  @required_fields ~w(email password_hash)
+  @required_fields ~w(email password)
   @optional_fields ~w()
 
   @doc """
@@ -27,8 +30,19 @@ defmodule Risen.Account do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> hash_password
     |> update_change(:email, &String.downcase/1)
     |> unique_constraint(:email)
+  end
+
+  defp hash_password(changeset) do
+    if password = get_change(changeset, :password) do
+      put_change(changeset, :password_hash, hashpwsalt(password))
+    else
+      changeset
+    end
   end
 
   def has_role?(model, role) do

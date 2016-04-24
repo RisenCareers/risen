@@ -8,55 +8,57 @@ defmodule Risen.Employer.RegisterController do
   alias Risen.Role
   alias Risen.Employer
   alias Risen.EmployerAdmin
+  alias Risen.EmployerService
 
   plug :put_layout, "employer.html"
   plug :scrub_params, "employer" when action in [:create]
 
   def new(conn, _params) do
-    changeset = Employer.changeset(%Employer{})
-    render conn, "new.html", changeset: changeset
+    conn
+    |> assign(:errors, [])
+    |> render("new.html")
   end
 
   def create(conn, params) do
+    # This is kind of a mess. It will get better (MUCH) in Ecto 2.0
+    account_changeset = Account.changeset(%Account{}, params["account"])
+    employer_changeset = Employer.changeset(%Employer{}, params["employer"])
 
-    # Hash the password for security
-    hash = hashpwsalt(params["employer"]["password"])
+    # Wrap the creation of things in a transaction.
+    # If one fails, WE ALL FAIL
+    tx_result = Repo.transaction fn ->
+      # Create the employer
+      case Repo.insert(employer_changeset) do
+        {:ok, employer} ->
+          # Create the employer admin
+          case Repo.insert(account_changeset) do
+            {:ok, account} ->
+              EmployerService.create_admin(%EmployerAdmin{
+                account_id: account.id,
+                employer_id: employer.id
+              })
+              conn
+              |> put_session(:account_id, account.id)
+              |> redirect(to: employer_setup_path(conn, :edit, employer.slug))
+            {:error, account_changeset} ->
+              errors = Ecto.Changeset.traverse_errors(account_changeset, &Risen.ErrorHelpers.translate_error/1)
+              conn
+              |> assign(:errors, errors)
+              |> render("new.html")
+              |> Repo.rollback
+          end
+        {:error, employer_changeset} ->
+          errors = Ecto.Changeset.traverse_errors(employer_changeset, &Risen.ErrorHelpers.translate_error/1)
+          conn
+          |> assign(:errors, errors)
+          |> render("new.html")
+          |> Repo.rollback
+      end
+    end
 
-    # Create the changes for the account
-    account_changeset = Account.changeset(
-      %Account{},
-      %{ "email" => params["employer"]["email"], "password_hash" => hash }
-    )
-
-    case Repo.insert(account_changeset) do
-      {:ok, account} ->
-
-        # Add the Employer Admin role to the account
-        role = Repo.get_by(Role, name: "EmployerAdmin")
-        Repo.insert!(%AccountRole{
-          account_id: account.id,
-          role_id: role.id
-        })
-
-        # Create the employer
-        employer_changeset = Employer.changeset(%Employer{}, %{
-          name: params["employer"]["name"],
-          slug: params["employer"]["slug"]
-        })
-        employer = Repo.insert!(employer_changeset)
-
-        # Create the employer admin
-        Repo.insert!(%EmployerAdmin{
-          account_id: account.id,
-          employer_id: employer.id
-        })
-
-        conn
-        |> put_session(:account_id, account.id)
-        |> redirect(to: employer_setup_path(conn, :edit, employer.slug))
-
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+    case tx_result do
+      {:ok, conn} -> conn
+      {:error, conn} -> conn
     end
   end
 

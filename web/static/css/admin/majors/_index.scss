@@ -1,0 +1,22 @@
+.adminMajorsIndex {
+  .pageTitle {
+    text-align: left;
+    margin-bottom: 35px;
+  }
+  .linkBtn {
+    float: right;
+  }
+  .majorList {
+
+  }
+  .major {
+    text-align: left;
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+  }
+}

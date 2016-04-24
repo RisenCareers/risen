@@ -1,0 +1,14 @@
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+<div class="container container--mobile adminMajorsIndex adminSite">
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+  <h1 class="pageTitle">Majors<a class="linkBtn" href="<%= admin_majors_path(@conn, :new) %>">New</a></h1>
+  <ul class="majorList">
+    <%= for major <- @majors do %>
+    <li class="major">
+      <a class="card" href="<%= admin_majors_path(@conn, :edit, major.id) %>">
+        <%= major.name %>
+      </a>
+    </li>
+    <% end %>
+  </ul>
+</div>

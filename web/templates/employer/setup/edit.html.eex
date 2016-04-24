@@ -1,22 +1,13 @@
 <div class="employerSetupForm container container--mobile">
-  <div class="logo logo--sm"></div>
+  <a href="<%= home_path(@conn, :index) %>" class="logo"></a>
   <div class="container--copy">
     <p class="tagLine">
       Looks good! Now finish the profile for <strong><%= @employer.name %></strong>.
     </p>
   </div>
   <div class="container--form">
-    <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true], fn f -> %>
-      <%= if f.errors != [] do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below:</p>
-          <ul>
-            <%= for {attr, message} <- f.errors do %>
-              <li><%= humanize(attr) %> <%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+    <%= form_for @changeset, employer_setup_path(@conn, :update, @employer.slug), [multipart: true, method: "patch"], fn f -> %>
+      <%= render Risen.SharedView, "form_errors.html", errors: f.errors %>
       <%= render Risen.SharedView, "employer_settings.html", assigns %>
       <%= submit "Done!", class: "btn btn--short" %>
     <% end %>

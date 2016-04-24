@@ -1,0 +1,12 @@
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+
+<div class="container container--mobile adminMajorsEdit adminSite">
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+  <h1 class="pageTitle">Majors  <span class="u-normalWeight">>  New</span></h1>
+  <%= form_for @changeset, admin_majors_path(@conn, :create), fn f -> %>
+    <%= render "_form.html", form: f %>
+    <div class="form-tray">
+      <button type="submit" class="btn btn--dark">Create Major</button>
+    </div>
+  <% end %>
+</div>

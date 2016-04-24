@@ -3,18 +3,7 @@
   <h2>Sign-in to your Risen account</h2>
   <div class="container--form">
     <form action="<%= account_path(@conn, :signin_post) %>" method="post">
-      <%= if @errors != [] do %>
-        <div class="form-error">
-          <div class="form-error__title">
-            Oops, something went wrong:
-          </div>
-          <ul class="form-error__list">
-            <%= for {_attr, message} <- @errors do %>
-              <li class="form-error__item"><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <%= render Risen.SharedView, "form_errors.html", errors: @errors %>
       <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
       <input name="email" class="input-default" type="email" placeholder="Email" value="<%= if @conn.params["email"], do: @conn.params["email"], else: "" %>">
       <input name="password" class="input-default" type="password" placeholder="Password">

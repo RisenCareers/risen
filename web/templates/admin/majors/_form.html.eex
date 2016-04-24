@@ -1,0 +1,5 @@
+<%= render Risen.SharedView, "form_errors.html", errors: @form.errors %>
+<label for="name">
+  <h3>Major Name</h3>
+  <%= text_input @form, :name, id: "name", class: "input-default input-default--black", placeholder: "Type name of major", required: true %>
+</label>

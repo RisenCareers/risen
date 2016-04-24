@@ -15,6 +15,15 @@ alias Risen.EmployerMajor
 alias Risen.EmployerAdmin
 
 #
+# Majors
+#
+
+Repo.insert!(%Major{name: "Computer Science"})
+Repo.insert!(%Major{name: "Business Management"})
+Repo.insert!(%Major{name: "Humanities"})
+Repo.insert!(%Major{name: "Nursing"})
+
+#
 # School
 #
 

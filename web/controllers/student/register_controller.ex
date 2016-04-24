@@ -7,67 +7,74 @@ defmodule Risen.Student.RegisterController do
   alias Risen.Role
   alias Risen.School
 
+  plug :load_school
   plug :scrub_params, "account" when action in [:create]
   plug :put_layout, "student.html"
 
   def new(conn, params) do
-    school = Repo.get_by(School, slug: params["school_slug"])
-    changeset = Account.changeset(%Account{})
-    render(conn, "new.html", changeset: changeset, school: school)
+    conn
+    |> assign(:errors, [])
+    |> render("new.html")
   end
 
   def create(conn, params) do
-    school = Repo.get_by(School, slug: params["school_slug"])
-    conn = assign(conn, :school, %{slug: school.slug})
+    school = conn.assigns[:school]
 
-    # Hash the password for security
-    hash = hashpwsalt(params["account"]["password"])
-
-    # Create the changes for the account
-    changeset = Account.changeset(
-      %Account{},
-      Map.merge(params["account"], %{ "password_hash" => hash })
-    )
-
-    case Repo.insert(changeset) do
-      {:ok, account} ->
-
-        # Add the Student role to the account
-        role = Repo.get_by(Role, name: "Student")
-        account_role = %Risen.AccountRole{
-          account_id: account.id,
-          role_id: role.id
-        }
-
-        case Repo.insert(account_role) do
-          {:ok, _new_account_role} ->
-
-            # Create the student
-            student_params = %{
-              name: params["account"]["name"],
-              account_id: account.id,
-              school_id: school.id,
-              status: "Pending"
-            }
-            student_changeset = Student.changeset(%Student{}, student_params)
-
-            case Repo.insert(student_changeset) do
-              {:ok, student} ->
-                # Risen.Mailer.send_student_welcome_email(student)
-                conn
-                |> put_session(:account_id, account.id)
-                |> redirect(to: student_setup_path(conn, :edit, school.slug, student.id))
-              {:error, changeset} ->
-                render(conn, "new.html", changeset: changeset)
-            end
-
-          {:error, changeset} ->
-            render(conn, "new.html", changeset: changeset)
-
-        end
-
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+    # Wrap the creation of things in a transaction.
+    # If one fails, WE ALL FAIL
+    tx_result = Repo.transaction fn ->
+      account_changeset = Account.changeset(%Account{}, params["account"])
+      case Repo.insert(account_changeset) do
+        {:ok, account} ->
+          role = Repo.get_by(Role, name: "Student")
+          account_role = %Risen.AccountRole{account_id: account.id, role_id: role.id}
+          case Repo.insert(account_role) do
+            {:ok, _new_account_role} ->
+              student_params = %{
+                name: params["student"]["name"],
+                account_id: account.id,
+                school_id: school.id,
+                status: "Pending"
+              }
+              student_changeset = Student.changeset(%Student{}, student_params)
+              case Repo.insert(student_changeset) do
+                {:ok, student} ->
+                  # Risen.Mailer.send_student_welcome_email(student)
+                  conn
+                  |> put_session(:account_id, account.id)
+                  |> redirect(to: student_setup_path(conn, :edit, school.slug, student.id))
+                {:error, changeset} ->
+                  errors = Ecto.Changeset.traverse_errors(changeset, &Risen.ErrorHelpers.translate_error/1)
+                  conn
+                  |> assign(:errors, errors)
+                  |> render("new.html")
+                  |> Repo.rollback
+              end
+            {:error, changeset} ->
+              errors = Ecto.Changeset.traverse_errors(changeset, &Risen.ErrorHelpers.translate_error/1)
+              conn
+              |> assign(:errors, errors)
+              |> render("new.html")
+              |> Repo.rollback
+          end
+        {:error, changeset} ->
+          errors = Ecto.Changeset.traverse_errors(changeset, &Risen.ErrorHelpers.translate_error/1)
+          conn
+          |> assign(:errors, errors)
+          |> render("new.html")
+          |> Repo.rollback
+      end
     end
+
+    case tx_result do
+      {:ok, conn} -> conn
+      {:error, conn} -> conn
+    end
+  end
+
+  defp load_school(conn, _) do
+    school = Repo.get_by(School, slug: conn.params["school_slug"])
+    conn
+    |> assign(:school, school)
   end
 end

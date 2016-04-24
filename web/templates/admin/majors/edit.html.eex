@@ -1,0 +1,28 @@
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+
+<div class="container container--mobile adminMajorsEdit adminSite">
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+  <h1 class="pageTitle">Majors  <span class="u-normalWeight">>  Edit <%= @major.name %></span></h1>
+  <%= form_for @changeset, admin_majors_path(@conn, :update, @major.id), [method: "patch"], fn f -> %>
+    <%= render "_form.html", form: f %>
+    <div class="form-tray">
+      <button type="submit" class="btn btn--dark">Save Major</button>
+      <button type="button" class="btn btn--warn--o" onclick="deleteMajor(event)">Delete Major</button>
+    </div>
+  <% end %>
+</div>
+
+<form id="delete-form" action="<%= admin_majors_path(@conn, :delete, @major.id) %>" method="post">
+  <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+  <input type="hidden" name="_method" value="delete" />
+</form>
+
+<script>
+function deleteMajor(e) {
+  e.preventDefault();
+  if (window.confirm("Do you really want to delete this major?")) {
+    var form = document.querySelector('#delete-form');
+    form.submit();
+  }
+}
+</script>

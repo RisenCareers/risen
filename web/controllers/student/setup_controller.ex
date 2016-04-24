@@ -4,10 +4,10 @@ defmodule Risen.Student.SetupController do
   import Risen.Plugs.Authenticator
   import Risen.Plugs.Student.Authenticator
 
+  alias Ecto.Changeset
   alias Risen.Student
   alias Risen.School
-  alias Risen.StudentPic
-  alias Risen.StudentResume
+  alias Risen.StudentService
 
   plug :authenticate
   plug :require_student
@@ -18,7 +18,7 @@ defmodule Risen.Student.SetupController do
 
   def edit(conn, _params) do
     student = conn.assigns[:student]
-    changeset = Ecto.Changeset.change(student)
+    changeset = Changeset.change(student)
 
     conn
     |> assign(:changeset, changeset)
@@ -29,24 +29,41 @@ defmodule Risen.Student.SetupController do
     school = conn.assigns[:school]
     student = conn.assigns[:student]
 
-    student_params = params["student"]
-    student_changeset = Student.changeset(student, student_params)
-    student = Repo.update!(student_changeset)
+    st_prms = params["student"]
+    if params["pic"], do: st_prms = Map.put(st_prms, "pic", params["pic"].filename)
+    if params["resume"], do: st_prms = Map.put(st_prms, "resume", params["resume"].filename)
+    st_chgs = Student.profile_changeset(student, st_prms)
 
-    Enum.each([{StudentPic, "pic"}, {StudentResume, "resume"}], fn({ m, p }) ->
-      if params[p] do
-        m.store({params[p], student})
-        student_changeset = Ecto.Changeset.change(student, %{ String.to_atom(p) => params[p].filename })
-        Repo.update!(student_changeset)
-      end
-    end)
-
-    conn
-    |> redirect(to: student_setup_path(conn, :done, school.slug, student.id))
+    case StudentService.upload_pic(conn, params["pic"]) do
+      {:ok, student} ->
+        conn = assign(conn, :student, student)
+        case StudentService.upload_resume(conn, params["resume"]) do
+          {:ok, student} ->
+            conn = assign(conn, :student, student)
+            case Repo.update(st_chgs) do
+              {:ok, student} ->
+                conn |> redirect(to: student_setup_path(conn, :done, school.slug, student.id))
+              {:error, st_chgs} ->
+                conn |> error_updating(st_chgs)
+            end
+          {:error, _} ->
+            st_chgs = Changeset.add_error(st_chgs, :resume, "errored uploading")
+            conn |> error_updating(st_chgs)
+        end
+      {:error, _} ->
+        st_chgs = Changeset.add_error(st_chgs, :pic, "errored uploading")
+        conn |> error_updating(st_chgs)
+    end
   end
 
   def done(conn, _params) do
     render conn, "done.html"
+  end
+
+  defp error_updating(conn, changeset) do
+    conn
+    |> assign(:changeset, changeset)
+    |> render("edit.html")
   end
 
   defp load_school(conn, _) do

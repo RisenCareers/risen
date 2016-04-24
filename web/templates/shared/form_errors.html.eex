@@ -1,0 +1,12 @@
+<%= if @errors != [] do %>
+  <div class="form-error">
+    <div class="form-error__title">
+      Oops, something went wrong:
+    </div>
+    <ul class="form-error__list">
+      <%= for {attr, message} <- @errors do %>
+        <li class="form-error__item"><%= attr %> <%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

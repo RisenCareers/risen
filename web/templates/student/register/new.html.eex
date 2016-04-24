@@ -13,26 +13,16 @@
       <h2>Create your applicant profile.</h2>
 
       <div class="container--form">
-        <%= form_for @changeset, student_register_path(@conn, :create, @school.slug), fn f -> %>
-
-          <%= if f.errors != [] do %>
-            <div class="alert alert-danger">
-              <p>Oops, something went wrong! Please check the errors below:</p>
-              <ul>
-                <%= for {attr, message} <- f.errors do %>
-                  <li><%= humanize(attr) %> <%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-
-          <%= text_input f, :name, class: "input-default input-default--black", placeholder: "Full Name", required: true %>
-          <%= email_input f, :email, class: "input-default input-default--black", placeholder: "Email", required: true %>
-          <%= password_input f, :password, class: "input-default input-default--black", placeholder: "Password", required: true %>
-
-          <%= submit "Sign Up", class: "btn btn--short btn--dark" %>
-
-        <% end %>
+        <form action="<%= student_register_path(@conn, :create, @school.slug) %>" method="post">
+          <%= render Risen.SharedView, "form_errors.html", errors: @errors %>
+          <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+          <input class="input-default input-default--black" type="text" name="student[name]" placeholder="Full Name" value="<%= @conn.params["student"]["name"] %>" required />
+          <input class="input-default input-default--black" type="email" name="account[email]" placeholder="Your Email" value="<%= @conn.params["account"]["email"] %>" required />
+          <input class="input-default input-default--black" type="password" name="account[password]" placeholder="Password" required />
+          <button type="submit" class="btn btn--short btn--dark">
+            Sign Up
+          </button>
+        </form>
       </div>
     </div>
 

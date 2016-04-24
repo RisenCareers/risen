@@ -20,6 +20,8 @@
 @import 'admin/employers/index';
 @import 'admin/schools/index';
 @import 'admin/schools/new';
+@import 'admin/majors/index';
+@import 'admin/majors/edit';
 
 // Components
 @import 'app_bar_menu';
@@ -307,6 +309,16 @@ a {
     background-color: $black-10;
   }
 }
+.btn--warn--o {
+  border-color: $warn;
+  color: $warn;
+  background-color: transparent;
+  &:hover {
+    border-color: $warn;
+    color: white;
+    background-color: $warn;
+  }
+}
 .linkBtn {
   text-decoration: none;
   text-transform: uppercase;
@@ -467,6 +479,16 @@ a {
 }
 .select {  // Multiple select
   position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 11px;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: rgba(black, .2);
+  }
   &-input {
     cursor: pointer;
     margin-bottom: 15px;
@@ -484,6 +506,7 @@ a {
     list-style: none;
     text-align: left;
     z-index: 1000;
+    box-shadow: 0 1px 15px rgba(black, .2);
     &.is-hidden {
       display: none;
     }

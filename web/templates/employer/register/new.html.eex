@@ -8,25 +8,16 @@
     </div>
     <h2>Get started in 45 seconds.</h2>
     <div class="container--form">
-      <%= form_for @changeset, employer_register_path(@conn, :create), fn f -> %>
-        <%= if f.errors != [] do %>
-          <div class="alert alert-danger">
-            <p>Oops, something went wrong! Please check the errors below:</p>
-            <ul>
-              <%= for {attr, message} <- f.errors do %>
-                <li><%= humanize(attr) %> <%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <%= text_input f, :name, class: "input-default", placeholder: "Organization Name", required: true %>
-        <%= text_input f, :slug, class: "input-default", placeholder: "Organization URL", required: true %>
-        <%= email_input f, :email, class: "input-default", placeholder: "Email", required: true %>
-        <%= password_input f, :password, class: "input-default", placeholder: "Password", required: true %>
+      <form action="<%= employer_register_path(@conn, :create) %>" method="post">
+        <%= render Risen.SharedView, "form_errors.html", errors: @errors %>
+        <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+        <input class="input-default" type="text" name="employer[name]" placeholder="Organization Name" value="<%= @conn.params["employer"]["name"] %>" required />
+        <input class="input-default" type="email" name="account[email]" placeholder="Your Email" value="<%= @conn.params["account"]["email"] %>" required />
+        <input class="input-default" type="password" name="account[password]" placeholder="Password" required />
         <button type="submit" class="btn btn--short">
           Sign Up
         </button>
-      <% end %>
+      </form>
     </div>
   </div>
 </div>

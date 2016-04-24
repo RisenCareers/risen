@@ -4,16 +4,20 @@ defmodule Risen.Student.ProfileController do
   import Risen.Plugs.Authenticator
   import Risen.Plugs.Student.Authenticator
 
+  alias Ecto.Changeset
+
   alias Risen.Repo
   alias Risen.Student
   alias Risen.School
   alias Risen.Major
+  alias Risen.StudentService
 
   plug :authenticate
   plug :require_student
   plug :load_school
   plug :load_majors
   plug :put_layout, "student.html"
+  plug :scrub_params, "student" when action in [:update]
 
   def edit(conn, _params) do
     student = conn.assigns[:student]
@@ -26,22 +30,35 @@ defmodule Risen.Student.ProfileController do
 
   def update(conn, params) do
     student = conn.assigns[:student]
-    student_params = params["student"]
 
-    student_changeset = Student.changeset(student, student_params)
-    student = Repo.update!(student_changeset)
+    st_prms = params["student"]
+    if params["pic"], do: st_prms = Map.put(st_prms, "pic", params["pic"].filename)
+    if params["resume"], do: st_prms = Map.put(st_prms, "resume", params["resume"].filename)
+    st_chgs = Student.profile_changeset(student, st_prms)
 
-    Enum.each([{StudentPic, "pic"}, {StudentResume, "resume"}], fn({ m, p }) ->
-      if params[p] do
-        m.store({params[p], student})
-        student_changeset = Student.changeset(student, %{ p => params[p].filename })
-        Repo.update!(student_changeset)
-      end
-    end)
-
-    conn
-    |> put_flash(:success, "Profile saved successfully.")
-    |> redirect(to: student_profile_path(conn, :edit, student.id))
+    case StudentService.upload_pic(conn, params["pic"]) do
+      {:ok, student} ->
+        conn = assign(conn, :student, student)
+        case StudentService.upload_resume(conn, params["resume"]) do
+          {:ok, student} ->
+            conn = assign(conn, :student, student)
+            IO.inspect st_chgs
+            case Repo.update(st_chgs) do
+              {:ok, student} ->
+                conn
+                |> put_flash(:success, "Profile saved successfully.")
+                |> redirect(to: student_profile_path(conn, :edit, student.id))
+              {:error, st_chgs} ->
+                conn |> error_updating(st_chgs)
+            end
+          {:error, _} ->
+            st_chgs = Changeset.add_error(st_chgs, :resume, "errored uploading")
+            conn |> error_updating(st_chgs)
+        end
+      {:error, _} ->
+        st_chgs = Changeset.add_error(st_chgs, :pic, "errored uploading")
+        conn |> error_updating(st_chgs)
+    end
   end
 
   defp load_school(conn, _) do
@@ -52,5 +69,11 @@ defmodule Risen.Student.ProfileController do
   defp load_majors(conn, _) do
     majors = Repo.all(Major)
     conn |> assign(:majors, majors)
+  end
+
+  defp error_updating(conn, changeset) do
+    conn
+    |> assign(:changeset, changeset)
+    |> render("edit.html")
   end
 end

@@ -3,7 +3,7 @@
   <img class="picChooser-pic" src="<%= Risen.EmployerLogo.url({@employer.logo, @employer}) %>"></img>
   <label for="file-upload" class="picChooser-btn btn btn--xshort" type="file">Choose...</label>
   <input type="hidden" name="employer[logo]" value="2">
-  <input id="file-upload" name="logo" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png">
+  <input id="file-upload" name="logo" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png,.gif">
 </div>
 
 <h3>Interests</h3>
@@ -19,7 +19,6 @@
 </div>
 
 <div class="selectedOptions"></div>
-
 
 <script>
   // NOTE: This function probably needs to go in /web/static/js/utils.js and imported in app.js

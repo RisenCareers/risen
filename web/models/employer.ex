@@ -15,8 +15,11 @@ defmodule Risen.Employer do
     timestamps
   end
 
-  @required_fields ~w(name slug)
+  @required_fields ~w(name)
   @optional_fields ~w(logo)
+
+  @required_settings_fields ~w(logo)
+  @optional_settings_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -27,7 +30,21 @@ defmodule Risen.Employer do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> update_change(:slug, &String.downcase/1)
+    |> slugify_name
+    |> validate_length(:name, min: 2)
     |> unique_constraint(:slug)
+  end
+
+  def settings_changeset(model, params \\ :empty) do
+    model
+    |> cast(params, @required_settings_fields, @optional_settings_fields)
+  end
+
+  defp slugify_name(changeset) do
+    if name = get_change(changeset, :name) do
+      put_change(changeset, :slug, Slugger.slugify_downcase(name))
+    else
+      changeset
+    end
   end
 end

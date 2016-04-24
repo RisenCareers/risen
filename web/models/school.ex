@@ -23,11 +23,11 @@ defmodule Risen.School do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> slugify_name
+    |> slugify_abbreviation
     |> unique_constraint(:slug)
   end
 
-  defp slugify_name(changeset) do
+  defp slugify_abbreviation(changeset) do
     if abbreviation = get_change(changeset, :abbreviation) do
       put_change(changeset, :slug, Slugger.slugify_downcase(abbreviation))
     else

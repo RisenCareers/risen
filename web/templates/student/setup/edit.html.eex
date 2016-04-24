@@ -11,7 +11,17 @@
       </div>
     </div>
 
-    <%= render Risen.SharedView, "student_settings.html", changeset: @changeset, action: student_setup_path(@conn, :update, @school.slug, @student.id), student: @student, majors: @majors, edit: false %>
+    <%=
+      render(
+        Risen.SharedView,
+        "student_settings.html",
+        changeset: @changeset,
+        action: student_setup_path(@conn, :update, @school.slug, @student.id),
+        student: @student,
+        majors: @majors,
+        edit: false
+      )
+    %>
 
     <div class="container--copy">
       <div class="content">

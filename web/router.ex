@@ -44,6 +44,13 @@ defmodule Risen.Router do
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show
     patch "/batches/:id", BatchesController, :update
+
+    get    "/majors", MajorsController, :index
+    get    "/majors/new", MajorsController, :new
+    post   "/majors", MajorsController, :create
+    get    "/majors/:id/edit", MajorsController, :edit
+    patch  "/majors/:id", MajorsController, :update
+    delete "/majors/:id", MajorsController, :delete
   end
 
   scope "/e", Risen.Employer, as: :employer do
@@ -55,7 +62,7 @@ defmodule Risen.Router do
     post  "/register", RegisterController, :create
 
     get   "/:employer_slug/setup", SetupController, :edit
-    put   "/:employer_slug/setup", SetupController, :update
+    patch "/:employer_slug/setup", SetupController, :update
 
     get   "/:employer_slug/students", StudentsController, :index
     get   "/:employer_slug/students/:id", StudentsController, :show

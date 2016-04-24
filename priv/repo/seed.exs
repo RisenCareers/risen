@@ -5,12 +5,11 @@ alias Risen.Role
 alias Risen.Account
 alias Risen.AccountRole
 alias Risen.Batch
-alias Risen.Major
 
 # Roles
 
-st_role = Repo.insert!(%Role{name: "Student"})
-ea_role = Repo.insert!(%Role{name: "EmployerAdmin"})
+Repo.insert!(%Role{name: "Student"})
+Repo.insert!(%Role{name: "EmployerAdmin"})
 ad_role = Repo.insert!(%Role{name: "RisenAdmin"})
 
 # Admins
@@ -38,9 +37,3 @@ end)
 # Insert Pending Batch
 
 Repo.insert!(%Batch{})
-
-# Majors (TBD)
-
-Repo.insert!(%Major{name: "Computer Science"})
-Repo.insert!(%Major{name: "Humanities"})
-Repo.insert!(%Major{name: "Anthropology"})

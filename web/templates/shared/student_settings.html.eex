@@ -3,6 +3,8 @@
   <div class="container--form">
     <%= form_for @changeset, @action, [multipart: true, method: "patch"], fn f -> %>
 
+      <%= render Risen.SharedView, "form_errors.html", errors: f.errors %>
+
       <h3>Photo</h3>
       <div class="picChooser">
         <img class="picChooser-pic u-round" src="<%= Risen.StudentPic.url({@student.pic, @student}) %>"></img>
@@ -12,7 +14,7 @@
 
       <div class="resumeUploader">
         <p class="resumeUploader-attached"><%= if @student.resume do %><%= @student.resume %> attached<% end %></p>
-        <label for="resume-upload" class="resumeUploader-btn" type="file"><h2>Upload <%= if @edit do %>New<% end %> Resume...</h2></label>
+        <label for="resume-upload" class="resumeUploader-btn" type="file"><h2>Upload <%= if @edit do %>New<% end %> PDF Resume...</h2></label>
         <input id="resume-upload" name="resume" class="resumeUploader-file" type="file" accept=".pdf">
       </div>
 
@@ -23,14 +25,9 @@
         </label>
       </label>
 
-      <label for="phone">
-        <h3>Phone Number</h3>
-        <%= telephone_input f, :phone, id: "phone", class: "input-default input-default--black", type: "tel", placeholder: "555-555-5555", required: true, pattern: "\\d{3}[\\-]\\d{3}[\\-]\\d{4}" %>
-      </label>
-
       <label for="role">
         <h3>Ideal Role</h3>
-        <%= text_input f, :ideal_role, id: "role", class: "input-default input-default--black", placeholder: "Type your ideal role...", required: true %>
+        <%= text_input f, :ideal_role, id: "role", class: "input-default input-default--black", placeholder: "Type your ideal role...", required: false %>
       </label>
 
       <label for="job-type">

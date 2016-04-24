@@ -6,13 +6,16 @@
         <a class="appBarMenu-link" href="<%= admin_students_path(@conn, :index) %>">Students</a>
       </li>
       <li class="appBarMenu-list-item">
+        <a class="appBarMenu-link" href="<%= admin_batches_path(@conn, :index) %>">Batches</a>
+      </li>
+      <li class="appBarMenu-list-item">
         <a class="appBarMenu-link" href="<%= admin_employers_path(@conn, :index) %>">Employers</a>
       </li>
       <li class="appBarMenu-list-item">
         <a class="appBarMenu-link" href="<%= admin_schools_path(@conn, :index) %>">Schools</a>
       </li>
       <li class="appBarMenu-list-item">
-        <a class="appBarMenu-link" href="<%= admin_batches_path(@conn, :index) %>">Batches</a>
+        <a class="appBarMenu-link" href="<%= admin_majors_path(@conn, :index) %>">Majors</a>
       </li>
       <li class="appBarMenu-list-item is-special">
         <a class="appBarMenu-link" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
