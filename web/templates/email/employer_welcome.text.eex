@@ -1,1 +1,14 @@
-Test
+Hi <%= @name %>,
+
+Welcome to Risen Careers! As an organization, you will be emailed batches of vetted Christian college graduates that align with your interests.
+
+We are constantly working to recruit and vet Christian college graduates before assigning them to batches.
+
+When a batch of graduates is ready to be sent, you'll be emailed with a link to the batch.
+
+If you see a graduate in the batch that fits your need, you can contact them directly and take them through your hiring process.
+
+If you ever have any questions, contact us at hello@risen.careers.
+
+Regards,
+The Team at Risen Careers

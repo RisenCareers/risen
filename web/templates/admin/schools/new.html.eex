@@ -8,61 +8,12 @@
 
   <%= form_for @changeset, admin_schools_path(@conn, :create), [multipart: true], fn f -> %>
 
-    <%= if f.errors != [] do %>
-      <div class="alert alert-danger">
-        <p>Oops, something went wrong! Please check the errors below:</p>
-        <ul>
-          <%= for {attr, message} <- f.errors do %>
-            <li><%= humanize(attr) %> <%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render "_form.html", form: f, schoolLogo: "/images/employerPlaceholder.svg" %>
 
-    <label for="name">
-      <h3>School Name</h3>
-      <%= text_input f, :name, id: "name", class: "input-default input-default--black", placeholder: "Type name of school", required: true %>
-    </label>
-
-    <label for="abbreviation">
-      <h3>School Colloquial Name</h3>
-      <%= text_input f, :abbreviation, id: "abbreviation", class: "input-default input-default--black", placeholder: "BJU, PCC, etc", required: true %>
-    </label>
-
-    <h3>School logo</h3>
-    <div class="picChooser">
-      <img class="picChooser-pic" src="/images/employerPlaceholder.svg"></img>
-      <label for="file-upload" class="picChooser-btn btn btn--xshort" type="file">Choose...</label>
-      <input id="file-upload" name="logo" class="picChooser-file" type="file" accept=".jpg,.jpeg,.png">
+    <div class="form-tray">
+      <button type="submit" class="btn btn--dark">Create School</button>
     </div>
-
-    <button type="submit" class="btn btn--dark">Create School</button>
 
   <% end %>
 
 </div>
-
-
-
-<script>
-
-  // NOTE: This function probably needs to go in /web/static/js/utils.js and imported in app.js
-  function previewImage(input, targetSelector) {
-    if (input.files && input.files[0]) {
-      // NOTE: FilReader API is supported in IE10+
-      var reader = new FileReader();
-      reader.readAsDataURL(input.files[0]);
-      reader.onload = function(e) {
-        document.querySelector(targetSelector).src = e.target.result;
-      }
-    }
-  }
-
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Preview the selected image
-    var uploader = document.querySelector('.picChooser-file');
-    uploader.onchange = function() { previewImage(uploader, '.picChooser-pic'); };
-  });
-
-</script>

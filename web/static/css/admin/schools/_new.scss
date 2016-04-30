@@ -12,8 +12,25 @@
       margin-bottom: 36px;
     }
   }
-  button[type="submit"] {
-    display: block;
+  .form-tray {
+    font-size: 0;
+    text-align: center;
     margin: 45px auto;
+    > * {
+      display: block;
+      margin: 0 auto;
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+      @include respond-to(medium) {
+        display: inline-block;
+        &:not(:last-child) {
+          margin-bottom: 0;
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+  button[type="submit"] {
   }
 }

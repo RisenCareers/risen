@@ -37,6 +37,7 @@ defmodule Risen.Employer.RegisterController do
                 account_id: account.id,
                 employer_id: employer.id
               })
+              Risen.Mailer.send_employer_welcome_email(employer)
               conn
               |> put_session(:account_id, account.id)
               |> redirect(to: employer_setup_path(conn, :edit, employer.slug))

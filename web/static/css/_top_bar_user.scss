@@ -1,0 +1,66 @@
+.TopBarUser {
+  display: none;
+  position: relative;
+
+  @include respond-to(medium) {
+    display: block;
+  }
+}
+
+.TopBarUser-imageWrap {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(black, .2);
+    border-radius: 100%;
+    transition: border-color .15s ease-in-out;
+  }
+  &:hover img {
+    border-color: rgba(black, .5);
+  }
+}
+
+.TopBarUser-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #eee;
+  border-radius: 3px;
+  border-top-right-radius: 0;
+  text-align: left;
+}
+.TopBarUser.is-open {
+  .TopBarUser-imageWrap {
+    background-color: #eee;
+  }
+  .TopBarUser-menu {
+    display: inline-block;
+  }
+}
+
+.TopBarUser-menuItem {
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(black, .05);
+  }
+}
+
+.TopBarUser-menuLink {
+  display: block;
+  padding: 10px 18px;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition: background-color .15s ease-in-out;
+
+  &:hover {
+    background-color: rgba(black, .05);
+  }
+}

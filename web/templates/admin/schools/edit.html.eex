@@ -1,0 +1,28 @@
+<%= render Risen.SharedView, "admin_app_menu.html", conn: @conn %>
+
+<div class="container container--mobile adminSchoolsNew adminSite">
+  <%= render Risen.SharedView, "admin_topbar.html", conn: @conn %>
+  <h1 class="pageTitle">Schools  <span class="u-normalWeight">>  Edit <%= @school.name %></span></h1>
+  <%= form_for @changeset, admin_schools_path(@conn, :update, @school.id), [multipart: true, method: "patch"], fn f -> %>
+    <%= render "_form.html", form: f, schoolLogo: Risen.SchoolLogo.url({@school.logo, @school}) %>
+    <div class="form-tray">
+      <button type="submit" class="btn btn--dark">Save School</button>
+      <button type="button" class="btn btn--warn--o" onclick="deleteSchool(event)">Delete School</button>
+    </div>
+  <% end %>
+</div>
+
+<form id="delete-form" action="<%= admin_majors_path(@conn, :delete, @school.id) %>" method="post">
+  <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+  <input type="hidden" name="_method" value="delete" />
+</form>
+
+<script>
+function deleteSchool(e) {
+  e.preventDefault();
+  if (window.confirm("Do you really want to delete this school?")) {
+    var form = document.querySelector('#delete-form');
+    form.submit();
+  }
+}
+</script>

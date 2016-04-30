@@ -3,15 +3,20 @@ defmodule Risen.Mailer do
 
   alias Risen.Repo
 
-  @from "info@risen.careers"
+  @from "hello@risen.careers"
 
   def send_student_welcome_email(student) do
     student = Repo.preload(student, [:account])
     send_email to: student.account.email,
                from: @from,
-               subject: "Welcome to Risen",
-               text: render("student_welcome.text", %{}),
-               html: render("student_welcome.html", %{})
+               subject: "Welcome to Risen Careers",
+               text: render("student_welcome.text", %{ name: student.name }),
+               html: render("student_welcome.html", %{ name: student.name })
+    send_email to: @from,
+               from: @from,
+               subject: "Welcome to Risen Careers",
+               text: render("student_welcome.text", %{ name: student.name }),
+               html: render("student_welcome.html", %{ name: student.name })
   end
 
   def send_student_ready_email(student) do
@@ -36,9 +41,14 @@ defmodule Risen.Mailer do
     employer = Repo.preload(employer, [:admins])
     send_email to: Enum.map(employer.admins, &(&1.email)),
                from: @from,
-               subject: "Welcome to Risen",
-               text: render("employer_welcome.text", %{}),
-               html: render("employer_welcome.html", %{})
+               subject: "Welcome to Risen Careers",
+               text: render("employer_welcome.text", %{ name: employer.name }),
+               html: render("employer_welcome.html", %{ name: employer.name })
+    send_email to: @from,
+               from: @from,
+               subject: "Welcome to Risen Careers",
+               text: render("employer_welcome.text", %{ name: employer.name }),
+               html: render("employer_welcome.html", %{ name: employer.name })
   end
 
   def send_employer_batch_email(employer, _batch) do

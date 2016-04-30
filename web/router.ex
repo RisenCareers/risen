@@ -16,14 +16,14 @@ defmodule Risen.Router do
   scope "/", Risen.Landing do
     pipe_through :browser
 
-    get  "/", HomeController, :index
+    get   "/", HomeController, :index
 
-    get  "/schools", SchoolsController, :index
+    get   "/schools", SchoolsController, :index
 
-    get  "/signin", AccountController, :signin_get
-    post "/signin", AccountController, :signin_post
+    get   "/signin", AccountController, :signin_get
+    post  "/signin", AccountController, :signin_post
 
-    get  "/signout", AccountController, :signout_get
+    get   "/signout", AccountController, :signout_get
   end
 
   scope "/a", Risen.Admin, as: :admin do
@@ -35,11 +35,14 @@ defmodule Risen.Router do
     get   "/students/:id/edit", StudentsController, :edit
     patch "/students/:id/edit", StudentsController, :update
 
-    get   "/employers", EmployersController, :index
+    get    "/employers", EmployersController, :index
 
-    get   "/schools", SchoolsController, :index
-    get   "/schools/new", SchoolsController, :new
-    post  "/schools", SchoolsController, :create
+    get    "/schools", SchoolsController, :index
+    get    "/schools/new", SchoolsController, :new
+    post   "/schools", SchoolsController, :create
+    get    "/schools/:id/edit", SchoolsController, :edit
+    patch  "/schools/:id", SchoolsController, :update
+    delete "/schools/:id", SchoolsController, :delete
 
     get   "/batches", BatchesController, :index
     get   "/batches/:id", BatchesController, :show

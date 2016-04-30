@@ -1,0 +1,27 @@
+<div class="TopBarUser js-top-bar-user">
+  <div class="TopBarUser-imageWrap js-top-bar-user-click">
+    <img src="<%= @image_url %>" />
+  </div>
+  <ul class="TopBarUser-menu">
+    <li class="TopBarUser-menuItem">
+      <a class="TopBarUser-menuLink" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
+    </li>
+  </ul>
+</div>
+
+<script>
+  var $topBarUser = document.querySelector('.js-top-bar-user');
+  var $topBarUserClick = $topBarUser.querySelector('.js-top-bar-user-click');
+
+  $topBarUserClick.addEventListener('click', function(e) {
+    $topBarUser.classList.toggle('is-open')
+  });
+
+  $topBarUser.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  document.addEventListener('click', function(e) {
+    $topBarUser.classList.remove('is-open');
+  });
+</script>

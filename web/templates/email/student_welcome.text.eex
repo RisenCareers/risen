@@ -1,1 +1,12 @@
-Welcome to Risen!
+Hi <%= @name %>,
+
+Welcome to Risen Careers! As a Christian college graduate, Risen helps you connect with mission-minded organizations.
+
+We'll look at your profile to make sure everything looks good. If we have any questions, we'll contact you at this email address.
+
+Once your profile is ready, we'll schedule you in a batch that gets sent to organizations in our network. If an organization thinks you are a good fit, they will contact you directly to proceed with their hiring process.
+
+If you have any questions, don't hesitate to reach us at hello@risen.careers.
+
+Regards,
+The Team at Risen Careers

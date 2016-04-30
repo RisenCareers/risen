@@ -17,11 +17,14 @@
       <li class="appBarMenu-list-item">
         <a class="appBarMenu-link" href="<%= admin_majors_path(@conn, :index) %>">Majors</a>
       </li>
-      <li class="appBarMenu-list-item is-special">
-        <a class="appBarMenu-link" href="<%= account_path(@conn, :signout_get) %>">Sign Out</a>
-      </li>
     </ul>
   </div>
+  <%=
+    render Risen.SharedView,
+    "top_bar_user.html",
+    conn: @conn,
+    image_url: "http://placehold.it/150x150"
+  %>
   <!-- 2nd Pass: Make menu an SVG -->
   <div class="menuIcon js-trigger">
     <div class="menuIcon-stripe"></div>

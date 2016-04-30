@@ -12,7 +12,9 @@
         <img class="pic pic--student--sm u-round" src="<%= Risen.SchoolLogo.url({school.logo, school}) %>" />
       </div>
       <div class="school-info">
-        <h2 class="school-info-name"><%= school.name %></h2>
+        <h2 class="school-info-name">
+          <a href="<%= admin_schools_path(@conn, :edit, school.id) %>"><%= school.name %></a>
+        </h2>
         <p class="school-info-studentCount"><%= length(school.students) %> Student Applicants</p>
       </div>
     </li>

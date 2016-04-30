@@ -28,6 +28,12 @@ defmodule Risen.Admin.StudentsController do
       preload: [:school, :major]
     )
 
+    IO.inspect pending_students
+
+    Enum.each(pending_students, fn(s) ->
+      IO.inspect s.name
+    end)
+
     # Grab upcoming batch
     upcoming_batch = Repo.one(
       from b in Batch,
