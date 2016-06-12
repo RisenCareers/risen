@@ -26,7 +26,7 @@ defmodule Risen.Landing.AccountController do
             conn |> good_credentials(account, admin_index_path(conn, :index))
           Account.has_role?(account, "EmployerAdmin") ->
             account = Repo.preload(account, [:employers])
-            conn |> good_credentials(account, employer_students_path(conn, :index, hd(account.employers).slug))
+            conn |> good_credentials(account, employer_batches_path(conn, :index, hd(account.employers).slug))
           Account.has_role?(account, "Student") ->
             account = Repo.preload(account, [:students])
             conn |> good_credentials(account, student_profile_path(conn, :edit, hd(account.students).id))

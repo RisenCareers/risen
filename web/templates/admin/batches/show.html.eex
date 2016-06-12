@@ -17,7 +17,7 @@
   <% end %>
 
   <h2 class="batch-title">
-    <%= length(@employers) %> <%= Inflex.inflect("Employer", length(@employers)) %> with <%= length(@students) %> <%= Inflex.inflect("Student", length(@students)) %>
+    <%= length(@students) %> <%= Inflex.inflect("Student", length(@students)) %>, <%= length(@employers) %> <%= Inflex.inflect("Employer", length(@employers)) %> 
   </h2>
 
   <ul class="employerList">
@@ -25,7 +25,7 @@
     <%= for employer <- @employers do %>
       <%
       employer_students = Enum.filter(@students, fn(s) ->
-        Enum.member?(Enum.map(employer.majors, &(&1.id)), s.major_id)
+        Enum.member?(Enum.map(@employer_majors, &(&1.major_id)), s.major_id)
       end)
       %>
       <li class="employerList-item card">

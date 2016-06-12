@@ -38,7 +38,7 @@ defmodule Risen.Employer.SetupController do
           case EmployerService.save_majors(conn, conn.params["employer"]["majors"]) do
             {:ok, employer} ->
               conn
-              |> redirect(to: employer_students_path(conn, :index, employer.slug))
+              |> redirect(to: employer_batches_path(conn, :index, employer.slug))
             {:error, _} ->
               changeset = Ecto.Changeset.add_error(changeset, :logo, "errored uploading")
               conn
@@ -65,7 +65,7 @@ defmodule Risen.Employer.SetupController do
 
   defp load_employer_majors(conn, _) do
     employer = conn.assigns[:employer]
-    employer = Repo.preload(employer, [:majors])
+    employer = EmployerService.load_current_majors(employer)
     conn |> assign(:employer, employer)
   end
 

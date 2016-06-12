@@ -42,7 +42,6 @@ defmodule Risen.Student.ProfileController do
         case StudentService.upload_resume(conn, params["resume"]) do
           {:ok, student} ->
             conn = assign(conn, :student, student)
-            IO.inspect st_chgs
             case Repo.update(st_chgs) do
               {:ok, student} ->
                 conn

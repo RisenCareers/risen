@@ -5,6 +5,8 @@ defmodule Risen.EmployerMajor do
   schema "employer_majors" do
     belongs_to :employer, Risen.Employer
     belongs_to :major, Risen.Major
+    field :removed_at, Timex.Ecto.DateTime
+    field :is_current, :boolean, default: true
 
     timestamps
   end

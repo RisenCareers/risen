@@ -8,6 +8,7 @@ defmodule Risen.Employer.StudentsController do
   alias Risen.Batch
   alias Risen.Student
   alias Risen.EmployerStudentInterest
+  alias Risen.EmployerService
 
   plug :put_layout, "employer.html"
   plug :authenticate
@@ -31,7 +32,7 @@ defmodule Risen.Employer.StudentsController do
 
     # This subquery grabs only students of the employer interested majors
     student_query = from s in Student,
-      where: s.major_id in ^(Enum.map(employer.majors, fn m -> m.id end)),
+      where: s.major_id in ^(Enum.map(employer.majors, &(&1.id))),
       preload: [:major, :school]
 
     # Grab all sent batches along with relevant students
@@ -90,27 +91,50 @@ defmodule Risen.Employer.StudentsController do
 
   def load_employer_majors(conn, _) do
     employer = conn.assigns[:employer]
-    employer = Repo.preload(employer, [:majors])
+    employer = EmployerService.load_current_majors(employer)
     conn |> assign(:employer, employer)
   end
 
   def load_student(conn, _) do
     employer = conn.assigns[:employer]
-
-    # Retrieve the current student from the path
     student = Repo.get(Student, conn.params["id"])
-    student = Repo.preload(student, [:account, :school, :major])
 
-    # Redirect back to students if the student does not exist
-    # or if the student does not have any majors that the employer
-    # is interested in
-    unless student && Enum.member?(employer.majors, student.major) do
+    unless student do
       conn
-      |> redirect(to: employer_students_path(conn, :index, employer.slug))
+      |> redirect(to: employer_batches_path(conn, :index, employer.slug))
       |> halt()
     else
-      conn |> assign(:student, student)
+      batch_ids = Enum.map(
+        Repo.all(
+          from bs in Risen.BatchStudent,
+          where: bs.student_id == ^student.id
+        ),
+        &(&1.batch_id)
+      )
+
+      batches = Repo.all(
+        from b in Risen.Batch,
+        where: b.id in ^batch_ids
+      )
+
+      # Get majors from all relevant batches
+      major_ids = EmployerService.major_ids_of_interest_for_batches(
+        employer,
+        batches
+      )
+
+      # Redirect back to students if the student does not have any majors that
+      # the employer is interested in
+      unless Enum.member?(major_ids, student.major_id) do
+        conn
+        |> redirect(to: employer_batches_path(conn, :index, employer.slug))
+        |> halt()
+      else
+        student = Repo.preload(student, [:account, :school, :major])
+        conn |> assign(:student, student)
+      end
     end
+
   end
 
 end

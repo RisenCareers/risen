@@ -11,8 +11,8 @@ defmodule Risen.Plugs.Authenticator do
     account_id = get_session(conn, :account_id)
     if account_id do
       account = Repo.get(Account, account_id)
-      account = Repo.preload(account, [:roles])
       if account do
+        account = Repo.preload(account, [:roles])
         conn = conn |> assign(:account, account)
       end
     end
@@ -25,10 +25,10 @@ defmodule Risen.Plugs.Authenticator do
       conn |> inauthenticated
     else
       account = Repo.get(Account, account_id)
-      account = Repo.preload(account, [:roles])
       unless account do
         conn |> inauthenticated
       else
+        account = Repo.preload(account, [:roles])
         conn |> assign(:account, account)
       end
     end

@@ -44,11 +44,15 @@ bju = build_school(%{
 #
 
 batches = Enum.map([1, 3, 6, 9], fn(t) ->
-  Repo.insert!(%Batch{ sent_at: Timex.shift(DateTime.now, days: (t * -1)) })
+  Repo.insert!(%Batch{
+    sent_at: DateTime.set(
+      Timex.shift(DateTime.now, days: (t * -1)), [millisecond: 0]
+    )
+  })
 end)
 # Upcoming Batch
-upcoming_batch = Repo.insert!(%Batch{})
-batches = batches ++ [upcoming_batch]
+# upcoming_batch = Repo.insert!(%Batch{})
+# batches = batches ++ [upcoming_batch]
 
 #
 # Students

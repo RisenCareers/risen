@@ -2,7 +2,7 @@
   <div class="drawer-content">
     <ul class="navMenu">
       <li>
-        <a class="u-noDecor" href="<%= employer_students_path(@conn, :index, @employer.slug) %>">All Students</a>
+        <a class="u-noDecor" href="<%= employer_batches_path(@conn, :index, @employer.slug) %>">Batches</a>
       </li>
       <li>
         <a class="u-noDecor" href="<%= employer_settings_path(@conn, :show, @employer.slug) %>">Settings</a>

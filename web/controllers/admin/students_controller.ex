@@ -100,6 +100,7 @@ defmodule Risen.Admin.StudentsController do
 
   defp load_student(conn, _) do
     student = Repo.get(Student, conn.params["id"])
+    student = Repo.preload(student, [:major, :school])
     conn |> assign(:student, student)
   end
 

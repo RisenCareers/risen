@@ -6,9 +6,11 @@ defmodule Risen.Admin.BatchesController do
   import Risen.Plugs.Admin.Authenticator
 
   alias Risen.Repo
+  alias Risen.Major
   alias Risen.Batch
   alias Risen.Employer
   alias Risen.EmployerMajor
+  alias Risen.EmployerService
 
   plug :authenticate
   plug :require_admin
@@ -37,22 +39,26 @@ defmodule Risen.Admin.BatchesController do
   end
 
   def show(conn, _params) do
-
     batch = conn.assigns[:batch]
     majors = Enum.map(batch.students, fn(s) -> s.major end)
 
     # Get all employer majors based on the majors of the students
+    query_time = if batch.sent_at, do: batch.sent_at, else: DateTime.now
     employer_majors = Repo.all(
       from em in EmployerMajor,
-      where: em.major_id in ^(Enum.map(majors, &(&1.id)))
+      where: em.major_id in ^(Enum.map(majors, &(&1.id))),
+      where: ^query_time > em.inserted_at,
+      where: (
+        is_nil(em.removed_at)
+        or (
+          not(is_nil(em.removed_at))
+          and ^query_time < em.removed_at
+        )
+      ),
+      preload: [:major, :employer]
     )
 
-    # Get all employers
-    employers = Repo.all(
-      from e in Employer,
-      where: e.id in ^(Enum.map(employer_majors, &(&1.employer_id))),
-      preload: [:majors]
-    )
+    employers = Enum.uniq(Enum.map(employer_majors, &(&1.employer)), &(&1.id))
 
     is_upcoming = (batch.sent_at == nil)
 
@@ -61,6 +67,7 @@ defmodule Risen.Admin.BatchesController do
     |> assign(:is_upcoming, is_upcoming)
     |> assign(:students, batch.students)
     |> assign(:employers, employers)
+    |> assign(:employer_majors, employer_majors)
     |> render("show.html")
   end
 
@@ -70,7 +77,10 @@ defmodule Risen.Admin.BatchesController do
     if params["send"] do
       unless batch.sent_at do
         Repo.transaction fn ->
-          batch_changeset = Ecto.Changeset.change(batch, sent_at: DateTime.now)
+          batch_changeset = Ecto.Changeset.change(
+            batch,
+            sent_at: DateTime.set(DateTime.now, [millisecond: 0])
+          )
           Repo.update!(batch_changeset)
           Repo.insert!(%Batch{})
         end

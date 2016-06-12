@@ -20,9 +20,15 @@
 
       <label for="major">
         <h3>Major</h3>
+        <%= unless @student.major_id do %>
         <label class="singleSelect">
           <%= select(f, :major_id, Enum.map(@majors, fn(m) -> {m.name, m.id} end), id: "major", class: "input-default input-default--black", prompt: "Select Major", required: true) %>
         </label>
+        <% else %>
+        <label class="singleSelect">
+          <%= select(f, :major_id, Enum.map(@majors, fn(m) -> {m.name, m.id} end), id: "major", class: "input-default input-default--black", disabled: true) %>
+        </label>
+        <% end %>
       </label>
 
       <label for="role">

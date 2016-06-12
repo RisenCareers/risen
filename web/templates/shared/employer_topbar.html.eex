@@ -1,9 +1,9 @@
 <div class="topBar topBar--mobile">
-  <a href="<%= employer_students_path(@conn, :index, @employer.slug) %>" class="logo logo--streamlined"></a>
+  <a href="<%= employer_batches_path(@conn, :index, @employer.slug) %>" class="logo logo--streamlined"></a>
   <div class="appBarMenu">
     <ul class="appBarMenu-list">
       <li class="appBarMenu-list-item">
-        <a class="appBarMenu-link" href="<%= employer_students_path(@conn, :index, @employer.slug) %>">All Students</a>
+        <a class="appBarMenu-link" href="<%= employer_batches_path(@conn, :index, @employer.slug) %>">Batches</a>
       </li>
       <li class="appBarMenu-list-item">
         <a class="appBarMenu-link" href="<%= employer_settings_path(@conn, :show, @employer.slug) %>">Settings</a>

@@ -68,7 +68,7 @@ defmodule Risen.Employer.SettingsController do
 
   defp load_employer_majors(conn, _) do
     employer = conn.assigns[:employer]
-    employer = Repo.preload(employer, [:majors])
+    employer = EmployerService.load_current_majors(employer)
     conn |> assign(:employer, employer)
   end
 
