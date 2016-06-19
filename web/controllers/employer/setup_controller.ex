@@ -5,8 +5,6 @@ defmodule Risen.Employer.SetupController do
   import Risen.Plugs.Employer.Authenticator
 
   alias Risen.Employer
-  alias Risen.EmployerLogo
-  alias Risen.EmployerMajor
   alias Risen.Major
   alias Risen.EmployerService
 
@@ -28,34 +26,10 @@ defmodule Risen.Employer.SetupController do
   end
 
   def update(conn, params) do
-    # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
-    changeset = Employer.changeset(employer)
-
-    tx_result = Repo.transaction fn ->
-      case EmployerService.upload_logo(conn, conn.params["logo"]) do
-        {:ok, employer} ->
-          case EmployerService.save_majors(conn, conn.params["employer"]["majors"]) do
-            {:ok, employer} ->
-              conn
-              |> redirect(to: employer_batches_path(conn, :index, employer.slug))
-            {:error, _} ->
-              changeset = Ecto.Changeset.add_error(changeset, :logo, "errored uploading")
-              conn
-              |> assign(:changeset, changeset)
-              |> render("edit.html")
-              |> Repo.rollback
-          end
-        {:error, _} ->
-          changeset = Ecto.Changeset.add_error(changeset, :logo, "errored uploading")
-          conn
-          |> assign(:changeset, changeset)
-          |> render("edit.html")
-          |> Repo.rollback
-      end
-    end
-
-    elem(tx_result, 1)
+    conn |> EmployerService.save_settings(employer, "edit.html", fn(c) ->
+      c |> redirect(to: employer_batches_path(conn, :index, employer.slug))
+    end)
   end
 
   defp load_all_majors(conn, _) do

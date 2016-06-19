@@ -12,8 +12,10 @@
     <%= for batch <- @batches do %>
     <div class="batch">
       <h2 class="batch-title">
-        <a href="<%= employer_batches_path(@conn, :show, @employer.slug, batch.id) %>">
-          Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %>
+        <a class="u-noDecor" href="<%= employer_batches_path(@conn, :show, @employer.slug, batch.id) %>">
+          <div class="card">
+            Batch for <%= Timex.format!(batch.sent_at, "%b. %e, %Y", :strftime) %>
+          </div>
         </a>
       </h2>
     </div>

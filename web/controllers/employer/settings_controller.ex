@@ -30,35 +30,12 @@ defmodule Risen.Employer.SettingsController do
   end
 
   def update(conn, params) do
-    # We got our employer from the Employer authenticator plug
     employer = conn.assigns[:employer]
-    changeset = Employer.changeset(employer)
-
-    tx_result = Repo.transaction fn ->
-      case EmployerService.upload_logo(conn, conn.params["logo"]) do
-        {:ok, employer} ->
-          case EmployerService.save_majors(conn, conn.params["employer"]["majors"]) do
-            {:ok, employer} ->
-              conn
-              |> put_flash(:success, "Settings updated successfully")
-              |> redirect(to: employer_settings_path(conn, :show, employer.slug))
-            {:error, _} ->
-              changeset = Changeset.add_error(changeset, :logo, "errored uploading")
-              conn
-              |> assign(:changeset, changeset)
-              |> render("edit.html")
-              |> Repo.rollback
-          end
-        {:error, _} ->
-          changeset = Changeset.add_error(changeset, :logo, "errored uploading")
-          conn
-          |> assign(:changeset, changeset)
-          |> render("edit.html")
-          |> Repo.rollback
-      end
-    end
-
-    elem(tx_result, 1)
+    conn |> EmployerService.save_settings(employer, "show.html", fn(c) ->
+      c
+      |> put_flash(:success, "Settings updated successfully")
+      |> redirect(to: employer_settings_path(conn, :show, employer.slug))
+    end)
   end
 
   defp load_all_majors(conn, _) do

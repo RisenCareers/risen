@@ -2,19 +2,99 @@ defmodule Risen.EmployerService do
   import Ecto.Query, only: [from: 1, from: 2]
   use Timex
 
+  alias Ecto.Changeset
+
   alias Risen.Repo
   alias Risen.Role
   alias Risen.AccountRole
+  alias Risen.Major
+  alias Risen.Batch
+  alias Risen.BatchStudent
   alias Risen.EmployerLogo
   alias Risen.Employer
   alias Risen.EmployerMajor
-  alias Risen.Major
+  alias Risen.EmployerStudentInterest
 
+  # Saves an employer settings based on the passed connection object. Will also
+  # run the success callback
+  def save_settings(conn, employer, view, on_success) do
+    changeset = Employer.changeset(employer)
+    tx_result = Repo.transaction fn ->
+      case upload_logo(conn, conn.params["logo"]) do
+        {:ok, employer} ->
+          case save_majors(conn, conn.params["employer"]["majors"]) do
+            {:ok, employer} ->
+              conn |> on_success.()
+            {:error, _} ->
+              changeset = Changeset.add_error(changeset, :logo, "errored uploading")
+              conn
+              |> conn.assign(:changeset, changeset)
+              |> conn.render(view)
+              |> Repo.rollback
+          end
+        {:error, _} ->
+          changeset = Changeset.add_error(changeset, :logo, "errored uploading")
+          conn
+          |> conn.assign(:changeset, changeset)
+          |> conn.render(view)
+          |> Repo.rollback
+      end
+    end
+    elem(tx_result, 1)
+  end
+
+  def can_view_student(employer, student) do
+    batch_ids = Enum.map(
+      Repo.all(
+        from bs in BatchStudent,
+        where: bs.student_id == ^student.id
+      ),
+      &(&1.batch_id)
+    )
+
+    batches = Repo.all(
+      from b in Batch,
+      where: b.id in ^batch_ids
+    )
+
+    # Get majors from all relevant batches
+    major_ids = major_ids_of_interest_for_batches(
+      employer,
+      batches
+    )
+
+    Enum.member?(major_ids, student.major_id)
+  end
+
+  # Return whether or not the employer has marked that they are interested
+  # in this student
+  def interested_in_student(employer, student) do
+    Repo.one(
+      from esi in EmployerStudentInterest,
+      where: esi.employer_id == ^employer.id and esi.student_id == ^student.id,
+      select: count(esi.id)
+    ) > 0
+  end
+
+  # Marks the student interested by this employer, as long as they aren't
+  # already interested
+  def mark_interested_in_student(employer, student) do
+    unless interested_in_student(employer, student) do
+      Repo.insert!(
+        %EmployerStudentInterest{
+          employer_id: employer.id,
+          student_id: student.id
+        }
+      )
+    end
+  end
+
+  # Return all major IDs that were of interest when the specified batch was
+  # sent. If batch was sent after a major was added but before it was removed
+  # or if it was not removed
   def major_ids_of_interest_for_batch(employer, batch) do
-    # If batch was sent after a major was added but before it was removed
-    # or if it was not removed
     majors_of_interest_when_sent = Repo.all(
-      from em in Risen.EmployerMajor,
+      from em in EmployerMajor,
       where: em.employer_id == ^employer.id,
       where: ^batch.sent_at > em.inserted_at,
       where: (

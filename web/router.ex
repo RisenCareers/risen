@@ -67,8 +67,6 @@ defmodule Risen.Router do
     get   "/:employer_slug/setup", SetupController, :edit
     patch "/:employer_slug/setup", SetupController, :update
 
-    # get   "/:employer_slug/students", StudentsController, :index
-
     get   "/:employer_slug/students/:id", StudentsController, :show
     patch "/:employer_slug/students/:id", StudentsController, :update
 
