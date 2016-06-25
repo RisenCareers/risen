@@ -8,12 +8,11 @@ defmodule Risen.EmployerService do
   alias Risen.Role
   alias Risen.AccountRole
   alias Risen.Major
-  alias Risen.Batch
-  alias Risen.BatchStudent
   alias Risen.EmployerLogo
   alias Risen.Employer
   alias Risen.EmployerMajor
   alias Risen.EmployerStudentInterest
+  alias Risen.StudentService
 
   # Saves an employer settings based on the passed connection object. Will also
   # run the success callback
@@ -21,9 +20,9 @@ defmodule Risen.EmployerService do
     changeset = Employer.changeset(employer)
     tx_result = Repo.transaction fn ->
       case upload_logo(conn, conn.params["logo"]) do
-        {:ok, employer} ->
+        {:ok, _employer} ->
           case save_majors(conn, conn.params["employer"]["majors"]) do
-            {:ok, employer} ->
+            {:ok, _employer} ->
               conn |> on_success.()
             {:error, _} ->
               changeset = Changeset.add_error(changeset, :logo, "errored uploading")
@@ -43,26 +42,10 @@ defmodule Risen.EmployerService do
     elem(tx_result, 1)
   end
 
+  # Return whether or not this employer can view the specified student
   def can_view_student(employer, student) do
-    batch_ids = Enum.map(
-      Repo.all(
-        from bs in BatchStudent,
-        where: bs.student_id == ^student.id
-      ),
-      &(&1.batch_id)
-    )
-
-    batches = Repo.all(
-      from b in Batch,
-      where: b.id in ^batch_ids
-    )
-
-    # Get majors from all relevant batches
-    major_ids = major_ids_of_interest_for_batches(
-      employer,
-      batches
-    )
-
+    batches = StudentService.batches_assigned(student)
+    major_ids = major_ids_of_interest_for_batches(employer, batches)
     Enum.member?(major_ids, student.major_id)
   end
 
@@ -87,6 +70,32 @@ defmodule Risen.EmployerService do
         }
       )
     end
+  end
+
+  def get_employers_from_employer_majors(employer_majors) do
+    employer_majors = Repo.preload(employer_majors, [:employer])
+    Enum.uniq(Enum.map(employer_majors, &(&1.employer)), &(&1.id))
+  end
+
+  # Return all employer majors of interest for the specified batch
+  def employer_majors_for_batch(batch) do
+    batch = Repo.preload(batch, :students)
+    majors = Enum.map(batch.students, &(&1.major))
+
+    query_time = if batch.sent_at, do: batch.sent_at, else: DateTime.now
+
+    Repo.all(
+      from em in EmployerMajor,
+      where: em.major_id in ^(Enum.map(majors, &(&1.id))),
+      where: ^query_time > em.inserted_at,
+      where: (
+        is_nil(em.removed_at)
+        or (
+          not(is_nil(em.removed_at))
+          and ^query_time < em.removed_at
+        )
+      )
+    )
   end
 
   # Return all major IDs that were of interest when the specified batch was

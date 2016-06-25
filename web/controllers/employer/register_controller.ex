@@ -1,11 +1,7 @@
 defmodule Risen.Employer.RegisterController do
   use Risen.Web, :controller
 
-  import Comeonin.Bcrypt
-
   alias Risen.Account
-  alias Risen.AccountRole
-  alias Risen.Role
   alias Risen.Employer
   alias Risen.EmployerAdmin
   alias Risen.EmployerService
@@ -42,14 +38,20 @@ defmodule Risen.Employer.RegisterController do
               |> put_session(:account_id, account.id)
               |> redirect(to: employer_setup_path(conn, :edit, employer.slug))
             {:error, account_changeset} ->
-              errors = Ecto.Changeset.traverse_errors(account_changeset, &Risen.ErrorHelpers.translate_error/1)
+              errors = Ecto.Changeset.traverse_errors(
+                account_changeset,
+                &Risen.ErrorHelpers.translate_error/1
+              )
               conn
               |> assign(:errors, errors)
               |> render("new.html")
               |> Repo.rollback
           end
         {:error, employer_changeset} ->
-          errors = Ecto.Changeset.traverse_errors(employer_changeset, &Risen.ErrorHelpers.translate_error/1)
+          errors = Ecto.Changeset.traverse_errors(
+            employer_changeset,
+            &Risen.ErrorHelpers.translate_error/1
+          )
           conn
           |> assign(:errors, errors)
           |> render("new.html")

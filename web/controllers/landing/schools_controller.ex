@@ -8,7 +8,6 @@ defmodule Risen.Landing.SchoolsController do
 
   def index(conn, _params) do
     schools = Repo.all(School)
-
     conn
     |> assign(:schools, schools)
     |> render("index.html")

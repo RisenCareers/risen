@@ -66,6 +66,9 @@
     margin: 0 auto;
     width: 205px;
   }
+  .btn--interested.is-processing {
+    opacity: .5;
+  }
   .interested {
     order: 5;
     border: 2px solid $faded-orange;

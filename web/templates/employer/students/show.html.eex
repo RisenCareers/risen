@@ -34,8 +34,18 @@
     <input type="hidden" name="interested" value="true">
     <button type="submit" class="btn btn--interested">I'm interested!</button>
   </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Click I'm Interested to swap between button and interested message
+      var btnInterested = document.querySelector('.btn--interested');
+      btnInterested.addEventListener('click', function() {
+        btnInterested.textContent = 'Processing...';
+        btnInterested.classList.add('is-processing');
+      });
+    });
+  </script>
   <% else %>
-  <div class="interested <%= if @employer_interested do %>alreadyInterested<% else %>u-hidden<% end %>">
+  <div class="interested alreadyInterested">
     <h2 class="interested-title">Hooray! You're interested.</h2>
     <p class="interested-message">We sent them an email letting them know. Your next step is to contact them directly:</p>
     <p class="interested-contactInfo"><%= @student.account.email %></p>
@@ -43,15 +53,3 @@
   </div>
   <% end %>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Click I'm Interested to swap between button and interested message
-    let btnInterested = document.querySelector('.btn--interested');
-    btnInterested.addEventListener('click', () => {
-      // TODO: Ajax request to change alreadyInterested status in server
-      btnInterested.classList.add('is-hidden');
-      document.querySelector('.interested').classList.remove('u-hidden');
-    });
-  });
-</script>

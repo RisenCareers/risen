@@ -6,7 +6,7 @@ defmodule Risen.Admin.SchoolsController do
 
   alias Risen.Repo
   alias Risen.School
-  alias Risen.SchoolLogo
+  alias Risen.SchoolService
 
   plug :authenticate
   plug :require_admin
@@ -38,9 +38,7 @@ defmodule Risen.Admin.SchoolsController do
 
     # Update the school logo, if specified
     if params["logo"] do
-      SchoolLogo.store({params["logo"], school})
-      school_changeset = Ecto.Changeset.change(school, logo: params["logo"].filename)
-      Repo.update!(school_changeset)
+      SchoolService.upload_logo(school, params["logo"])
     end
 
     conn
@@ -64,9 +62,7 @@ defmodule Risen.Admin.SchoolsController do
 
     # Update the school logo, if specified
     if params["logo"] do
-      SchoolLogo.store({params["logo"], school})
-      school_changeset = Ecto.Changeset.change(school, logo: params["logo"].filename)
-      Repo.update!(school_changeset)
+      SchoolService.upload_logo(school, params["logo"])
     end
 
     conn
@@ -74,7 +70,7 @@ defmodule Risen.Admin.SchoolsController do
     |> redirect(to: admin_schools_path(conn, :edit, school.id))
   end
 
-  def delete(conn, params) do
+  def delete(conn, _params) do
     school = conn.assigns[:school]
     Repo.delete!(school)
 

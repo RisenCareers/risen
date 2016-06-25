@@ -5,7 +5,7 @@ defmodule Risen.AccountService do
         Risen.Router.Helpers.admin_index_path(conn, :index)
       Risen.Account.has_role?(model, "EmployerAdmin") ->
         model = Risen.Repo.preload(model, [:employers])
-        Risen.Router.Helpers.employer_students_path(conn, :index, hd(model.employers).slug)
+        Risen.Router.Helpers.employer_batches_path(conn, :index, hd(model.employers).slug)
       Risen.Account.has_role?(model, "Student") ->
         model = Risen.Repo.preload(model, [:students])
         Risen.Router.Helpers.student_profile_path(conn, :edit, hd(model.students).id)

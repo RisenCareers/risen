@@ -29,10 +29,18 @@
       <% else %>
         <div>
           <h2 class="u-normalWeight u-italic">Assigned to:</h2>
-          <%= if @student_batch.sent_at do %>
-          <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><h2 class="pageTitle"><%= Timex.format!(@student_batch.sent_at, "%b. %e, %Y", :strftime) %> Batch</h2></a>
-          <% else %>
-          <a href="<%= admin_batches_path(@conn, :show, @student_batch.id) %>"><h2 class="pageTitle">Upcoming Batch</a>
+          <%= for student_batch <- @student_batches do %>
+            <%= if student_batch.sent_at do %>
+            <a href="<%= admin_batches_path(@conn, :show, student_batch.id) %>">
+              <h2 class="pageTitle">
+                <%= Timex.format!(student_batch.sent_at, "%b. %e, %Y", :strftime) %> Batch
+              </h2>
+            </a>
+            <% else %>
+            <a href="<%= admin_batches_path(@conn, :show, student_batch.id) %>">
+              <h2 class="pageTitle">Upcoming Batch</h2>
+            </a>
+            <% end %>
           <% end %>
         </div>
       <% end %>

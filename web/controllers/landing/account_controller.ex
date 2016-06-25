@@ -23,13 +23,22 @@ defmodule Risen.Landing.AccountController do
         account = conn.assigns[:account]
         cond do
           Account.has_role?(account, "RisenAdmin") ->
-            conn |> good_credentials(account, admin_index_path(conn, :index))
+            conn
+            |> good_credentials(account, admin_index_path(conn, :index))
           Account.has_role?(account, "EmployerAdmin") ->
             account = Repo.preload(account, [:employers])
-            conn |> good_credentials(account, employer_batches_path(conn, :index, hd(account.employers).slug))
+            conn
+            |> good_credentials(
+              account,
+              employer_batches_path(conn, :index, hd(account.employers).slug)
+            )
           Account.has_role?(account, "Student") ->
             account = Repo.preload(account, [:students])
-            conn |> good_credentials(account, student_profile_path(conn, :edit, hd(account.students).id))
+            conn
+            |> good_credentials(
+              account,
+              student_profile_path(conn, :edit, hd(account.students).id)
+            )
         end
       {:error, m} -> conn |> bad_credentials([account: m])
     end
@@ -57,7 +66,8 @@ defmodule Risen.Landing.AccountController do
   end
 
   defp check_credentials(conn) do
-    unless checkpw(conn.params["password"], conn.assigns[:account].password_hash) do
+    password_hash = conn.assigns[:account].password_hash
+    unless checkpw(conn.params["password"], password_hash) do
       {:error, "Invalid credentials."}
     else
       {:ok, conn}

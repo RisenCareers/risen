@@ -34,10 +34,10 @@ defmodule Risen.Student.SetupController do
     if params["resume"], do: st_prms = Map.put(st_prms, "resume", params["resume"].filename)
     st_chgs = Student.profile_changeset(student, st_prms)
 
-    case StudentService.upload_pic(conn, params["pic"]) do
+    case StudentService.upload_pic(student, params["pic"]) do
       {:ok, student} ->
         conn = assign(conn, :student, student)
-        case StudentService.upload_resume(conn, params["resume"]) do
+        case StudentService.upload_resume(student, params["resume"]) do
           {:ok, student} ->
             conn = assign(conn, :student, student)
             case Repo.update(st_chgs) do

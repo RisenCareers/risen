@@ -7,6 +7,34 @@ defmodule Risen.BatchService do
   alias Risen.Student
   alias Risen.EmployerService
 
+  def upcoming_batch() do
+    Repo.one(
+      from b in Batch,
+      where: is_nil(b.sent_at)
+    )
+  end
+
+  def sent_batches() do
+    Repo.all(
+      from b in Batch,
+      where: not(is_nil(b.sent_at))
+    )
+  end
+
+  def send_batch(batch) do
+    unless batch.sent_at do
+      Repo.transaction fn ->
+        Repo.update!(
+          Ecto.Changeset.change(
+            batch,
+            sent_at: DateTime.set(DateTime.now, [millisecond: 0])
+          )
+        )
+        Repo.insert!(%Batch{})
+      end
+    end
+  end
+
   def all_batches_for_employer(employer) do
     Repo.all(
       from b in Batch,
